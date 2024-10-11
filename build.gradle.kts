@@ -4,4 +4,5 @@ plugins {
     alias(libs.plugins.androidLibrary).apply(false)
     alias(libs.plugins.kotlinMultiplatform).apply(false)
     alias(libs.plugins.kotestMultiplatform).apply(false)
+    alias(libs.plugins.kotlinxKover).apply(false)
 }
