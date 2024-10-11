@@ -35,9 +35,6 @@ sealed class KResult<out E, out T> {
         }
     }
 
-    fun swap(): KResult<T, E> =
-        fold({ KSuccess(it) }, { KFailure(it) })
-
     inline fun <C> map(f: (success: T) -> C): KResult<E, C> {
         contract {
             callsInPlace(f, InvocationKind.AT_MOST_ONCE)
@@ -53,7 +50,21 @@ sealed class KResult<out E, out T> {
         }
     }
 
-    fun getOrNull(): T? {
+    inline fun onSuccess(action: (success: T) -> Unit): KResult<E, T> {
+        contract {
+            callsInPlace(action, InvocationKind.AT_MOST_ONCE)
+        }
+        return also { if (it.isSuccess()) action(it.value) }
+    }
+
+    inline fun onFailure(action: (failure: E) -> Unit): KResult<E, T> {
+        contract {
+            callsInPlace(action, InvocationKind.AT_MOST_ONCE)
+        }
+        return also { if (it.isFailure()) action(it.error) }
+    }
+
+    fun successOrNull(): T? {
         contract {
             returns(null) implies (this@KResult is KFailure<E>)
             returnsNotNull() implies (this@KResult is KSuccess<T>)
@@ -72,10 +83,8 @@ sealed class KResult<out E, out T> {
         )
     }
 
-    override fun toString(): String = fold(
-        { "KFailure($it)" },
-        { "KSuccess($it)" }
-    )
+    fun swap(): KResult<T, E> =
+        fold({ KSuccess(it) }, { KFailure(it) })
 
     companion object {
         @JvmStatic
@@ -108,6 +117,21 @@ inline fun <E, T, T1> KResult<E, T>.flatMap(f: (success: T) -> KResult<E, T1>): 
 }
 
 @OptIn(ExperimentalContracts::class)
+fun <E, T, E1> KResult<E, T>.flatMapFailure(f: (failure: E) -> KResult<E1, T>): KResult<E1, T> {
+    contract { callsInPlace(f, InvocationKind.AT_MOST_ONCE) }
+    return when (this) {
+        is KFailure -> f(this.error)
+        is KSuccess -> this
+    }
+}
+
+fun <E, T> KResult<E, KResult<E, T>>.flatten(): KResult<E, T> =
+    flatMap { it }
+
+fun <E, T> KResult<KResult<E, T>, T>.flattenFailure(): KResult<E, T> =
+    flatMapFailure { it }
+
+@OptIn(ExperimentalContracts::class)
 inline infix fun <E, T> KResult<E, T>.getOrElse(default: (E) -> T): T {
     contract { callsInPlace(default, InvocationKind.AT_MOST_ONCE) }
     return when (this) {
@@ -116,9 +140,37 @@ inline infix fun <E, T> KResult<E, T>.getOrElse(default: (E) -> T): T {
     }
 }
 
+fun <T> KResult<T, T>.merge(): T =
+    fold(
+        { it },
+        { it }
+    )
+
 fun <A> A.asFailure(): KResult<A, Nothing> =
     KFailure(this)
 
 fun <A> A.asSuccess(): KResult<Nothing, A> =
     KSuccess(this)
 
+operator fun <E : Comparable<E>, T : Comparable<T>> KResult<E, T>.compareTo(other: KResult<E, T>): Int =
+    fold(
+        { a1 -> other.fold({ a2 -> a1.compareTo(a2) }, { -1 }) },
+        { b1 -> other.fold({ 1 }, { b2 -> b1.compareTo(b2) }) }
+    )
+
+fun <E, T> KResult<E, T>.combine(
+    other: KResult<E, T>,
+    combineFailure: (E, E) -> E,
+    combineSuccess: (T, T) -> T
+): KResult<E, T> =
+    when (val one = this) {
+        is KFailure -> when (other) {
+            is KFailure -> KFailure(combineFailure(one.error, other.error))
+            is KSuccess -> one
+        }
+
+        is KSuccess -> when (other) {
+            is KFailure -> other
+            is KSuccess -> KSuccess(combineSuccess(one.value, other.value))
+        }
+    }
