@@ -3,6 +3,7 @@ agp = "8.5.0"
 kotlin = "2.0.0"
 nexus-publish = "2.0.0"
 kotest = "5.9.1"
+kover = "0.8.3"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -16,3 +17,4 @@ kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref 
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotestMultiplatform = { id = "io.kotest.multiplatform", version.ref = "kotest" }
+kotlinxKover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
