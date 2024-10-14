@@ -9,6 +9,7 @@ knit = "0.5.0"
 arrow = "1.2.4"
 
 [libraries]
+arrow-core = { module = "io.arrow-kt:arrow-core", version.ref = "arrow" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlinx-knit-test = { module = "org.jetbrains.kotlinx:kotlinx-knit-test", version.ref = "knit" }
 nexus-publish = { module = "io.github.gradle-nexus.publish-plugin:io.github.gradle-nexus.publish-plugin.gradle.plugin", version.ref = "nexus-publish" }
