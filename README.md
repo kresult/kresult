@@ -19,3 +19,53 @@ KResult is heavily inspired by:
 - Support for full `map` and `flatMap` operations on both sides, success & failure
 - Failure-side transformation and recovery
 - Nullable (or not found) handling
+
+## Usage
+
+### Create Results
+
+Creating `KResult` instances can be done using various methods. While there are explicit methods like using the 
+extension `Any.asSuccess()` or `Any.asFailure()`, results can be created from Kotlin Results, by catching exceptions or 
+from nullable types. Extensions with other frameworks provide creation methods as well. The following code block 
+showcases (some) creation methods:
+
+```kotlin
+import io.kotest.matchers.shouldBe
+import io.kresult.core.KResult
+import io.kresult.core.asKResult
+import io.kresult.core.asSuccess
+
+fun test() {
+    // by instance
+    KResult.Success("test")
+        .isSuccess() shouldBe true
+
+    // by extension function
+    "test".asSuccess() shouldBe true
+
+    // by catching exceptions
+    KResult
+        .catch {
+            throw RuntimeException("throws")
+        }
+        .isFailure() shouldBe true
+
+    // from nullable
+    KResult
+        .fromNullable(null) {
+            RuntimeException("Value can not be null")
+        }
+        .isFailure() shouldBe true
+
+    // from Kotlin Result
+    Result.success("test")
+        .asKResult()
+        .isSuccess() shouldBe true
+
+    // from Arrow Either (needs kresult-arrow extension)
+    arrow.core.Either.Left("test")
+}
+```
+
+<!--- KNIT example-readme-01.kt -->
+<!-- TEST -->
