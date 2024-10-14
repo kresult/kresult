@@ -8,5 +8,5 @@ import io.kresult.core.KResult
 fun test() {
     KResult.Success("test")
         .toEither()
-        .isLeft() shouldBe true
+        .isRight() shouldBe true
 }

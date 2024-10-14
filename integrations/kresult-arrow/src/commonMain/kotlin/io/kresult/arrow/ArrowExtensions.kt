@@ -16,7 +16,7 @@ import io.kresult.core.KResult
  * import io.kresult.arrow.toKResult
  *
  * fun test() {
- *     Either.Left("test")
+ *     Either.Right("test")
  *         .toKResult()
  *         .isSuccess() shouldBe true
  * }
@@ -42,7 +42,7 @@ fun <A, B> Either<A, B>.toKResult(): KResult<A, B> =
  * fun test() {
  *     KResult.Success("test")
  *         .toEither()
- *         .isLeft() shouldBe true
+ *         .isRight() shouldBe true
  * }
  * ```
  *

@@ -6,7 +6,7 @@ import io.kotest.matchers.shouldBe
 import io.kresult.arrow.toKResult
 
 fun test() {
-    Either.Left("test")
+    Either.Right("test")
         .toKResult()
         .isSuccess() shouldBe true
 }
