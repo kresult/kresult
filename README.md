@@ -41,7 +41,8 @@ fun test() {
         .isSuccess() shouldBe true
 
     // by extension function
-    "test".asSuccess() shouldBe true
+    "test".asSuccess()
+        .isSuccess() shouldBe true
 
     // by catching exceptions
     KResult
@@ -69,3 +70,56 @@ fun test() {
 
 <!--- KNIT example-readme-01.kt -->
 <!-- TEST -->
+
+### Mapping & Transformation
+
+Kresults can be transformed in several ways. At the core, [KResult](TODO) implements functional mapping with `flatMap`, 
+`map`, `flatten` & `filter`:
+
+```kotlin
+import io.kotest.matchers.shouldBe
+import io.kresult.core.KResult
+import io.kresult.core.filter
+import io.kresult.core.flatMap
+import io.kresult.core.flatten
+
+fun test() {
+    val res: KResult<Throwable, String> = KResult.Success("test")
+
+    // map
+    res
+        .map { "$it-1" }
+        .getOrNull() shouldBe "test-1"
+
+    // flatMap
+    res
+        .flatMap {
+            if (it.length > 3) {
+                KResult.Success(it)
+            } else {
+                KResult.Failure(RuntimeException("missing length"))
+            }
+        }
+        .getOrNull() shouldBe "test"
+
+    // flatten
+    val nestedRes: KResult<Throwable, KResult<Throwable, String>> =
+        KResult.Success(res)
+
+    nestedRes.flatten().getOrNull() shouldBe "test"
+
+    // filter
+    res
+        .filter(
+            { it.isNotBlank() },
+            { RuntimeException("String is empty") }
+        )
+        .isSuccess() shouldBe true
+}
+```
+<!--- KNIT example-readme-02.kt -->
+<!-- TEST -->
+
+Additional transformations, e.g. `merge`, `combine` and `swap` ca be used as well:
+
+**TBD...**

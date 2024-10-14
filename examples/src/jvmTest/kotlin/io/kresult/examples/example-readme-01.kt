@@ -12,7 +12,8 @@ fun test() {
         .isSuccess() shouldBe true
 
     // by extension function
-    "test".asSuccess() shouldBe true
+    "test".asSuccess()
+        .isSuccess() shouldBe true
 
     // by catching exceptions
     KResult
