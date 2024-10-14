@@ -1,4 +1,4 @@
-package io.kresult.core
+package io.kresult.examples.tests
 
 import org.junit.jupiter.api.Test
 

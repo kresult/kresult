@@ -8,13 +8,22 @@ kotlin {
     jvm()
 
     sourceSets {
-        val jvmTest by getting {
+
+        val commonTest by getting {
             dependencies {
                 implementation(project(":kresult-core"))
                 implementation(project(":kresult-arrow"))
+                implementation(libs.kotlin.test)
+                implementation(libs.arrow.core)
+            }
+        }
+
+        val jvmTest by getting {
+            dependencies {
+
                 implementation(libs.kotest.runner.junit5)
                 implementation(libs.kotlinx.knit.test)
-                implementation(libs.arrow.core)
+
             }
         }
     }
@@ -22,9 +31,6 @@ kotlin {
 
 tasks.named<Test>("jvmTest") {
     useJUnitPlatform()
-    filter {
-        isFailOnNoMatchingTests = false
-    }
     testLogging {
         showExceptions = true
         showStandardStreams = true
