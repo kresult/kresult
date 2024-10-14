@@ -19,7 +19,10 @@ inline fun <E, T, T1> KResult<E, T>.flatMap(f: (success: T) -> KResult<E, T1>): 
 
 @OptIn(ExperimentalContracts::class)
 inline fun <E, T> KResult<E, T>.filter(f: (success: T) -> Boolean, failureFn: (success: T) -> E): KResult<E, T> {
-    contract { callsInPlace(f, InvocationKind.AT_MOST_ONCE) }
+    contract {
+        callsInPlace(f, InvocationKind.UNKNOWN)
+        callsInPlace(failureFn, InvocationKind.UNKNOWN)
+    }
     return fold(
         { Failure(it) },
         {
