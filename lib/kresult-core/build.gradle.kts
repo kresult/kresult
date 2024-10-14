@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.kotestMultiplatform)
     alias(libs.plugins.kotlinxKover)
+    alias(libs.plugins.dokka)
     //alias(libs.plugins.androidLibrary)
     id("module.publication")
 }
@@ -35,6 +36,7 @@ kotlin {
         val jvmTest by getting {
             dependencies {
                 implementation(libs.kotest.runner.junit5)
+                implementation(libs.kotlinx.knit.test)
             }
         }
     }
