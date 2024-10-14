@@ -7,10 +7,18 @@ plugins {
     alias(libs.plugins.dokka)
     alias(libs.plugins.kotlinMultiplatform).apply(false)
     alias(libs.plugins.kotestMultiplatform).apply(false)
-    alias(libs.plugins.kotlinxKover).apply(false)
     alias(libs.plugins.kotlinxKover)
     alias(libs.plugins.kotlinxKnit)
 }
+
+dependencies {
+    dokka(project(":kresult-core"))
+    dokka(project(":kresult-arrow"))
+
+    kover(project(":kresult-core"))
+    kover(project(":kresult-arrow"))
+}
+
 configure<KnitPluginExtension> {
     siteRoot = "https://kresult.io/"
     rootDir = projectDir

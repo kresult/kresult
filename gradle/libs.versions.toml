@@ -6,6 +6,7 @@ nexus-publish = "2.0.0"
 kotest = "5.9.1"
 kover = "0.8.3"
 knit = "0.5.0"
+arrow = "1.2.4"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
