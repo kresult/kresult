@@ -17,6 +17,12 @@ dependencies {
 
     kover(project(":kresult-core"))
     kover(project(":kresult-arrow"))
+allprojects {
+    group = "io.kresult"
+    version = rootProject
+        .file("version.txt")
+        .readText()
+        .trim()
 }
 
 configure<KnitPluginExtension> {
