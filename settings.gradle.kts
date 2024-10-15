@@ -17,12 +17,12 @@ dependencyResolutionManagement {
 rootProject.name = "kresult"
 
 // libs
-include(":kresult-core")
-project(":kresult-core").projectDir = file("lib/kresult-core")
+include(":libs")
+include(":libs:kresult-core")
 
 // integrations
-include(":kresult-arrow")
-project(":kresult-arrow").projectDir = file("integrations/kresult-arrow")
+include(":integrations")
+include(":integrations:kresult-arrow")
 
 // other
 include(":examples")

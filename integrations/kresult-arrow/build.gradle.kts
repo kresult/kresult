@@ -6,13 +6,17 @@ plugins {
     id("module.publication")
 }
 
+dependencies {
+    dokkaHtmlPlugin("org.jetbrains.dokka:versioning-plugin:${libs.versions.dokka.get()}")
+}
+
 kotlin {
     jvm()
 
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(project(":kresult-core"))
+                implementation(project(":libs:kresult-core"))
                 api(libs.arrow.core)
             }
         }
@@ -56,5 +60,3 @@ tasks.named<Test>("jvmTest") {
         exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
     }
 }
-
-

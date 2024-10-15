@@ -7,6 +7,10 @@ plugins {
     id("module.publication")
 }
 
+dependencies {
+    dokkaHtmlPlugin("org.jetbrains.dokka:versioning-plugin:${libs.versions.dokka.get()}")
+}
+
 kotlin {
     jvm()
     linuxX64()

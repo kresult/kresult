@@ -9,14 +9,14 @@ kotlin {
 
     sourceSets {
 
-        val commonTest by getting {
-            dependencies {
-                implementation(project(":kresult-core"))
-                implementation(project(":kresult-arrow"))
-                implementation(libs.kotlin.test)
-                implementation(libs.arrow.core)
-            }
-        }
+    val commonTest by getting {
+      dependencies {
+        implementation(project(":libs:kresult-core"))
+        implementation(project(":integrations:kresult-arrow"))
+        implementation(libs.kotlin.test)
+        implementation(libs.arrow.core)
+      }
+    }
 
         val jvmTest by getting {
             dependencies {

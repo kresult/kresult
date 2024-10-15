@@ -2,7 +2,6 @@ import kotlinx.knit.KnitPluginExtension
 
 plugins {
     id("root.publication")
-    //trick: for the same plugin versions in all sub-modules
     alias(libs.plugins.androidLibrary).apply(false)
     alias(libs.plugins.dokka)
     alias(libs.plugins.kotlinMultiplatform).apply(false)
@@ -12,11 +11,13 @@ plugins {
 }
 
 dependencies {
-    dokka(project(":kresult-core"))
-    dokka(project(":kresult-arrow"))
+    dokka(project(":libs:kresult-core"))
+    dokka(project(":integrations:kresult-arrow"))
 
-    kover(project(":kresult-core"))
-    kover(project(":kresult-arrow"))
+    kover(project(":libs:kresult-core"))
+    kover(project(":integrations:kresult-arrow"))
+}
+
 allprojects {
     group = "io.kresult"
     version = rootProject

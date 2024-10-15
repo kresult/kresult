@@ -143,7 +143,7 @@ sealed class KResult<out E, out T> {
                 NullPointerException("Value null!")
             }
 
-    }
+  }
 
     data class Failure<out E>(val error: E) : KResult<E, Nothing>() {
         override fun toString(): String = "${this::class.simpleName}($error)"
