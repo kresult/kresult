@@ -46,6 +46,20 @@ tasks {
 }
 
 dokka {
+    val docDir = layout.projectDirectory
+        .dir("docs/api")
+
+    val docVersion = project.version.toString()
+        .split(".")
+        .let { parts ->
+            if (parts.size == 3) {
+                "${parts[0]}.${parts[1]}.X"
+            } else {
+                "INVALID-PROJECT-VERSION!"
+            }
+        }
+
     moduleName.set("KResult")
-    dokkaPublicationDirectory.set(layout.projectDirectory.dir("docs/api"))
+    moduleVersion.set(docVersion)
+    dokkaPublicationDirectory.set(docDir)
 }

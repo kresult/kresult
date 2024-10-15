@@ -3,7 +3,7 @@
 [![CI Build](https://github.com/kresult/kresult/actions/workflows/build.yml/badge.svg?branch=develop)](https://github.com/kresult/kresult/actions/workflows/build.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-**A functional Result Type for Kotlin**
+**An opinionated, functional Result type for Kotlin**
 
 *[KResult](https://kresult.io) is a functional library that provides an opinionated and feature-rich extension / 
 alternative to Kotlin's [Result\<T\>](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-result/) type. While the core 
