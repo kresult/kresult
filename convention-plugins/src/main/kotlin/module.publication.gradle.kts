@@ -8,19 +8,17 @@ plugins {
 }
 
 publishing {
-    // Configure all publications
     publications.withType<MavenPublication> {
-        // Stub javadoc.jar artifact
+
         artifact(tasks.register("${name}JavadocJar", Jar::class) {
             archiveClassifier.set("javadoc")
             archiveAppendix.set(this@withType.name)
         })
 
-        // Provide artifacts information required by Maven Central
         pom {
-            name.set("Kotlin Multiplatform library template")
-            description.set("Dummy library to test deployment to Maven Central")
-            url.set("https://github.com/Kotlin/multiplatform-library-template")
+            name.set("KResult")
+            description.set("An opinionated, functional Result type for Kotlin")
+            url.set("https://kresult.io")
 
             licenses {
                 license {
@@ -28,16 +26,27 @@ publishing {
                     url.set("https://opensource.org/licenses/MIT")
                 }
             }
+
             developers {
                 developer {
-                    id.set("JetBrains")
-                    name.set("JetBrains Team")
-                    organization.set("JetBrains")
-                    organizationUrl.set("https://www.jetbrains.com")
+                    id.set("frne")
+                    name.set("Frank Neff")
+                    url.set("https://frankneff.com")
+                }
+                developer {
+                    id.set("kresult-contributors")
+                    name.set("KResult Contributors")
+                    url.set("https://github.com/kresult/kresult/graphs/contributors")
                 }
             }
+
+            issueManagement {
+                system.set("GitHub Issues")
+                url.set("https://github.com/kresult/kresult/issues")
+            }
+
             scm {
-                url.set("https://github.com/Kotlin/multiplatform-library-template")
+                url.set("https://github.com/kresult/kresult")
             }
         }
     }
