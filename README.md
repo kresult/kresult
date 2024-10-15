@@ -15,6 +15,8 @@ KResult is heavily inspired by:
 * Rust's [Result\<T, E\>](https://doc.rust-lang.org/std/result/enum.Result.html).
 * Arrow's [Either\<A, B\>](https://apidocs.arrow-kt.io/arrow-core/arrow.core/-either/index.html)
 
+## TOC
+
 <!--- TOC -->
 
 * [Features](#features)
