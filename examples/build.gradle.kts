@@ -1,13 +1,13 @@
 plugins {
-    alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.kotestMultiplatform)
-    alias(libs.plugins.dokka)
+  alias(libs.plugins.kotlinMultiplatform)
+  alias(libs.plugins.kotestMultiplatform)
+  alias(libs.plugins.dokka)
 }
 
 kotlin {
-    jvm()
+  jvm()
 
-    sourceSets {
+  sourceSets {
 
     val commonTest by getting {
       dependencies {
@@ -18,26 +18,24 @@ kotlin {
       }
     }
 
-        val jvmTest by getting {
-            dependencies {
-
-                implementation(libs.kotest.runner.junit5)
-                implementation(libs.kotlinx.knit.test)
-
-            }
-        }
+    val jvmTest by getting {
+      dependencies {
+        implementation(libs.kotest.runner.junit5)
+        implementation(libs.kotlinx.knit.test)
+      }
     }
+  }
 }
 
 tasks.named<Test>("jvmTest") {
-    useJUnitPlatform()
-    testLogging {
-        showExceptions = true
-        showStandardStreams = true
-        events = setOf(
-            org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED,
-            org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED
-        )
-        exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
-    }
+  useJUnitPlatform()
+  testLogging {
+    showExceptions = true
+    showStandardStreams = true
+    events = setOf(
+      org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED,
+      org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED
+    )
+    exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+  }
 }

@@ -4,7 +4,7 @@ import arrow.core.Either
 import io.kresult.core.KResult
 
 /**
- * <!--- TEST_NAME ArrowKnitTest -->
+ * <!--- TEST_NAME ArrowIntegrationsKnitTest -->
  */
 
 /**
@@ -23,7 +23,7 @@ import io.kresult.core.KResult
  * ```
  *
  * <!--- KNIT example-arrow-01.kt -->
- * <!-- TEST -->
+ * <!--- TEST lines.isEmpty() -->
  */
 fun <A, B> Either<A, B>.toKResult(): KResult<A, B> =
     this.fold(
@@ -47,7 +47,7 @@ fun <A, B> Either<A, B>.toKResult(): KResult<A, B> =
  * ```
  *
  * <!--- KNIT example-arrow-02.kt -->
- * <!-- TEST -->
+ * <!--- TEST lines.isEmpty() -->
  */
 fun <E, T> KResult<E, T>.toEither(): Either<E, T> =
     this.fold(

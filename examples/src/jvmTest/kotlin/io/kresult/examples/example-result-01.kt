@@ -1,8 +1,8 @@
 // This file was automatically generated from KResult.kt by Knit tool. Do not edit.
 package io.kresult.examples.exampleResult01
 
-import io.kresult.core.*
 import io.kotest.matchers.shouldBe
+import io.kresult.core.KResult
 
 fun test() {
   KResult.Failure("test").isFailure() shouldBe true

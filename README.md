@@ -31,6 +31,8 @@ KResult is heavily inspired by:
 
 ## Usage
 
+<!--- TEST_NAME ReadmeKnitTest -->
+
 ### Create Results
 
 Creating `KResult` instances can be done using various methods. While there are explicit methods like using the 
@@ -78,7 +80,7 @@ fun test() {
 ```
 
 <!--- KNIT example-readme-01.kt -->
-<!-- TEST -->
+<!--- TEST lines.isEmpty() -->
 
 ### Mapping & Transformation
 
@@ -127,7 +129,7 @@ fun test() {
 }
 ```
 <!--- KNIT example-readme-02.kt -->
-<!-- TEST -->
+<!--- TEST lines.isEmpty() -->
 
 Additional transformations, e.g. `merge`, `combine` and `swap` ca be used as well:
 
