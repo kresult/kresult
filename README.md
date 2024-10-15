@@ -15,6 +15,15 @@ KResult is heavily inspired by:
 * Rust's [Result\<T, E\>](https://doc.rust-lang.org/std/result/enum.Result.html).
 * Arrow's [Either\<A, B\>](https://apidocs.arrow-kt.io/arrow-core/arrow.core/-either/index.html)
 
+<!--- TOC -->
+
+* [Features](#features)
+* [Usage](#usage)
+  * [Create Results](#create-results)
+  * [Mapping & Transformation](#mapping-&-transformation)
+
+<!--- END -->
+
 ## Features
 - Support for full `map` and `flatMap` operations on both sides, success & failure
 - Failure-side transformation and recovery
