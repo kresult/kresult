@@ -5,8 +5,9 @@ import io.kotest.matchers.shouldBe
 import io.kresult.core.KResult
 
 fun test() {
-  val res: KResult<Nothing, Unit> =
-    KResult.Success.unit
+  KResult.Success("test-success")
+    .getOrNull() shouldBe "test-success"
 
-  res.isSuccess() shouldBe true
+  KResult.Failure("test-failure")
+    .getOrNull() shouldBe null
 }

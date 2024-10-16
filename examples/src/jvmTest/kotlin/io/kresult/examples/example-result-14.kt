@@ -1,13 +1,12 @@
 // This file was automatically generated from KResult.kt by Knit tool. Do not edit.
-package io.kresult.examples.exampleResult07
+package io.kresult.examples.exampleResult14
 
 import io.kotest.matchers.shouldBe
 import io.kresult.core.KResult
 
 fun test() {
-  KResult.Success(2)
-    .map {
-      it * it
-    }
-    .getOrNull() shouldBe 4
+  val res: KResult<Nothing, Unit> =
+    KResult.Success.unit
+
+  res.isSuccess() shouldBe true
 }

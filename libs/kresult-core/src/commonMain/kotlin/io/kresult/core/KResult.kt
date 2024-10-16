@@ -8,7 +8,101 @@ import kotlin.jvm.JvmStatic
 /**
  * <!--- TEST_NAME KResultKnitTest -->
  *
+ * [KResult] and its inheritors [Success] and [Failure] provide an opinionated, functional result type. While Kotlin has
+ * its own [kotlin.Result] already, the intent of [KResult] is to be more functional, usable and better integrated.
  *
+ * ## Creating Results
+ *
+ * Results can be created by constructing [Success] or [Failure] directly, but there is a variety of helpers and third
+ * party types to create results from:
+ *
+ * ```kotlin
+ * import io.kresult.core.KResult
+ * import io.kresult.core.asKResult
+ * import io.kresult.core.asSuccess
+ *
+ * fun test() {
+ *   // by instance
+ *   KResult.Success("test")
+ *
+ *   // by extension function
+ *   "test".asSuccess()
+ *
+ *   // by catching exceptions
+ *   KResult.catch {
+ *     throw RuntimeException("throws")
+ *   }
+ *
+ *   // from nullable
+ *   KResult.fromNullable(null) {
+ *     RuntimeException("Value can not be null")
+ *   }
+ *
+ *   // from Kotlin Result
+ *   Result.success("test")
+ *     .asKResult()
+ * }
+ * ```
+ * <!--- KNIT example-result-01.kt -->
+ * <!--- TEST lines.isEmpty() -->
+ *
+ * ### From Extensions
+ *
+ * There are more result builders with extensions, e.g. from `kresult-arrow`:
+ *
+ * ```kotlin
+ * import arrow.core.Either
+ * import io.kresult.arrow.toKResult
+ *
+ * fun test() {
+ *   Either.Right("test")
+ *     .toKResult()
+ * }
+ * ```
+ * <!--- KNIT example-result-02.kt -->
+ * <!--- TEST lines.isEmpty() -->
+ *
+ * ## Mapping & Transformation
+ *
+ * Results can be transformed in several ways. At the core, [KResult] implements functional mapping with [flatMap],
+ * [map], [flatten], [filter], etc. Some of these are extension functions that need to be imported.:
+ *
+ * ```kotlin
+ * import io.kresult.core.KResult
+ * import io.kresult.core.filter
+ * import io.kresult.core.flatMap
+ * import io.kresult.core.flatten
+ *
+ * fun test() {
+ *   // map
+ *   KResult.Success(2)
+ *     .map { it - 1 }
+ *
+ *   // flatMap
+ *   KResult.Success("some-p4ss!").flatMap {
+ *     if (it.length > 8) {
+ *       KResult.Success(it)
+ *     } else {
+ *       KResult.Failure(RuntimeException("Password is too short"))
+ *     }
+ *   }
+ *
+ *   // filter
+ *   KResult.Success("some-p4ss!").filter(
+ *     { it.isNotBlank() },
+ *     { RuntimeException("String is empty") }
+ *   )
+ *
+ *   // flatten
+ *   val nested: KResult<Throwable, KResult<Throwable, Int>> =
+ *     KResult.Success(KResult.Success(2))
+ *
+ *   val flattened: KResult<Throwable, Int> =
+ *     nested.flatten()
+ * }
+ * ```
+ * <!--- KNIT example-result-03.kt -->
+ * <!--- TEST lines.isEmpty() -->
  */
 @OptIn(ExperimentalContracts::class)
 sealed class KResult<out E, out T> {
@@ -25,9 +119,7 @@ sealed class KResult<out E, out T> {
    *   KResult.Success("test").isFailure() shouldBe false
    * }
    * ```
-   * example-result-01.kt
-   *
-   * <!--- KNIT example-result-01.kt -->
+   * <!--- KNIT example-result-04.kt -->
    * <!--- TEST lines.isEmpty() -->
    */
   fun isFailure(): Boolean {
@@ -52,7 +144,7 @@ sealed class KResult<out E, out T> {
    * ```
    * example-result-01.kt
    *
-   * <!--- KNIT example-result-02.kt -->
+   * <!--- KNIT example-result-05.kt -->
    * <!--- TEST lines.isEmpty() -->
    */
   fun isSuccess(): Boolean {
@@ -79,7 +171,7 @@ sealed class KResult<out E, out T> {
    *     ) shouldBe 2
    * }
    * ```
-   * <!--- KNIT example-result-03.kt -->
+   * <!--- KNIT example-result-06.kt -->
    * <!--- TEST lines.isEmpty() -->
    *
    * @param ifFailure transform the [KResult.Failure] type [E] to [R].
@@ -112,7 +204,7 @@ sealed class KResult<out E, out T> {
    *     .getOrNull() shouldBe 4
    * }
    * ```
-   * <!--- KNIT example-result-04.kt -->
+   * <!--- KNIT example-result-07.kt -->
    * <!--- TEST lines.isEmpty() -->
    *
    * @param f transform the [KResult.Success] type [T] to [R].
@@ -139,7 +231,7 @@ sealed class KResult<out E, out T> {
    *     .failureOrNull() shouldBe 4
    * }
    * ```
-   * <!--- KNIT example-result-05.kt -->
+   * <!--- KNIT example-result-08.kt -->
    * <!--- TEST lines.isEmpty() -->
    *
    * @param f transform the [KResult.Success] type [T] to [R].
@@ -170,7 +262,7 @@ sealed class KResult<out E, out T> {
    *   result shouldBe "test-success"
    * }
    * ```
-   * <!--- KNIT example-result-06.kt -->
+   * <!--- KNIT example-result-09.kt -->
    * <!--- TEST lines.isEmpty() -->
    *
    * @param action to run on successful results.
@@ -200,7 +292,7 @@ sealed class KResult<out E, out T> {
    *   result shouldBe "test-failure"
    * }
    * ```
-   * <!--- KNIT example-result-07.kt -->
+   * <!--- KNIT example-result-10.kt -->
    * <!--- TEST lines.isEmpty() -->
    *
    * @param action to run on failure results.
@@ -227,7 +319,7 @@ sealed class KResult<out E, out T> {
    *     .getOrNull() shouldBe null
    * }
    * ```
-   * <!--- KNIT example-result-08.kt -->
+   * <!--- KNIT example-result-11.kt -->
    * <!--- TEST lines.isEmpty() -->
    */
   fun getOrNull(): T? {
@@ -253,7 +345,7 @@ sealed class KResult<out E, out T> {
    *     .failureOrNull() shouldBe null
    * }
    * ```
-   * <!--- KNIT example-result-09.kt -->
+   * <!--- KNIT example-result-12.kt -->
    * <!--- TEST lines.isEmpty() -->
    */
   fun failureOrNull(): E? {
@@ -279,7 +371,7 @@ sealed class KResult<out E, out T> {
    *   KResult.Success("test").swap() shouldBe KResult.Failure("test")
    * }
    * ```
-   * <!--- KNIT example-result-10.kt -->
+   * <!--- KNIT example-result-13.kt -->
    * <!--- TEST lines.isEmpty() -->
    */
   fun swap(): KResult<T, E> =
@@ -330,7 +422,7 @@ sealed class KResult<out E, out T> {
    *   res.isSuccess() shouldBe true
    * }
    * ```
-   * <!--- KNIT example-result-11.kt -->
+   * <!--- KNIT example-result-14.kt -->
    * <!--- TEST lines.isEmpty() -->
    */
   data class Success<out T>(val value: T) : KResult<Nothing, T>() {

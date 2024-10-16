@@ -1,16 +1,13 @@
 // This file was automatically generated from KResult.kt by Knit tool. Do not edit.
-package io.kresult.examples.exampleResult10
+package io.kresult.examples.exampleResult12
 
 import io.kotest.matchers.shouldBe
 import io.kresult.core.KResult
 
 fun test() {
-  var result = ""
-
   KResult.Failure("test-failure")
-    .onFailure {
-      result += it
-    }
+    .failureOrNull() shouldBe "test-failure"
 
-  result shouldBe "test-failure"
+  KResult.Success("test-success")
+    .failureOrNull() shouldBe null
 }

@@ -3,14 +3,12 @@ package io.kresult.examples.exampleResult06
 
 import io.kotest.matchers.shouldBe
 import io.kresult.core.KResult
+import kotlin.test.fail
 
 fun test() {
-  var result = ""
-
-  KResult.Success("test-success")
-    .onSuccess {
-      result += it
-    }
-
-  result shouldBe "test-success"
+  KResult.Success(1)
+    .fold(
+      { fail("Cannot be left") },
+      { it + 1 }
+    ) shouldBe 2
 }

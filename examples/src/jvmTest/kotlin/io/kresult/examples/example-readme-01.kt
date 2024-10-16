@@ -33,7 +33,4 @@ fun test() {
     Result.success("test")
         .asKResult()
         .isSuccess() shouldBe true
-
-    // from Arrow Either (needs kresult-arrow extension)
-    arrow.core.Either.Left("test")
 }
