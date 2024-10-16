@@ -108,6 +108,26 @@ import kotlin.jvm.JvmStatic
 sealed class KResult<out E, out T> {
 
   /**
+   * Failure component for destructuring declaration
+   *
+   * @return the [Failure.error] if [KResult] is a failure, null otherwise
+   */
+  open operator fun component1(): E? = when (this) {
+    is Success -> null
+    is Failure -> error
+  }
+
+  /**
+   * Success component for destructuring declaration
+   *
+   * @return the [Success.value] if [KResult] is a success, null otherwise
+   */
+  open operator fun component2(): T? = when (this) {
+    is Success -> value
+    is Failure -> null
+  }
+
+  /**
    * Indicates if a [KResult] is a [Failure]
    *
    * ```kotlin
@@ -399,8 +419,19 @@ sealed class KResult<out E, out T> {
   /**
    * Represents a failed [KResult]
    */
-  data class Failure<out E>(val error: E) : KResult<E, Nothing>() {
+  class Failure<out E>(val error: E) : KResult<E, Nothing>() {
+
     override fun toString(): String = "${this::class.simpleName}($error)"
+
+    override fun equals(other: Any?): Boolean =
+      if (other is Failure<*>)
+        error == other.error
+      else
+        false
+
+    override fun hashCode(): Int {
+      return error?.hashCode() ?: 0
+    }
   }
 
   /**
@@ -425,8 +456,19 @@ sealed class KResult<out E, out T> {
    * <!--- KNIT example-result-14.kt -->
    * <!--- TEST lines.isEmpty() -->
    */
-  data class Success<out T>(val value: T) : KResult<Nothing, T>() {
+  class Success<out T>(val value: T) : KResult<Nothing, T>() {
+
     override fun toString(): String = "${this::class.simpleName}($value)"
+
+    override fun equals(other: Any?): Boolean =
+      if (other is Success<*>)
+        value == other.value
+      else
+        false
+
+    override fun hashCode(): Int {
+      return value?.hashCode() ?: 0
+    }
 
     companion object {
       val unit: KResult<Nothing, Unit> =
