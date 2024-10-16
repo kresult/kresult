@@ -5,31 +5,32 @@ import io.kresult.core.KResult
 import io.kresult.core.filter
 import io.kresult.core.flatMap
 import io.kresult.core.flatten
+import io.kotest.matchers.shouldBe
 
 fun test() {
   // map
-  KResult.Success(2)
+  KResult.Success(3)
     .map { it - 1 }
+    .getOrNull() shouldBe 2
 
   // flatMap
-  KResult.Success("some-p4ss!").flatMap {
-    if (it.length > 8) {
-      KResult.Success(it)
-    } else {
-      KResult.Failure(RuntimeException("Password is too short"))
-    }
-  }
+  KResult.Success("some-p4ss!")
+    .flatMap {
+      if (it.length > 8) {
+        KResult.Success(it)
+      } else {
+        KResult.Failure(RuntimeException("Password is too short"))
+      }
+    } shouldBe KResult.Success("some-p4ss!")
 
   // filter
-  KResult.Success("some-p4ss!").filter(
-    { it.isNotBlank() },
-    { RuntimeException("String is empty") }
-  )
+  KResult.Success("some-p4ss!")
+    .filter(
+      { it.isNotBlank() },
+      { RuntimeException("String is empty") }
+    ) shouldBe KResult.Success("some-p4ss!")
 
   // flatten
-  val nested: KResult<Throwable, KResult<Throwable, Int>> =
-    KResult.Success(KResult.Success(2))
-
-  val flattened: KResult<Throwable, Int> =
-    nested.flatten()
+  KResult.Success(KResult.Success(2))
+    .flatten() shouldBe KResult.Success(2)
 }

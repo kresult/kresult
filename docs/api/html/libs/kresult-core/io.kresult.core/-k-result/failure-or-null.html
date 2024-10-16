@@ -44,7 +44,7 @@
 <a class="library-name--link" href="../../../../index.html">
                             KResult
                     </a>            </div>
-            <div class="library-version">0.1.X
+            <div class="library-version">0.2.X
             </div>
         </div>
         <div class="filter-section" id="filter-section">
@@ -66,7 +66,7 @@
   <div class="cover ">
     <h1 class="cover"><span>failure</span><wbr><span>Or</span><wbr><span><span>Null</span></span></h1>
   </div>
-  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":libs:kresult-core/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="failure-or-null.html"><span class="token function">failureOrNull</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">E</a><span class="token operator">?</span></div><p class="paragraph">Runs the <a href="-failure/error.html">Failure.error</a>, if the <a href="index.html">KResult</a> is a failure or null otherwise</p><div class="sample-container"><pre><code class="block lang-kotlin" theme="idea">import io.kotest.matchers.shouldBe<br>import io.kresult.core.KResult<br><br>fun test() {<br>  KResult.Failure("test-failure")<br>    .failureOrNull() shouldBe "test-failure"<br><br>  KResult.Success("test-success")<br>    .failureOrNull() shouldBe null<br>}</code></pre><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><!-- KNIT example-result-12.kt --><!-- TEST lines.isEmpty() --></div></div>
+  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":libs:kresult-core/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="failure-or-null.html"><span class="token function">failureOrNull</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">E</a><span class="token operator">?</span></div><p class="paragraph">Runs the <a href="-failure/error.html">Failure.error</a>, if the <a href="index.html">KResult</a> is a failure or <code class="lang-kotlin">null</code> otherwise</p><div class="sample-container"><pre><code class="block lang-kotlin" theme="idea">import io.kresult.core.KResult<br>import io.kotest.matchers.shouldBe<br><br>fun test() {<br>  KResult.Failure("test-failure")<br>    .failureOrNull() shouldBe "test-failure"<br><br>  KResult.Success("test-success")<br>    .failureOrNull() shouldBe null<br>}</code></pre><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><!-- KNIT example-result-14.kt --><!-- TEST lines.isEmpty() --></div></div>
 </div>
     <div class="footer">
         <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>

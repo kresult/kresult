@@ -1,5 +1,9 @@
+@file:OptIn(ExperimentalContracts::class)
+
 package io.kresult.core
 
+import io.kresult.core.KResult.Failure
+import io.kresult.core.KResult.Success
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -20,27 +24,35 @@ import kotlin.jvm.JvmStatic
  * import io.kresult.core.KResult
  * import io.kresult.core.asKResult
  * import io.kresult.core.asSuccess
+ * import io.kotest.matchers.shouldBe
  *
  * fun test() {
  *   // by instance
  *   KResult.Success("test")
+ *     .isSuccess() shouldBe true
  *
  *   // by extension function
  *   "test".asSuccess()
+ *     .isSuccess() shouldBe true
  *
  *   // by catching exceptions
- *   KResult.catch {
- *     throw RuntimeException("throws")
- *   }
+ *   KResult
+ *     .catch {
+ *       throw RuntimeException("throws")
+ *     }
+ *     .isSuccess() shouldBe false
  *
  *   // from nullable
- *   KResult.fromNullable(null) {
- *     RuntimeException("Value can not be null")
- *   }
+ *   KResult
+ *     .fromNullable(null) {
+ *       RuntimeException("Value can not be null")
+ *     }
+ *     .isSuccess() shouldBe false
  *
  *   // from Kotlin Result
  *   Result.success("test")
  *     .asKResult()
+ *     .isSuccess() shouldBe true
  * }
  * ```
  * <!--- KNIT example-result-01.kt -->
@@ -51,8 +63,8 @@ import kotlin.jvm.JvmStatic
  * There are more result builders with extensions, e.g. from `kresult-arrow`:
  *
  * ```kotlin
- * import arrow.core.Either
  * import io.kresult.arrow.toKResult
+ * import arrow.core.Either
  *
  * fun test() {
  *   Either.Right("test")
@@ -72,39 +84,106 @@ import kotlin.jvm.JvmStatic
  * import io.kresult.core.filter
  * import io.kresult.core.flatMap
  * import io.kresult.core.flatten
+ * import io.kotest.matchers.shouldBe
  *
  * fun test() {
  *   // map
- *   KResult.Success(2)
+ *   KResult.Success(3)
  *     .map { it - 1 }
+ *     .getOrNull() shouldBe 2
  *
  *   // flatMap
- *   KResult.Success("some-p4ss!").flatMap {
- *     if (it.length > 8) {
- *       KResult.Success(it)
- *     } else {
- *       KResult.Failure(RuntimeException("Password is too short"))
- *     }
- *   }
+ *   KResult.Success("some-p4ss!")
+ *     .flatMap {
+ *       if (it.length > 8) {
+ *         KResult.Success(it)
+ *       } else {
+ *         KResult.Failure(RuntimeException("Password is too short"))
+ *       }
+ *     } shouldBe KResult.Success("some-p4ss!")
  *
  *   // filter
- *   KResult.Success("some-p4ss!").filter(
- *     { it.isNotBlank() },
- *     { RuntimeException("String is empty") }
- *   )
+ *   KResult.Success("some-p4ss!")
+ *     .filter(
+ *       { it.isNotBlank() },
+ *       { RuntimeException("String is empty") }
+ *     ) shouldBe KResult.Success("some-p4ss!")
  *
  *   // flatten
- *   val nested: KResult<Throwable, KResult<Throwable, Int>> =
- *     KResult.Success(KResult.Success(2))
- *
- *   val flattened: KResult<Throwable, Int> =
- *     nested.flatten()
+ *   KResult.Success(KResult.Success(2))
+ *     .flatten() shouldBe KResult.Success(2)
  * }
  * ```
  * <!--- KNIT example-result-03.kt -->
  * <!--- TEST lines.isEmpty() -->
+ *
+ * ## Getting values or errors
+ *
+ * As a [KResult] is always either a [Success] or a [Failure], a simple, kotlin-native `when` expression or a
+ * destructuring declaration can be used to get the [Success.value] or [Failure.error]:
+ *
+ * ```kotlin
+ * import io.kresult.core.KResult
+ * import io.kresult.core.KResult.Failure
+ * import io.kresult.core.KResult.Success
+ * import io.kotest.matchers.shouldBe
+ *
+ * fun test() {
+ *   val res: KResult<String, Int> = Success(2)
+ *
+ *   // when expression
+ *   when (res) {
+ *     is Success -> "success: ${res.value}"
+ *     is Failure -> "failure: ${res.error}"
+ *   } shouldBe "success: 2"
+ *
+ *   // destructuring call
+ *   val (failureValue, successValue) = res
+ *
+ *   failureValue shouldBe null
+ *   successValue shouldBe 2
+ * }
+ * ```
+ * <!--- KNIT example-result-04.kt -->
+ * <!--- TEST lines.isEmpty() -->
+ *
+ * ### Convenience Methods
+ *
+ * Additionally, convenience methods like [fold], [getOrNull], [getOrElse], or [getOrThrow] for results that have a
+ * [Throwable] on failure side.
+ *
+ * ```kotlin
+ * import io.kresult.core.KResult
+ * import io.kresult.core.getOrElse
+ * import io.kresult.core.getOrThrow
+ * import io.kotest.assertions.throwables.shouldThrow
+ * import io.kotest.matchers.shouldBe
+ *
+ * fun test() {
+ *   // fold
+ *   KResult.Success(2).fold(
+ *     { "failure: $it" },
+ *     { "success: $it" }
+ *   ) shouldBe "success: 2"
+ *
+ *   // getOrNull
+ *   KResult.Success(2).getOrNull() shouldBe 2
+ *   KResult.Failure("error").getOrNull() shouldBe null
+ *
+ *   // getOrElse
+ *   KResult.Success(2).getOrElse { -1 } shouldBe 2
+ *   KResult.Failure("error").getOrElse { -1 } shouldBe -1
+ *
+ *   // getOrThrow
+ *   KResult.Success(2).getOrThrow() shouldBe 2
+ *   shouldThrow<RuntimeException> {
+ *     KResult.Failure(RuntimeException("test")).getOrThrow()
+ *   }
+ * }
+ * ```
+ * <!--- KNIT example-result-05.kt -->
+ * <!--- TEST lines.isEmpty() -->
  */
-@OptIn(ExperimentalContracts::class)
 sealed class KResult<out E, out T> {
 
   /**
@@ -131,15 +210,15 @@ sealed class KResult<out E, out T> {
    * Indicates if a [KResult] is a [Failure]
    *
    * ```kotlin
-   * import io.kotest.matchers.shouldBe
    * import io.kresult.core.KResult
+   * import io.kotest.matchers.shouldBe
    *
    * fun test() {
    *   KResult.Failure("test").isFailure() shouldBe true
    *   KResult.Success("test").isFailure() shouldBe false
    * }
    * ```
-   * <!--- KNIT example-result-04.kt -->
+   * <!--- KNIT example-result-06.kt -->
    * <!--- TEST lines.isEmpty() -->
    */
   fun isFailure(): Boolean {
@@ -154,17 +233,15 @@ sealed class KResult<out E, out T> {
    * Indicates if a [KResult] is a [Success]
    *
    * ```kotlin
-   * import io.kotest.matchers.shouldBe
    * import io.kresult.core.KResult
+   * import io.kotest.matchers.shouldBe
    *
    * fun test() {
    *   KResult.Success("test").isSuccess() shouldBe true
    *   KResult.Failure("test").isSuccess() shouldBe false
    * }
    * ```
-   * example-result-01.kt
-   *
-   * <!--- KNIT example-result-05.kt -->
+   * <!--- KNIT example-result-07.kt -->
    * <!--- TEST lines.isEmpty() -->
    */
   fun isSuccess(): Boolean {
@@ -179,8 +256,8 @@ sealed class KResult<out E, out T> {
    * Transforms a [KResult] into a value of [R].
    *
    * ```kotlin
-   * import io.kotest.matchers.shouldBe
    * import io.kresult.core.KResult
+   * import io.kotest.matchers.shouldBe
    * import kotlin.test.fail
    *
    * fun test() {
@@ -191,7 +268,7 @@ sealed class KResult<out E, out T> {
    *     ) shouldBe 2
    * }
    * ```
-   * <!--- KNIT example-result-06.kt -->
+   * <!--- KNIT example-result-08.kt -->
    * <!--- TEST lines.isEmpty() -->
    *
    * @param ifFailure transform the [KResult.Failure] type [E] to [R].
@@ -213,8 +290,8 @@ sealed class KResult<out E, out T> {
    * Maps (transforms) the success value [T] to a new value [R]
    *
    * ```kotlin
-   * import io.kotest.matchers.shouldBe
    * import io.kresult.core.KResult
+   * import io.kotest.matchers.shouldBe
    *
    * fun test() {
    *   KResult.Success(2)
@@ -224,7 +301,7 @@ sealed class KResult<out E, out T> {
    *     .getOrNull() shouldBe 4
    * }
    * ```
-   * <!--- KNIT example-result-07.kt -->
+   * <!--- KNIT example-result-09.kt -->
    * <!--- TEST lines.isEmpty() -->
    *
    * @param f transform the [KResult.Success] type [T] to [R].
@@ -240,8 +317,8 @@ sealed class KResult<out E, out T> {
    * Maps (transforms) the failure value [E] to a new value [R]
    *
    * ```kotlin
-   * import io.kotest.matchers.shouldBe
    * import io.kresult.core.KResult
+   * import io.kotest.matchers.shouldBe
    *
    * fun test() {
    *   KResult.Failure(2)
@@ -251,7 +328,7 @@ sealed class KResult<out E, out T> {
    *     .failureOrNull() shouldBe 4
    * }
    * ```
-   * <!--- KNIT example-result-08.kt -->
+   * <!--- KNIT example-result-10.kt -->
    * <!--- TEST lines.isEmpty() -->
    *
    * @param f transform the [KResult.Success] type [T] to [R].
@@ -268,8 +345,8 @@ sealed class KResult<out E, out T> {
    * Runs an action (side-effect) when the [KResult] is a [Success]
    *
    * ```kotlin
-   * import io.kotest.matchers.shouldBe
    * import io.kresult.core.KResult
+   * import io.kotest.matchers.shouldBe
    *
    * fun test() {
    *   var result = ""
@@ -282,7 +359,7 @@ sealed class KResult<out E, out T> {
    *   result shouldBe "test-success"
    * }
    * ```
-   * <!--- KNIT example-result-09.kt -->
+   * <!--- KNIT example-result-11.kt -->
    * <!--- TEST lines.isEmpty() -->
    *
    * @param action to run on successful results.
@@ -298,8 +375,8 @@ sealed class KResult<out E, out T> {
    * Runs an action (side-effect) when the [KResult] is a [Failure]
    *
    * ```kotlin
-   * import io.kotest.matchers.shouldBe
    * import io.kresult.core.KResult
+   * import io.kotest.matchers.shouldBe
    *
    * fun test() {
    *   var result = ""
@@ -312,7 +389,7 @@ sealed class KResult<out E, out T> {
    *   result shouldBe "test-failure"
    * }
    * ```
-   * <!--- KNIT example-result-10.kt -->
+   * <!--- KNIT example-result-12.kt -->
    * <!--- TEST lines.isEmpty() -->
    *
    * @param action to run on failure results.
@@ -325,11 +402,11 @@ sealed class KResult<out E, out T> {
   }
 
   /**
-   * Runs the [Success.value], if the [KResult] is a success or [null] otherwise
+   * Runs the [Success.value], if the [KResult] is a success or `null` otherwise
    *
    * ```kotlin
-   * import io.kotest.matchers.shouldBe
    * import io.kresult.core.KResult
+   * import io.kotest.matchers.shouldBe
    *
    * fun test() {
    *   KResult.Success("test-success")
@@ -339,7 +416,7 @@ sealed class KResult<out E, out T> {
    *     .getOrNull() shouldBe null
    * }
    * ```
-   * <!--- KNIT example-result-11.kt -->
+   * <!--- KNIT example-result-13.kt -->
    * <!--- TEST lines.isEmpty() -->
    */
   fun getOrNull(): T? {
@@ -351,11 +428,11 @@ sealed class KResult<out E, out T> {
   }
 
   /**
-   * Runs the [Failure.error], if the [KResult] is a failure or [null] otherwise
+   * Runs the [Failure.error], if the [KResult] is a failure or `null` otherwise
    *
    * ```kotlin
-   * import io.kotest.matchers.shouldBe
    * import io.kresult.core.KResult
+   * import io.kotest.matchers.shouldBe
    *
    * fun test() {
    *   KResult.Failure("test-failure")
@@ -365,7 +442,7 @@ sealed class KResult<out E, out T> {
    *     .failureOrNull() shouldBe null
    * }
    * ```
-   * <!--- KNIT example-result-12.kt -->
+   * <!--- KNIT example-result-14.kt -->
    * <!--- TEST lines.isEmpty() -->
    */
   fun failureOrNull(): E? {
@@ -383,15 +460,15 @@ sealed class KResult<out E, out T> {
    * Swap the parameters ([T] and [E]) of this [Result].
    *
    * ```kotlin
-   * import io.kotest.matchers.shouldBe
    * import io.kresult.core.KResult
+   * import io.kotest.matchers.shouldBe
    *
    * fun test() {
    *   KResult.Failure("test").swap() shouldBe KResult.Success("test")
    *   KResult.Success("test").swap() shouldBe KResult.Failure("test")
    * }
    * ```
-   * <!--- KNIT example-result-13.kt -->
+   * <!--- KNIT example-result-15.kt -->
    * <!--- TEST lines.isEmpty() -->
    */
   fun swap(): KResult<T, E> =
@@ -443,8 +520,8 @@ sealed class KResult<out E, out T> {
    * can be represented using:
    *
    * ```kotlin
-   * import io.kotest.matchers.shouldBe
    * import io.kresult.core.KResult
+   * import io.kotest.matchers.shouldBe
    *
    * fun test() {
    *   val res: KResult<Nothing, Unit> =
@@ -453,7 +530,7 @@ sealed class KResult<out E, out T> {
    *   res.isSuccess() shouldBe true
    * }
    * ```
-   * <!--- KNIT example-result-14.kt -->
+   * <!--- KNIT example-result-16.kt -->
    * <!--- TEST lines.isEmpty() -->
    */
   class Success<out T>(val value: T) : KResult<Nothing, T>() {

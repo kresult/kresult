@@ -2,7 +2,7 @@
 <html class="no-js">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
-    <title>map</title>
+    <title>component1</title>
 <link href="../../../../images/logo-icon.svg" rel="icon" type="image/svg">    <script>var pathToRoot = "../../../../";</script>
     <script>document.documentElement.classList.replace("no-js","js");</script>
     <script>const storage = localStorage.getItem("dokka-dark-mode")
@@ -61,12 +61,12 @@
                 <div class="sidebar--inner" id="sideMenu"></div>
             </div>
             <div id="main">
-<div class="main-content" data-page-type="member" id="content" pageids="kresult-core::io.kresult.core/KResult/map/#kotlin.Function1[TypeParam(bounds=[kotlin.Any?]),TypeParam(bounds=[kotlin.Any?])]/PointingToDeclaration//-1051702103">
-  <div class="breadcrumbs"><a href="../../index.html">kresult-core</a><span class="delimiter">/</span><a href="../index.html">io.kresult.core</a><span class="delimiter">/</span><a href="index.html">KResult</a><span class="delimiter">/</span><span class="current">map</span></div>
+<div class="main-content" data-page-type="member" id="content" pageids="kresult-core::io.kresult.core/KResult/component1/#/PointingToDeclaration//-1051702103">
+  <div class="breadcrumbs"><a href="../../index.html">kresult-core</a><span class="delimiter">/</span><a href="../index.html">io.kresult.core</a><span class="delimiter">/</span><a href="index.html">KResult</a><span class="delimiter">/</span><span class="current">component1</span></div>
   <div class="cover ">
-    <h1 class="cover"><span><span>map</span></span></h1>
+    <h1 class="cover"><span><span>component1</span></span></h1>
   </div>
-  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":libs:kresult-core/commonMain"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="map.html">R</a><span class="token operator">&gt; </span><a href="map.html"><span class="token function">map</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">f<span class="token operator">: </span><span class="token punctuation">(</span>success<span class="token operator">: </span><a href="index.html">T</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="map.html">R</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">KResult</a><span class="token operator">&lt;</span><a href="index.html">E</a><span class="token punctuation">, </span><a href="map.html">R</a><span class="token operator">&gt;</span></div><p class="paragraph">Maps (transforms) the success value <a href="index.html">T</a> to a new value <a href="map.html">R</a></p><div class="sample-container"><pre><code class="block lang-kotlin" theme="idea">import io.kresult.core.KResult<br>import io.kotest.matchers.shouldBe<br><br>fun test() {<br>  KResult.Success(2)<br>    .map {<br>      it * it<br>    }<br>    .getOrNull() shouldBe 4<br>}</code></pre><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><!-- KNIT example-result-09.kt --><!-- TEST lines.isEmpty() --><h4 class="">Parameters</h4><div class="table"><div class="table-row" data-filterable-current=":libs:kresult-core/commonMain" data-filterable-set=":libs:kresult-core/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><u><span><span>f</span></span></u></div></span></div><div><div class="title"><p class="paragraph">transform the <a href="-success/index.html">KResult.Success</a> type <a href="index.html">T</a> to <a href="map.html">R</a>.</p></div></div></div></div></div></div></div>
+  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":libs:kresult-core/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">operator </span><span class="token keyword">fun </span><a href="component1.html"><span class="token function">component1</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">E</a><span class="token operator">?</span></div><p class="paragraph">Failure component for destructuring declaration</p><span class="kdoc-tag"><h4 class="">Return</h4><p class="paragraph">the <a href="-failure/error.html">Failure.error</a> if <a href="index.html">KResult</a> is a failure, null otherwise</p></span></div></div>
 </div>
     <div class="footer">
         <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>

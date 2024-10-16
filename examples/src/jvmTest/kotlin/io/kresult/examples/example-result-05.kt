@@ -1,10 +1,30 @@
 // This file was automatically generated from KResult.kt by Knit tool. Do not edit.
 package io.kresult.examples.exampleResult05
 
-import io.kotest.matchers.shouldBe
 import io.kresult.core.KResult
+import io.kresult.core.getOrElse
+import io.kresult.core.getOrThrow
+import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.matchers.shouldBe
 
 fun test() {
-  KResult.Success("test").isSuccess() shouldBe true
-  KResult.Failure("test").isSuccess() shouldBe false
+  // fold
+  KResult.Success(2).fold(
+    { "failure: $it" },
+    { "success: $it" }
+  ) shouldBe "success: 2"
+
+  // getOrNull
+  KResult.Success(2).getOrNull() shouldBe 2
+  KResult.Failure("error").getOrNull() shouldBe null
+
+  // getOrElse
+  KResult.Success(2).getOrElse { -1 } shouldBe 2
+  KResult.Failure("error").getOrElse { -1 } shouldBe -1
+
+  // getOrThrow
+  KResult.Success(2).getOrThrow() shouldBe 2
+  shouldThrow<RuntimeException> {
+    KResult.Failure(RuntimeException("test")).getOrThrow()
+  }
 }
