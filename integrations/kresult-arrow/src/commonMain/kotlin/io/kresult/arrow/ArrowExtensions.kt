@@ -26,10 +26,10 @@ import io.kresult.core.KResult
  * <!--- TEST lines.isEmpty() -->
  */
 fun <A, B> Either<A, B>.toKResult(): KResult<A, B> =
-    this.fold(
-        { failure -> KResult.Failure(failure) },
-        { success -> KResult.Success(success) }
-    )
+  this.fold(
+    { failure -> KResult.Failure(failure) },
+    { success -> KResult.Success(success) }
+  )
 
 /**
  * Transforms a [KResult] to an Arrow [Either]
@@ -50,7 +50,7 @@ fun <A, B> Either<A, B>.toKResult(): KResult<A, B> =
  * <!--- TEST lines.isEmpty() -->
  */
 fun <E, T> KResult<E, T>.toEither(): Either<E, T> =
-    this.fold(
-        { failure -> Either.Left(failure) },
-        { success -> Either.Right(success) }
-    )
+  this.fold(
+    { failure -> Either.Left(failure) },
+    { success -> Either.Right(success) }
+  )

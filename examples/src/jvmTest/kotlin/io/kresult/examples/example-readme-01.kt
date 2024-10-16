@@ -7,30 +7,30 @@ import io.kresult.core.asKResult
 import io.kresult.core.asSuccess
 
 fun test() {
-    // by instance
-    KResult.Success("test")
-        .isSuccess() shouldBe true
+  // by instance
+  KResult.Success("test")
+    .isSuccess() shouldBe true
 
-    // by extension function
-    "test".asSuccess()
-        .isSuccess() shouldBe true
+  // by extension function
+  "test".asSuccess()
+    .isSuccess() shouldBe true
 
-    // by catching exceptions
-    KResult
-        .catch {
-            throw RuntimeException("throws")
-        }
-        .isFailure() shouldBe true
+  // by catching exceptions
+  KResult
+    .catch {
+      throw RuntimeException("throws")
+    }
+    .isFailure() shouldBe true
 
-    // from nullable
-    KResult
-        .fromNullable(null) {
-            RuntimeException("Value can not be null")
-        }
-        .isFailure() shouldBe true
+  // from nullable
+  KResult
+    .fromNullable(null) {
+      RuntimeException("Value can not be null")
+    }
+    .isFailure() shouldBe true
 
-    // from Kotlin Result
-    Result.success("test")
-        .asKResult()
-        .isSuccess() shouldBe true
+  // from Kotlin Result
+  Result.success("test")
+    .asKResult()
+    .isSuccess() shouldBe true
 }
