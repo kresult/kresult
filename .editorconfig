@@ -1,4 +1,15 @@
+# EditorConfig is awesome: https://editorconfig.org
+
+# top-most EditorConfig file
+root = true
+
+[*]
+end_of_line = lf
+insert_final_newline = true
+max_line_length = 120
+
+[*.{md}]
+indent_size = 2
+
 [*.{kt,kts}]
 indent_size = 2
-insert_final_newline = true
-max_line_length = off
