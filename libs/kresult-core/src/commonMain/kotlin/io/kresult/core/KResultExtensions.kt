@@ -62,6 +62,20 @@ inline infix fun <E, T> KResult<E, T>.getOrElse(default: (E) -> T): T {
     }
 }
 
+/**
+ * If a [KResult] has a [Throwable] on failure side, this either returns the [Success.value] or throws the
+ * [Failure.error]
+ *
+ * @return T if result is a [Success]
+ * @throws E if result is a [Failure]
+ */
+fun <E : Throwable, T> KResult<E, T>.getOrThrow(): T {
+  return when (this) {
+    is Failure -> throw this.error
+    is Success -> this.value
+  }
+}
+
 // comparison
 
 operator fun <E : Comparable<E>, T : Comparable<T>> KResult<E, T>.compareTo(other: KResult<E, T>): Int =
