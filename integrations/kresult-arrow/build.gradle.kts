@@ -1,3 +1,6 @@
+import org.jetbrains.dokka.gradle.DokkaTaskPartial
+import java.net.URL
+
 plugins {
   alias(libs.plugins.kotlinMultiplatform)
   alias(libs.plugins.kotestMultiplatform)
@@ -6,12 +9,9 @@ plugins {
   id("module.publication")
 }
 
-dependencies {
-  dokkaHtmlPlugin("org.jetbrains.dokka:versioning-plugin:${libs.versions.dokka.get()}")
-}
-
 kotlin {
   jvm()
+  linuxX64()
 
   sourceSets {
     val commonMain by getting {
@@ -43,20 +43,16 @@ kotlin {
       }
     }
   }
-}
 
-tasks.named<Test>("jvmTest") {
-  useJUnitPlatform()
-  filter {
-    isFailOnNoMatchingTests = false
-  }
-  testLogging {
-    showExceptions = true
-    showStandardStreams = true
-    events = setOf(
-      org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED,
-      org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED
-    )
-    exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+  @Suppress("DEPRECATION")
+  tasks.withType<DokkaTaskPartial>().configureEach {
+    dokkaSourceSets {
+      configureEach {
+        externalDocumentationLink {
+          url.set(URL("https://apidocs.arrow-kt.io/"))
+          packageListUrl.set(URL("https://apidocs.arrow-kt.io/package-list"))
+        }
+      }
+    }
   }
 }
