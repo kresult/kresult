@@ -5,12 +5,9 @@ import io.kresult.core.KResult
 import io.kotest.matchers.shouldBe
 
 fun test() {
-  var result = ""
-
-  KResult.Success("test-success")
-    .onSuccess {
-      result += it
+  KResult.Failure(2)
+    .mapFailure {
+      it * it
     }
-
-  result shouldBe "test-success"
+    .failureOrNull() shouldBe 4
 }

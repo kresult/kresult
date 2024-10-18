@@ -1,0 +1,7 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+
+module:kresult-arrow
+io.kresult.arrow
+module:kresult-core
+io.kresult.core

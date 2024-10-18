@@ -5,6 +5,9 @@ import io.kresult.core.KResult
 import io.kotest.matchers.shouldBe
 
 fun test() {
-  KResult.Failure("test").swap() shouldBe KResult.Success("test")
-  KResult.Success("test").swap() shouldBe KResult.Failure("test")
+  KResult.Failure("test-failure")
+    .failureOrNull() shouldBe "test-failure"
+
+  KResult.Success("test-success")
+    .failureOrNull() shouldBe null
 }

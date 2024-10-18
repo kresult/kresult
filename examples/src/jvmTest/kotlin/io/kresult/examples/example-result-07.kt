@@ -5,6 +5,6 @@ import io.kresult.core.KResult
 import io.kotest.matchers.shouldBe
 
 fun test() {
-  KResult.Success("test").isSuccess() shouldBe true
-  KResult.Failure("test").isSuccess() shouldBe false
+  KResult.Failure("test").isFailure() shouldBe true
+  KResult.Success("test").isFailure() shouldBe false
 }

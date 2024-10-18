@@ -1,4 +1,4 @@
-package io.kresult.arrow
+package io.kresult.integration.arrow
 
 import arrow.core.Either
 import io.kresult.core.KResult
@@ -13,7 +13,7 @@ import io.kresult.core.KResult
  * ```kotlin
  * import arrow.core.Either
  * import io.kotest.matchers.shouldBe
- * import io.kresult.arrow.toKResult
+ * import io.kresult.integration.arrow.toKResult
  *
  * fun test() {
  *     Either.Right("test")
@@ -36,7 +36,7 @@ fun <A, B> Either<A, B>.toKResult(): KResult<A, B> =
  *
  * ```kotlin
  * import io.kotest.matchers.shouldBe
- * import io.kresult.arrow.toEither
+ * import io.kresult.integration.arrow.toEither
  * import io.kresult.core.KResult
  *
  * fun test() {
