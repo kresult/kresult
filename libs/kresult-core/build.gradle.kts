@@ -1,14 +1,8 @@
 plugins {
-  alias(libs.plugins.kotlinMultiplatform)
+  id(libs.plugins.kotlinMultiplatform.get().pluginId)
   alias(libs.plugins.kotestMultiplatform)
   alias(libs.plugins.kotlinxKover)
-  alias(libs.plugins.dokka)
-  //alias(libs.plugins.androidLibrary)
   id("module.publication")
-}
-
-dependencies {
-  dokkaHtmlPlugin("org.jetbrains.dokka:versioning-plugin:${libs.versions.dokka.get()}")
 }
 
 kotlin {
@@ -43,21 +37,5 @@ kotlin {
         implementation(libs.kotlinx.knit.test)
       }
     }
-  }
-}
-
-tasks.named<Test>("jvmTest") {
-  useJUnitPlatform()
-  filter {
-    isFailOnNoMatchingTests = false
-  }
-  testLogging {
-    showExceptions = true
-    showStandardStreams = true
-    events = setOf(
-      org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED,
-      org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED
-    )
-    exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
   }
 }
