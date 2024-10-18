@@ -491,6 +491,38 @@ sealed class KResult<out E, out T> {
         NullPointerException("Value null!")
       }
 
+    /**
+     * Combine two [KResult] instances of same type
+     *
+     * This is an alternative syntax for calling [KResult.combine] on the first result and applying second as a
+     * parameter.
+     *
+     * ```kotlin
+     * import io.kresult.core.KResult
+     *
+     * fun test() {
+     *   val first: KResult<String, String> = KResult.Success("test 1")
+     *   val second: KResult<String, String> = KResult.Success("test 2")
+     *
+     *   KResult.combine(
+     *     first,
+     *     second,
+     *     { f1, f2 -> "$f1, $f2" },
+     *     { s1, s2 -> "$s1, $s2" }
+     *   )
+     * }
+     * ```
+     * <!--- KNIT example-result-18.kt -->
+     * <!--- TEST lines.isEmpty() -->
+     */
+    fun <E, T> combine(
+      first: KResult<E, T>,
+      second: KResult<E, T>,
+      combineFailure: (E, E) -> E,
+      combineSuccess: (T, T) -> T,
+    ): KResult<E, T> =
+      first.combine(second, combineFailure, combineSuccess)
+
   }
 
   /**
