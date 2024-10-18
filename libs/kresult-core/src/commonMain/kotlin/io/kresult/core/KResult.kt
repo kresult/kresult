@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalContracts::class)
-
 package io.kresult.core
 
 import io.kresult.core.KResult.Failure
@@ -10,10 +8,10 @@ import kotlin.contracts.contract
 import kotlin.jvm.JvmStatic
 
 /**
- * <!--- TEST_NAME KResultKnitTest -->
- *
  * [KResult] and its inheritors [Success] and [Failure] provide an opinionated, functional result type. While Kotlin has
  * its own [kotlin.Result] already, the intent of [KResult] is to be more functional, usable and better integrated.
+ *
+ * <!--- TEST_NAME KResultKnitTest -->
  *
  * ## Creating Results
  *
@@ -63,7 +61,7 @@ import kotlin.jvm.JvmStatic
  * There are more result builders with extensions, e.g. from `kresult-arrow`:
  *
  * ```kotlin
- * import io.kresult.arrow.toKResult
+ * import io.kresult.integration.arrow.toKResult
  * import arrow.core.Either
  *
  * fun test() {
@@ -149,12 +147,12 @@ import kotlin.jvm.JvmStatic
  *
  * ### Convenience Methods
  *
- * Additionally, convenience methods like [fold], [getOrNull], [getOrElse], or [getOrThrow] for results that have a
+ * Additionally, convenience methods like [fold], [getOrNull], [getOrDefault], or [getOrThrow] for results that have a
  * [Throwable] on failure side.
  *
  * ```kotlin
  * import io.kresult.core.KResult
- * import io.kresult.core.getOrElse
+ * import io.kresult.core.getOrDefault
  * import io.kresult.core.getOrThrow
  * import io.kotest.assertions.throwables.shouldThrow
  * import io.kotest.matchers.shouldBe
@@ -171,8 +169,8 @@ import kotlin.jvm.JvmStatic
  *   KResult.Failure("error").getOrNull() shouldBe null
  *
  *   // getOrElse
- *   KResult.Success(2).getOrElse { -1 } shouldBe 2
- *   KResult.Failure("error").getOrElse { -1 } shouldBe -1
+ *   KResult.Success(2).getOrDefault { -1 } shouldBe 2
+ *   KResult.Failure("error").getOrDefault { -1 } shouldBe -1
  *
  *   // getOrThrow
  *   KResult.Success(2).getOrThrow() shouldBe 2
@@ -184,6 +182,7 @@ import kotlin.jvm.JvmStatic
  * <!--- KNIT example-result-05.kt -->
  * <!--- TEST lines.isEmpty() -->
  */
+@OptIn(ExperimentalContracts::class)
 sealed class KResult<out E, out T> {
 
   /**
@@ -481,7 +480,7 @@ sealed class KResult<out E, out T> {
       kotlin.runCatching { f() }
         .asKResult()
 
-    fun <T, E> fromNullable(value: T?, errFn: () -> E): KResult<E, T> =
+    fun <E, T> fromNullable(value: T?, errFn: () -> E): KResult<E, T> =
       value
         ?.asSuccess()
         ?: errFn().asFailure()
