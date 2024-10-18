@@ -40,7 +40,23 @@ fun <A> A.asFailure(): KResult<A, Nothing> =
   Failure(this)
 
 /**
+ * Transforms any element to a [MultiErrorKResult], carrying a list of elements on [Failure] side
+ *
+ * @since 0.2.0
+ */
+fun <A> A.asFailureList(): KResult<List<A>, Nothing> =
+  Failure(listOf(this))
+
+/**
  * Transforms any element to a [KResult], carrying the given element on [Success] side
  */
 fun <A> A.asSuccess(): KResult<Nothing, A> =
   Success(this)
+
+/**
+ * Transforms any element to a [MultiValueKResult], carrying a list of elements on [Success] side
+ *
+ * @since 0.2.0
+ */
+fun <A> A.asSuccessList(): MultiValueKResult<Nothing, A> =
+  Success(listOf(this))
