@@ -33,7 +33,7 @@ class KResultTest {
       .map { "$it+map" }
       .let {
         it.shouldBeInstanceOf<Success<String>>()
-        it.getOrElse { "else" }.shouldBeEqual("success+map")
+        it.getOrDefault { "else" }.shouldBeEqual("success+map")
       }
 
     failure()

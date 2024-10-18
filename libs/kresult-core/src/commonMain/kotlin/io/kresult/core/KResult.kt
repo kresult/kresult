@@ -424,7 +424,7 @@ sealed class KResult<out E, out T> {
       returns(null) implies (this@KResult is Failure<E>)
       returnsNotNull() implies (this@KResult is Success<T>)
     }
-    return getOrElse { null }
+    return getOrDefault { null }
   }
 
   /**

@@ -1,7 +1,6 @@
 package io.kresult.core
 
-import io.kresult.core.KResult.Failure
-import io.kresult.core.KResult.Success
+import io.kresult.core.KResult.*
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -53,8 +52,34 @@ fun <E, T> KResult<KResult<E, T>, T>.flattenFailure(): KResult<E, T> =
 
 // getters for success & failure
 
+@Deprecated("Deprecated since 0.2.0", replaceWith = ReplaceWith("getOrDefault(default)"))
+inline infix fun <E, T> KResult<E, T>.getOrElse(default: (E) -> T): T =
+  getOrDefault(default)
+
+/**
+ * Returns the value of the [Success] side, or the result of the [default] function otherwise
+ *
+ * @since 0.2.0
+ */
 @OptIn(ExperimentalContracts::class)
-inline infix fun <E, T> KResult<E, T>.getOrElse(default: (E) -> T): T {
+inline infix fun <E, T> KResult<E, T>.getOrDefault(default: (E) -> T): T {
+  contract { callsInPlace(default, InvocationKind.AT_MOST_ONCE) }
+  return when (this) {
+    is Failure -> default(this.error)
+    is Success -> this.value
+    // we could return a value here, but that would be semantically incorrect, because a Failure with a value is
+    // still a failure
+    is FailureWithValue -> default(this.error)
+  }
+}
+
+/**
+ * Returns the error of the [Failure] side, or the result of the [default] function otherwise
+ *
+ * @since 0.2.0
+ */
+@OptIn(ExperimentalContracts::class)
+inline infix fun <E, T> KResult<E, T>.failureOrDefault(default: (T) -> E): E {
   contract { callsInPlace(default, InvocationKind.AT_MOST_ONCE) }
   return when (this) {
     is Failure -> default(this.error)
