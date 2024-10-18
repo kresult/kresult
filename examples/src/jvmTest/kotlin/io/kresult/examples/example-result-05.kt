@@ -2,7 +2,7 @@
 package io.kresult.examples.exampleResult05
 
 import io.kresult.core.KResult
-import io.kresult.core.getOrElse
+import io.kresult.core.getOrDefault
 import io.kresult.core.getOrThrow
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
@@ -19,8 +19,8 @@ fun test() {
   KResult.Failure("error").getOrNull() shouldBe null
 
   // getOrElse
-  KResult.Success(2).getOrElse { -1 } shouldBe 2
-  KResult.Failure("error").getOrElse { -1 } shouldBe -1
+  KResult.Success(2).getOrDefault { -1 } shouldBe 2
+  KResult.Failure("error").getOrDefault { -1 } shouldBe -1
 
   // getOrThrow
   KResult.Success(2).getOrThrow() shouldBe 2

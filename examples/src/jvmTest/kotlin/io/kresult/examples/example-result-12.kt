@@ -7,10 +7,10 @@ import io.kotest.matchers.shouldBe
 fun test() {
   var result = ""
 
-  KResult.Failure("test-failure")
-    .onFailure {
+  KResult.Success("test-success")
+    .onSuccess {
       result += it
     }
 
-  result shouldBe "test-failure"
+  result shouldBe "test-success"
 }

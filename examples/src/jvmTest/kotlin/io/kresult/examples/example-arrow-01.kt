@@ -3,7 +3,7 @@ package io.kresult.examples.exampleArrow01
 
 import arrow.core.Either
 import io.kotest.matchers.shouldBe
-import io.kresult.arrow.toKResult
+import io.kresult.integration.arrow.toKResult
 
 fun test() {
     Either.Right("test")

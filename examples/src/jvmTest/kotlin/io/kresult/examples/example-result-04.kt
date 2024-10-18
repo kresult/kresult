@@ -3,6 +3,7 @@ package io.kresult.examples.exampleResult04
 
 import io.kresult.core.KResult
 import io.kresult.core.KResult.Failure
+import io.kresult.core.KResult.FailureWithValue
 import io.kresult.core.KResult.Success
 import io.kotest.matchers.shouldBe
 
@@ -13,11 +14,12 @@ fun test() {
   when (res) {
     is Success -> "success: ${res.value}"
     is Failure -> "failure: ${res.error}"
+    is FailureWithValue -> "failure: ${res.error} (original value was ${res.value})"
   } shouldBe "success: 2"
 
   // destructuring call
-  val (failureValue, successValue) = res
+  val (error, value) = res
 
-  failureValue shouldBe null
-  successValue shouldBe 2
+  error shouldBe null
+  value shouldBe 2
 }

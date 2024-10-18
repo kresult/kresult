@@ -2,7 +2,7 @@
 package io.kresult.examples.exampleArrow02
 
 import io.kotest.matchers.shouldBe
-import io.kresult.arrow.toEither
+import io.kresult.integration.arrow.toEither
 import io.kresult.core.KResult
 
 fun test() {
