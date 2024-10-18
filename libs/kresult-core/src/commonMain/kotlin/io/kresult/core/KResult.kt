@@ -117,12 +117,15 @@ import kotlin.jvm.JvmStatic
  *
  * ## Getting values or errors
  *
- * As a [KResult] is always either a [Success] or a [Failure], a simple, kotlin-native `when` expression or a
- * destructuring declaration can be used to get the [Success.value] or [Failure.error]:
+ * As a [KResult] is always either a [Success] or a [Failure] / [FailureWithValue], a simple, kotlin-native `when`
+ * expression or a destructuring declaration can be used to get the [Success.value] or [Failure.error]:
+ *
+ * **Heads up:** If you destructure a [FailureWithValue], you'll get an `error` **AND** a `value` back!
  *
  * ```kotlin
  * import io.kresult.core.KResult
  * import io.kresult.core.KResult.Failure
+ * import io.kresult.core.KResult.FailureWithValue
  * import io.kresult.core.KResult.Success
  * import io.kotest.matchers.shouldBe
  *
@@ -133,13 +136,14 @@ import kotlin.jvm.JvmStatic
  *   when (res) {
  *     is Success -> "success: ${res.value}"
  *     is Failure -> "failure: ${res.error}"
+ *     is FailureWithValue -> "failure: ${res.error} (original value was ${res.value})"
  *   } shouldBe "success: 2"
  *
  *   // destructuring call
- *   val (failureValue, successValue) = res
+ *   val (error, value) = res
  *
- *   failureValue shouldBe null
- *   successValue shouldBe 2
+ *   error shouldBe null
+ *   value shouldBe 2
  * }
  * ```
  * <!--- KNIT example-result-04.kt -->
@@ -181,6 +185,63 @@ import kotlin.jvm.JvmStatic
  * ```
  * <!--- KNIT example-result-05.kt -->
  * <!--- TEST lines.isEmpty() -->
+ *
+ * ## Multiple Failures or Success values
+ *
+ * Returning a **list of successful values** with a result, as well as indicating **multiple failure reasons** are
+ * common cases. If we are, for example **validating user input**, we want to indicate all validations that failed,
+ * not just the first.
+ *
+ * Because of the flexibility of [KResult], this can easily be achieved by just representing the [Success] or [Failure]
+ * side with a [List] respectively. Examples could be `KResult<List<Error>, String>` or
+ * `KResult<List<Error>, List<String>>` if we have multiple success results as well. As these type definition can become
+ * rather complex, predefined typealiases can be used:
+ *
+ * - [MultiErrorKResult] if failure side carries a list
+ * - [MultiValueKResult] if success side carries a list
+ *
+ * To make working with success or failure lists easier, there are a few conveninet helpers. Keep in mind that the
+ * [KResult.validate] extension can only be used with [MultiErrorKResult] or more generally, if you have a [List] on
+ * the [Failure] side:
+ *
+ * ```kotlin
+ * import io.kresult.core.KResult
+ * import io.kresult.core.MultiErrorKResult
+ * import io.kresult.core.errors
+ * import io.kresult.core.validate
+ * import io.kotest.matchers.shouldBe
+ *
+ * data class User(val name: String, val age: Int, val active: Boolean)
+ *
+ * enum class ValidationError(val message: String) {
+ *   InvalidName("Name must not be empty"),
+ *   IllegalAge("User must be over 18 years old"),
+ *   Inactive("User must active"),
+ * }
+ *
+ * fun test() {
+ *   val user: MultiErrorKResult<ValidationError, User> =
+ *     KResult.Success(User(name = "Max", age = 17, active = false))
+ *
+ *   val result: MultiErrorKResult<ValidationError, User> = user
+ *     .validate(ValidationError.InvalidName) { u ->
+ *       u.name.isNotBlank()
+ *     }
+ *     .validate(ValidationError.IllegalAge) { u ->
+ *       u.age >= 18
+ *     }
+ *     .validate(ValidationError.Inactive) { u ->
+ *       u.active
+ *     }
+ *
+ *   result.isFailure() shouldBe true
+ *   result.errors().size shouldBe 2
+ *   result.errors()[0] shouldBe ValidationError.IllegalAge
+ *   result.errors()[1] shouldBe ValidationError.Inactive
+ * }
+ * ```
+ * <!--- KNIT example-result-06.kt -->
+ * <!--- TEST lines.isEmpty() -->
  */
 @OptIn(ExperimentalContracts::class)
 sealed class KResult<out E, out T> {
@@ -193,6 +254,7 @@ sealed class KResult<out E, out T> {
   open operator fun component1(): E? = when (this) {
     is Success -> null
     is Failure -> error
+    is FailureWithValue -> error
   }
 
   /**
@@ -203,6 +265,7 @@ sealed class KResult<out E, out T> {
   open operator fun component2(): T? = when (this) {
     is Success -> value
     is Failure -> null
+    is FailureWithValue -> value
   }
 
   /**
@@ -217,15 +280,16 @@ sealed class KResult<out E, out T> {
    *   KResult.Success("test").isFailure() shouldBe false
    * }
    * ```
-   * <!--- KNIT example-result-06.kt -->
+   * <!--- KNIT example-result-07.kt -->
    * <!--- TEST lines.isEmpty() -->
    */
   fun isFailure(): Boolean {
     contract {
       returns(true) implies (this@KResult is Failure<E>)
+      returns(true) implies (this@KResult is FailureWithValue<E, T>)
       returns(false) implies (this@KResult is Success<T>)
     }
-    return this@KResult is Failure<E>
+    return this@KResult is Failure<E> || this@KResult is FailureWithValue<E, T>
   }
 
   /**
@@ -240,13 +304,14 @@ sealed class KResult<out E, out T> {
    *   KResult.Failure("test").isSuccess() shouldBe false
    * }
    * ```
-   * <!--- KNIT example-result-07.kt -->
+   * <!--- KNIT example-result-08.kt -->
    * <!--- TEST lines.isEmpty() -->
    */
   fun isSuccess(): Boolean {
     contract {
-      returns(true) implies (this@KResult is Success<T>)
       returns(false) implies (this@KResult is Failure<E>)
+      returns(false) implies (this@KResult is FailureWithValue<E, T>)
+      returns(true) implies (this@KResult is Success<T>)
     }
     return this@KResult is Success<T>
   }
@@ -267,7 +332,7 @@ sealed class KResult<out E, out T> {
    *     ) shouldBe 2
    * }
    * ```
-   * <!--- KNIT example-result-08.kt -->
+   * <!--- KNIT example-result-09.kt -->
    * <!--- TEST lines.isEmpty() -->
    *
    * @param ifFailure transform the [KResult.Failure] type [E] to [R].
@@ -282,6 +347,7 @@ sealed class KResult<out E, out T> {
     return when (this) {
       is Success -> ifSuccess(value)
       is Failure -> ifFailure(error)
+      is FailureWithValue -> ifFailure(error)
     }
   }
 
@@ -300,7 +366,7 @@ sealed class KResult<out E, out T> {
    *     .getOrNull() shouldBe 4
    * }
    * ```
-   * <!--- KNIT example-result-09.kt -->
+   * <!--- KNIT example-result-10.kt -->
    * <!--- TEST lines.isEmpty() -->
    *
    * @param f transform the [KResult.Success] type [T] to [R].
@@ -327,7 +393,7 @@ sealed class KResult<out E, out T> {
    *     .failureOrNull() shouldBe 4
    * }
    * ```
-   * <!--- KNIT example-result-10.kt -->
+   * <!--- KNIT example-result-11.kt -->
    * <!--- TEST lines.isEmpty() -->
    *
    * @param f transform the [KResult.Success] type [T] to [R].
@@ -337,6 +403,7 @@ sealed class KResult<out E, out T> {
     return when (this) {
       is Failure -> Failure(f(error))
       is Success -> Success(value)
+      is FailureWithValue -> FailureWithValue(f(error), value)
     }
   }
 
@@ -358,7 +425,7 @@ sealed class KResult<out E, out T> {
    *   result shouldBe "test-success"
    * }
    * ```
-   * <!--- KNIT example-result-11.kt -->
+   * <!--- KNIT example-result-12.kt -->
    * <!--- TEST lines.isEmpty() -->
    *
    * @param action to run on successful results.
@@ -388,7 +455,7 @@ sealed class KResult<out E, out T> {
    *   result shouldBe "test-failure"
    * }
    * ```
-   * <!--- KNIT example-result-12.kt -->
+   * <!--- KNIT example-result-13.kt -->
    * <!--- TEST lines.isEmpty() -->
    *
    * @param action to run on failure results.
@@ -415,7 +482,7 @@ sealed class KResult<out E, out T> {
    *     .getOrNull() shouldBe null
    * }
    * ```
-   * <!--- KNIT example-result-13.kt -->
+   * <!--- KNIT example-result-14.kt -->
    * <!--- TEST lines.isEmpty() -->
    */
   fun getOrNull(): T? {
@@ -441,7 +508,7 @@ sealed class KResult<out E, out T> {
    *     .failureOrNull() shouldBe null
    * }
    * ```
-   * <!--- KNIT example-result-14.kt -->
+   * <!--- KNIT example-result-15.kt -->
    * <!--- TEST lines.isEmpty() -->
    */
   fun failureOrNull(): E? {
@@ -467,7 +534,7 @@ sealed class KResult<out E, out T> {
    *   KResult.Success("test").swap() shouldBe KResult.Failure("test")
    * }
    * ```
-   * <!--- KNIT example-result-15.kt -->
+   * <!--- KNIT example-result-16.kt -->
    * <!--- TEST lines.isEmpty() -->
    */
   fun swap(): KResult<T, E> =
@@ -511,7 +578,7 @@ sealed class KResult<out E, out T> {
      *   )
      * }
      * ```
-     * <!--- KNIT example-result-18.kt -->
+     * <!--- KNIT example-result-17.kt -->
      * <!--- TEST lines.isEmpty() -->
      */
     fun <E, T> combine(
@@ -561,7 +628,7 @@ sealed class KResult<out E, out T> {
    *   res.isSuccess() shouldBe true
    * }
    * ```
-   * <!--- KNIT example-result-16.kt -->
+   * <!--- KNIT example-result-18.kt -->
    * <!--- TEST lines.isEmpty() -->
    */
   class Success<out T>(val value: T) : KResult<Nothing, T>() {
@@ -583,49 +650,19 @@ sealed class KResult<out E, out T> {
         Success(Unit)
     }
   }
+
+  class FailureWithValue<out E, out T>(val error: E, val value: T) : KResult<E, T>() {
+
+    override fun toString(): String = "${this::class.simpleName}($error)"
+
+    override fun equals(other: Any?): Boolean =
+      if (other is Failure<*>)
+        error == other.error
+      else
+        false
+
+    override fun hashCode(): Int {
+      return error?.hashCode() ?: 0
+    }
+  }
 }
-
-/**
- * Typealias to represent [KResult] types that have lists on both [Success] and [Failure] sides
- *
- * Equals to:
- *
- * ```kotlin
- * KResult<List<E>, List<T>>
- * ```
- *
- * @since 0.2.0
- * @see MultiFailureKResult if failure side carries a list
- * @see MultiSuccessKResult if success side carries a list
- */
-typealias MultiKResult<E, T> = KResult<List<E>, List<T>>
-
-/**
- * Typealias to represent [KResult] types that have a [List] type on the [Success] side
- *
- * Equals to:
- *
- * ```kotlin
- * KResult<E, List<T>>
- * ```
- *
- * @since 0.2.0
- * @see MultiKResult if both sides carry lists
- * @see MultiFailureKResult if failure side carries a list
- */
-typealias MultiSuccessKResult<E, T> = KResult<E, List<T>>
-
-/**
- * Typealias to represent [KResult] types that have a [List] type on the [Failure] side
- *
- * Equals to:
- *
- * ```kotlin
- * KResult<List<E>, T>
- * ```
- *
- * @since 0.2.0
- * @see MultiKResult if both sides carry lists
- * @see MultiSuccessKResult if success side carries a list
- */
-typealias MultiFailureKResult<E, T> = KResult<List<E>, T>

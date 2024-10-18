@@ -11,8 +11,19 @@ import kotlin.contracts.contract
 inline fun <E, T, T1> KResult<E, T>.flatMap(f: (success: T) -> KResult<E, T1>): KResult<E, T1> {
   contract { callsInPlace(f, InvocationKind.AT_MOST_ONCE) }
   return when (this) {
-    is Success -> f(this.value)
-    is Failure -> this
+    is Success ->
+      f(value)
+
+    is Failure ->
+      Failure(error)
+
+    // If the flatMap(f) results in a failure, we lose type information of the value and need to return a Failure
+    // because of that
+    is FailureWithValue ->
+      f(value).fold(
+        { innerFail -> Failure(innerFail) },
+        { innerSuccess -> FailureWithValue(error, innerSuccess) },
+      )
   }
 }
 
@@ -39,8 +50,20 @@ inline fun <E, T> KResult<E, T>.filter(f: (success: T) -> Boolean, failureFn: (s
 fun <E, T, E1> KResult<E, T>.flatMapFailure(f: (failure: E) -> KResult<E1, T>): KResult<E1, T> {
   contract { callsInPlace(f, InvocationKind.AT_MOST_ONCE) }
   return when (this) {
-    is Failure -> f(this.error)
-    is Success -> this
+
+    is Failure ->
+      f(this.error)
+
+    is Success ->
+      this
+
+    // If the flatMap(f) results in a success, we lose type information of the error and need to return a Success
+    // because of that
+    is FailureWithValue ->
+      f(error).fold(
+        { innerFail -> FailureWithValue(innerFail, value) },
+        { innerSuccess -> Success(value) },
+      )
   }
 }
 
@@ -82,8 +105,9 @@ inline infix fun <E, T> KResult<E, T>.getOrDefault(default: (E) -> T): T {
 inline infix fun <E, T> KResult<E, T>.failureOrDefault(default: (T) -> E): E {
   contract { callsInPlace(default, InvocationKind.AT_MOST_ONCE) }
   return when (this) {
-    is Failure -> default(this.error)
-    is Success -> this.value
+    is Failure -> this.error
+    is Success -> default(this.value)
+    is FailureWithValue -> this.error
   }
 }
 
@@ -98,6 +122,7 @@ fun <E : Throwable, T> KResult<E, T>.getOrThrow(): T {
   return when (this) {
     is Failure -> throw this.error
     is Success -> this.value
+    is FailureWithValue -> throw this.error
   }
 }
 
@@ -125,11 +150,19 @@ fun <E, T> KResult<E, T>.combine(
   when (val one = this) {
     is Failure -> when (other) {
       is Failure -> Failure(combineFailure(one.error, other.error))
+      is FailureWithValue -> Failure(combineFailure(one.error, other.error))
+      is Success -> one
+    }
+
+    is FailureWithValue -> when (other) {
+      is Failure -> Failure(combineFailure(one.error, other.error))
+      is FailureWithValue -> Failure(combineFailure(one.error, other.error))
       is Success -> one
     }
 
     is Success -> when (other) {
       is Failure -> other
+      is FailureWithValue -> other
       is Success -> Success(combineSuccess(one.value, other.value))
     }
   }
