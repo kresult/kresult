@@ -54,19 +54,7 @@ import kotlin.contracts.contract
  * <!--- KNIT example-multierrorkresult-01.kt -->
  * <!--- TEST lines.isEmpty() -->
  *
- * @since 0.2.0
- * @see MultiValueKResult if success side carries a list
- */
-typealias MultiErrorKResult<E, T> = KResult<List<E>, T>
-
-/**
- * Validates a [Success] or a [FailureWithValue] against a predicate ([expectationFn]] and applies [failureValue] if
- * not fulfilled
- *
- * This will return a [FailureWithValue] in case of an unmatched predicate, so multiple validation failures can be
- * tracked without early termination. If you prefer early termination on the first error, see [KResult.filter] instead.
- *
- * ## flatMap-ing validation results
+ * ### Be careful with flatMap-ing validation results
  *
  * If you need to [flatMap] a validation result (which is either a [Success] or a [FailureWithValue]), make sure that
  * there are **no successive [validate] calls**. In the failure case of a [flatMap] operation, we lose the type
@@ -110,7 +98,22 @@ typealias MultiErrorKResult<E, T> = KResult<List<E>, T>
  * <!--- TEST lines.isEmpty() -->
  *
  * @since 0.2.0
- * @see MultiErrorKResult for examples
+ * @see MultiValueKResult if success side carries a list
+ */
+typealias MultiErrorKResult<E, T> = KResult<List<E>, T>
+
+/**
+ * Validates a [Success] or a [FailureWithValue] against a predicate ([expectationFn]] and applies [failureValue] if
+ * not fulfilled
+ *
+ * This will return a [FailureWithValue] in case of an unmatched predicate, so multiple validation failures can be
+ * tracked without early termination. If you prefer early termination on the first error, see [KResult.filter] instead.
+ *
+ * **Heads up:** Be careful with combining [validate] and [flatMap]. See documentation of [MultiErrorKResult] for
+ * details
+ *
+ * @since 0.2.0
+ * @see MultiErrorKResult for examples and details
  */
 @OptIn(ExperimentalContracts::class)
 inline fun <E, T> MultiErrorKResult<E, T>.validate(
