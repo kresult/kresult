@@ -554,4 +554,47 @@ sealed class KResult<out E, out T> {
   }
 }
 
+/**
+ * Typealias to represent [KResult] types that have lists on both [Success] and [Failure] sides
+ *
+ * Equals to:
+ *
+ * ```kotlin
+ * KResult<List<E>, List<T>>
+ * ```
+ *
+ * @since 0.2.0
+ * @see MultiFailureKResult if failure side carries a list
+ * @see MultiSuccessKResult if success side carries a list
+ */
+typealias MultiKResult<E, T> = KResult<List<E>, List<T>>
 
+/**
+ * Typealias to represent [KResult] types that have a [List] type on the [Success] side
+ *
+ * Equals to:
+ *
+ * ```kotlin
+ * KResult<E, List<T>>
+ * ```
+ *
+ * @since 0.2.0
+ * @see MultiKResult if both sides carry lists
+ * @see MultiFailureKResult if failure side carries a list
+ */
+typealias MultiSuccessKResult<E, T> = KResult<E, List<T>>
+
+/**
+ * Typealias to represent [KResult] types that have a [List] type on the [Failure] side
+ *
+ * Equals to:
+ *
+ * ```kotlin
+ * KResult<List<E>, T>
+ * ```
+ *
+ * @since 0.2.0
+ * @see MultiKResult if both sides carry lists
+ * @see MultiSuccessKResult if success side carries a list
+ */
+typealias MultiFailureKResult<E, T> = KResult<List<E>, T>
