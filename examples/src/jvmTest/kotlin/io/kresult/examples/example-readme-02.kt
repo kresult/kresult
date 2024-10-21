@@ -2,41 +2,55 @@
 package io.kresult.examples.exampleReadme02
 
 import io.kotest.matchers.shouldBe
-import io.kresult.core.KResult
-import io.kresult.core.filter
-import io.kresult.core.flatMap
-import io.kresult.core.flatten
+import io.kresult.core.*
+
+// Product to encode success
+data class Greeting(val name: String)
+
+// SUm to encode a failure
+sealed class Failure(val msg: String) {
+
+  // Indicates that Failure was caused by invalid input
+  interface InputValidationProblem
+  data object BlankName : Failure("Name should not be blank"), InputValidationProblem
+  data object IllegalCharacters : Failure("Name contains illegal characters"), InputValidationProblem
+
+  data object Unknown : Failure("An unknown error occured")
+}
+
+// Product to encode a response
+data class Response(val status: Int, val content: String)
 
 fun test() {
-  val res: KResult<Throwable, String> = KResult.Success("test")
+  val greeting: KResult<Failure, Greeting> = Greeting("World")
+    // Wraps any type into a KResult.Success
+    .asSuccess()
+    // Filter, transforming to failure if greeting name is blank
+    .filter(Failure.BlankName) {
+      it.name.isNotBlank()
+    }
+    .filter(Failure.IllegalCharacters) {
+      !it.name.contains("/")
+    }
 
-  // map
-  res
-    .map { "$it-1" }
-    .getOrNull() shouldBe "test-1"
+  val response: Response = greeting
+    // Transforms Success side to a Response
+    .map {
+      Response(status = 200, content = """Hello, ${it.name}!""")
+    }
+    // Transforms Failure side to a Response
+    .mapFailure { failure ->
+      when (failure) {
+        is Failure.InputValidationProblem ->
+          Response(status = 400, content = failure.msg)
 
-  // flatMap
-  res
-    .flatMap {
-      if (it.length > 3) {
-        KResult.Success(it)
-      } else {
-        KResult.Failure(RuntimeException("missing length"))
+        else ->
+          Response(status = 500, content = failure.msg)
       }
     }
-    .getOrNull() shouldBe "test"
+    // When Success and Failure side are of the same type, we can merge them (long syntax for fold)
+    .merge()
 
-  // flatten
-  val nestedRes: KResult<Throwable, KResult<Throwable, String>> =
-    KResult.Success(res)
-
-  nestedRes.flatten().getOrNull() shouldBe "test"
-
-  // filter
-  res
-    .filter(
-      { it.isNotBlank() },
-      { RuntimeException("String is empty") }
-    )
-    .isSuccess() shouldBe true
+  response.status shouldBe 200
+  response.content shouldBe "Hello, World!"
 }

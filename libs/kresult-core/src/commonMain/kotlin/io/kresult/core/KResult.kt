@@ -1,7 +1,6 @@
 package io.kresult.core
 
-import io.kresult.core.KResult.Failure
-import io.kresult.core.KResult.Success
+import io.kresult.core.KResult.*
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -102,10 +101,9 @@ import kotlin.jvm.JvmStatic
  *
  *   // filter
  *   KResult.Success("some-p4ss!")
- *     .filter(
- *       { it.isNotBlank() },
- *       { RuntimeException("String is empty") }
- *     ) shouldBe KResult.Success("some-p4ss!")
+ *     .filter(RuntimeException("String is empty")) {
+ *       it.isNotBlank()
+ *     } shouldBe KResult.Success("some-p4ss!")
  *
  *   // flatten
  *   KResult.Success(KResult.Success(2))
