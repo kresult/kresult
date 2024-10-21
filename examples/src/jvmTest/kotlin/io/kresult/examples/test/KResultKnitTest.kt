@@ -61,4 +61,20 @@ class KResultKnitTest {
     io.kresult.examples.exampleResult14.test()
   }
 
+  @Test fun exampleResult15() = runTest {
+    io.kresult.examples.exampleResult15.test()
+  }
+
+  @Test fun exampleResult16() = runTest {
+    io.kresult.examples.exampleResult16.test()
+  }
+
+  @Test fun exampleResult17() = runTest {
+    io.kresult.examples.exampleResult17.test()
+  }
+
+  @Test fun exampleResult18() = runTest {
+    io.kresult.examples.exampleResult18.test()
+  }
+
 }

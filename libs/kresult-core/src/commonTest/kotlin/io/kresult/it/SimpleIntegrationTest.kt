@@ -8,16 +8,16 @@ import kotlin.test.Test
 
 class SimpleIntegrationTest {
 
-    @Test
-    fun `create map and get success`() {
-        "test".asSuccess()
-            .flatMap {
-                if (it.length > 3) {
-                    Success(it)
-                } else {
-                    Failure("String is not long enough")
-                }
-            }
-            .getOrNull()
-    }
+  @Test
+  fun `create map and get success`() {
+    "test".asSuccess()
+      .flatMap {
+        if (it.length > 3) {
+          Success(it)
+        } else {
+          Failure("String is not long enough")
+        }
+      }
+      .getOrNull()
+  }
 }

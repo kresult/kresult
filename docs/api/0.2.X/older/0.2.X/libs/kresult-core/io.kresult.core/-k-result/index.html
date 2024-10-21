@@ -1,0 +1,560 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>KResult</title>
+<link href="../../../../images/logo-icon.svg" rel="icon" type="image/svg">    <script>var pathToRoot = "../../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async></script>
+<script type="text/javascript" src="../../../../scripts/sourceset_dependencies.js" async></script>
+<link href="../../../../styles/style.css" rel="Stylesheet">
+<link href="../../../../styles/main.css" rel="Stylesheet">
+<link href="../../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../../scripts/clipboard.js" async></script>
+<script type="text/javascript" src="../../../../scripts/navigation-loader.js" async></script>
+<script type="text/javascript" src="../../../../scripts/platform-content-handler.js" async></script>
+<script type="text/javascript" src="../../../../scripts/main.js" defer></script>
+<script type="text/javascript" src="../../../../scripts/prism.js" async></script>
+<script type="text/javascript" src="../../../../scripts/symbol-parameters-wrapper_deferred.js" defer></script>
+<link href="../../../../styles/multimodule.css" rel="Stylesheet"></head>
+<body>
+    <div class="root">
+<nav class="navigation" id="navigation-wrapper">
+    <div class="navigation--inner">
+        <div class="navigation-title">
+            <button class="menu-toggle" id="menu-toggle" type="button">toggle menu</button>
+            <div class="library-name">
+<a class="library-name--link" href="../../../../index.html">
+                            kresult
+                    </a>            </div>
+            <div class="library-version">
+<dokka-template-command data="{&quot;@class&quot;:&quot;org.jetbrains.dokka.base.templating.ReplaceVersionsCommand&quot;,&quot;location&quot;:&quot;io.kresult.core/-k-result/index.html&quot;}"><div class="versions-dropdown">
+  <div class="versions-dropdown-button">0.1.X</div>
+  <div class="versions-dropdown-data"><a href="../../../../../../libs/kresult-core/io.kresult.core/-k-result/index.html">0.2.X</a><a href="index.html">0.1.X</a></div>
+</div>
+</dokka-template-command>            </div>
+        </div>
+        <div class="filter-section" id="filter-section">
+                <button class="platform-tag platform-selector common-like" data-active="" data-filter=":libs:kresult-core:dokkaHtmlPartial/commonMain">common</button>
+        </div>
+    </div>
+    <div class="navigation-controls">
+        <button class="navigation-controls--btn navigation-controls--theme" id="theme-toggle-button" type="button">switch theme</button>
+        <div class="navigation-controls--btn navigation-controls--search" id="searchBar" role="button">search in API</div>
+    </div>
+</nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="sidebar--inner" id="sideMenu"></div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageids="kresult-core::io.kresult.core/KResult///PointingToDeclaration//-945919563">
+  <div class="breadcrumbs"><a href="../../index.html">kresult-core</a><span class="delimiter">/</span><a href="../index.html">io.kresult.core</a><span class="delimiter">/</span><span class="current">KResult</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span><span>KResult</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":libs:kresult-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">sealed </span><span class="token keyword">class </span><a href="index.html">KResult</a><span class="token operator">&lt;</span><span class="token keyword">out </span><a href="index.html">E</a><span class="token punctuation">, </span><span class="token keyword">out </span><a href="index.html">T</a><span class="token operator">&gt;</span><span class="clearfix"><span class="floating-right">(<a href="https://github.com/kresult/kresult/tree/main/libs/kresult-core/src/commonMain/kotlin/io/kresult/core/KResult.kt#L247">source</a>)</span></span></div><p class="paragraph"><a href="index.html">KResult</a> and its inheritors <a href="-success/index.html">Success</a> and <a href="-failure/index.html">Failure</a> provide an opinionated, functional result type. While Kotlin has its own <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-result/index.html">kotlin.Result</a> already, the intent of <a href="index.html">KResult</a> is to be more functional, usable and better integrated.</p><!-- TEST_NAME KResultKnitTest --><h2 class="">Creating Results</h2><p class="paragraph">Results can be created by constructing <a href="-success/index.html">Success</a> or <a href="-failure/index.html">Failure</a> directly, but there is a variety of helpers and third party types to create results from:</p><div class="sample-container"><pre><code class="block lang-kotlin" theme="idea">import io.kresult.core.KResult<br>import io.kresult.core.asKResult<br>import io.kresult.core.asSuccess<br>import io.kotest.matchers.shouldBe<br><br>fun test() {<br>  // by instance<br>  KResult.Success("test")<br>    .isSuccess() shouldBe true<br><br>  // by extension function<br>  "test".asSuccess()<br>    .isSuccess() shouldBe true<br><br>  // by catching exceptions<br>  KResult<br>    .catch {<br>      throw RuntimeException("throws")<br>    }<br>    .isSuccess() shouldBe false<br><br>  // from nullable<br>  KResult<br>    .fromNullable(null) {<br>      RuntimeException("Value can not be null")<br>    }<br>    .isSuccess() shouldBe false<br><br>  // from Kotlin Result<br>  Result.success("test")<br>    .asKResult()<br>    .isSuccess() shouldBe true<br>}</code></pre><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><!-- KNIT example-result-01.kt --><!-- TEST lines.isEmpty() --><h3 class="">From Extensions</h3><p class="paragraph">There are more result builders with extensions, e.g. from <code class="lang-kotlin">kresult-arrow</code>:</p><div class="sample-container"><pre><code class="block lang-kotlin" theme="idea">import io.kresult.integration.arrow.toKResult<br>import arrow.core.Either<br><br>fun test() {<br>  Either.Right("test")<br>    .toKResult()<br>}</code></pre><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><!-- KNIT example-result-02.kt --><!-- TEST lines.isEmpty() --><h2 class="">Mapping &amp; Transformation</h2><p class="paragraph">Results can be transformed in several ways. At the core, <a href="index.html">KResult</a> implements functional mapping with <a href="../flat-map.html">flatMap</a>, <a href="map.html">map</a>, <a href="../flatten.html">flatten</a>, <a href="../filter.html">filter</a>, etc. Some of these are extension functions that need to be imported.:</p><div class="sample-container"><pre><code class="block lang-kotlin" theme="idea">import io.kresult.core.KResult<br>import io.kresult.core.filter<br>import io.kresult.core.flatMap<br>import io.kresult.core.flatten<br>import io.kotest.matchers.shouldBe<br><br>fun test() {<br>  // map<br>  KResult.Success(3)<br>    .map { it - 1 }<br>    .getOrNull() shouldBe 2<br><br>  // flatMap<br>  KResult.Success("some-p4ss!")<br>    .flatMap {<br>      if (it.length 8) {<br>        KResult.Success(it)<br>      } else {<br>        KResult.Failure(RuntimeException("Password is too short"))<br>      }<br>    } shouldBe KResult.Success("some-p4ss!")<br><br>  // filter<br>  KResult.Success("some-p4ss!")<br>    .filter(<br>      { it.isNotBlank() },<br>      { RuntimeException("String is empty") }<br>    ) shouldBe KResult.Success("some-p4ss!")<br><br>  // flatten<br>  KResult.Success(KResult.Success(2))<br>    .flatten() shouldBe KResult.Success(2)<br>}</code></pre><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><!-- KNIT example-result-03.kt --><!-- TEST lines.isEmpty() --><h2 class="">Getting values or errors</h2><p class="paragraph">As a <a href="index.html">KResult</a> is always either a <a href="-success/index.html">Success</a> or a <a href="-failure/index.html">Failure</a> / <a href="-failure-with-value/index.html">FailureWithValue</a>, a simple, kotlin-native <code class="lang-kotlin">when</code> expression or a destructuring declaration can be used to get the <a href="-success/value.html">Success.value</a> or <a href="-failure/error.html">Failure.error</a>:</p><p class="paragraph"><strong>Heads up:</strong> If you destructure a <a href="-failure-with-value/index.html">FailureWithValue</a>, you'll get an <code class="lang-kotlin">error</code> <strong>AND</strong> a <code class="lang-kotlin">value</code> back!</p><div class="sample-container"><pre><code class="block lang-kotlin" theme="idea">import io.kresult.core.KResult<br>import io.kresult.core.KResult.Failure<br>import io.kresult.core.KResult.FailureWithValue<br>import io.kresult.core.KResult.Success<br>import io.kotest.matchers.shouldBe<br><br>fun test() {<br>  val res: KResult&lt;String, Int&gt; = Success(2)<br><br>  // when expression<br>  when (res) {<br>    is Success -&gt; "success: ${res.value}"<br>    is Failure -&gt; "failure: ${res.error}"<br>    is FailureWithValue -&gt; "failure: ${res.error} (original value was ${res.value})"<br>  } shouldBe "success: 2"<br><br>  // destructuring call<br>  val (error, value) = res<br><br>  error shouldBe null<br>  value shouldBe 2<br>}</code></pre><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><!-- KNIT example-result-04.kt --><!-- TEST lines.isEmpty() --><h3 class="">Convenience Methods</h3><p class="paragraph">Additionally, convenience methods like <a href="fold.html">fold</a>, <a href="get-or-null.html">getOrNull</a>, <a href="../get-or-default.html">getOrDefault</a>, or <a href="../get-or-throw.html">getOrThrow</a> for results that have a <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-throwable/index.html">Throwable</a> on failure side.</p><div class="sample-container"><pre><code class="block lang-kotlin" theme="idea">import io.kresult.core.KResult<br>import io.kresult.core.getOrDefault<br>import io.kresult.core.getOrThrow<br>import io.kotest.assertions.throwables.shouldThrow<br>import io.kotest.matchers.shouldBe<br><br>fun test() {<br>  // fold<br>  KResult.Success(2).fold(<br>    { "failure: $it" },<br>    { "success: $it" }<br>  ) shouldBe "success: 2"<br><br>  // getOrNull<br>  KResult.Success(2).getOrNull() shouldBe 2<br>  KResult.Failure("error").getOrNull() shouldBe null<br><br>  // getOrElse<br>  KResult.Success(2).getOrDefault { -1 } shouldBe 2<br>  KResult.Failure("error").getOrDefault { -1 } shouldBe -1<br><br>  // getOrThrow<br>  KResult.Success(2).getOrThrow() shouldBe 2<br>  shouldThrow&lt;RuntimeException&gt; {<br>    KResult.Failure(RuntimeException("test")).getOrThrow()<br>  }<br>}</code></pre><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><!-- KNIT example-result-05.kt --><!-- TEST lines.isEmpty() --><h2 class="">Multiple Failures or Success values</h2><p class="paragraph">Returning a <strong>list of successful values</strong> with a result, as well as indicating <strong>multiple failure reasons</strong> are common cases. If we are, for example <strong>validating user input</strong>, we want to indicate all validations that failed, not just the first.</p><p class="paragraph">Because of the flexibility of <a href="index.html">KResult</a>, this can easily be achieved by just representing the <a href="-success/index.html">Success</a> or <a href="-failure/index.html">Failure</a> side with a <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a> respectively. Examples could be <code class="lang-kotlin">KResult&lt;List&lt;Error&gt;, String&gt;</code> or <code class="lang-kotlin">KResult&lt;List&lt;Error&gt;, List&lt;String&gt;&gt;</code> if we have multiple success results as well. As these type definition can become rather complex, predefined typealiases can be used:</p><ul><li><p class="paragraph"><a href="../-multi-error-k-result/index.html">MultiErrorKResult</a> if failure side carries a list</p></li><li><p class="paragraph"><a href="../-multi-value-k-result/index.html">MultiValueKResult</a> if success side carries a list</p></li></ul><p class="paragraph">To make working with success or failure lists easier, there are a few conveninet helpers. Keep in mind that the <a href="../validate.html">KResult.validate</a> extension can only be used with <a href="../-multi-error-k-result/index.html">MultiErrorKResult</a> or more generally, if you have a <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a> on the <a href="-failure/index.html">Failure</a> side:</p><div class="sample-container"><pre><code class="block lang-kotlin" theme="idea">import io.kresult.core.KResult<br>import io.kresult.core.MultiErrorKResult<br>import io.kresult.core.errors<br>import io.kresult.core.validate<br>import io.kotest.matchers.shouldBe<br><br>data class User(val name: String, val age: Int, val active: Boolean)<br><br>enum class ValidationError(val message: String) {<br>  InvalidName("Name must not be empty"),<br>  IllegalAge("User must be over 18 years old"),<br>  Inactive("User must active"),<br>}<br><br>fun test() {<br>  val user: MultiErrorKResult&lt;ValidationError, User&gt; =<br>    KResult.Success(User(name = "Max", age = 17, active = false))<br><br>  val result: MultiErrorKResult&lt;ValidationError, User&gt; = user<br>    .validate(ValidationError.InvalidName) { u -&gt;<br>      u.name.isNotBlank()<br>    }<br>    .validate(ValidationError.IllegalAge) { u -&gt;<br>      u.age &gt;= 18<br>    }<br>    .validate(ValidationError.Inactive) { u -&gt;<br>      u.active<br>    }<br><br>  result.isFailure() shouldBe true<br>  result.errors().size shouldBe 2<br>  result.errors()[0] shouldBe ValidationError.IllegalAge<br>  result.errors()[1] shouldBe ValidationError.Inactive<br>}</code></pre><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><!-- KNIT example-result-06.kt --><!-- TEST lines.isEmpty() --><h4 class="">Inheritors</h4><div class="table"><div class="table-row" data-filterable-current=":libs:kresult-core:dokkaHtmlPartial/commonMain" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-failure/index.html">Failure</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":libs:kresult-core:dokkaHtmlPartial/commonMain" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-success/index.html">Success</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":libs:kresult-core:dokkaHtmlPartial/commonMain" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-failure-with-value/index.html">FailureWithValue</a></div></span></div><div></div></div></div></div></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button><button class="section-tab" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION,EXTENSION_PROPERTY,EXTENSION_FUNCTION">Members &amp; Extensions</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="TYPE">
+        <h2 class="">Types</h2>
+        <div class="table"><a data-name="1468556845%2FClasslikes%2F-945919563" anchor-label="Companion" id="1468556845%2FClasslikes%2F-945919563" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":libs:kresult-core:dokkaHtmlPartial/commonMain" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-companion/index.html"><span><span>Companion</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1468556845%2FClasslikes%2F-945919563"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":libs:kresult-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">object </span><a href="-companion/index.html">Companion</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-151092369%2FClasslikes%2F-945919563" anchor-label="Failure" id="-151092369%2FClasslikes%2F-945919563" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":libs:kresult-core:dokkaHtmlPartial/commonMain" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-failure/index.html"><span><span>Failure</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-151092369%2FClasslikes%2F-945919563"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":libs:kresult-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-failure/index.html">Failure</a><span class="token operator">&lt;</span><span class="token keyword">out </span><a href="-failure/index.html">E</a><span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>error<span class="token operator">: </span><a href="-failure/index.html">E</a></span></span><span class="token punctuation">)</span> : <a href="index.html">KResult</a><span class="token operator">&lt;</span><a href="-failure/index.html">E</a><span class="token punctuation">, </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-nothing/index.html">Nothing</a><span class="token operator">&gt; </span></div><div class="brief "><p class="paragraph">Represents a failed <a href="index.html">KResult</a></p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-201783064%2FClasslikes%2F-945919563" anchor-label="FailureWithValue" id="-201783064%2FClasslikes%2F-945919563" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":libs:kresult-core:dokkaHtmlPartial/commonMain" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-failure-with-value/index.html"><span>Failure</span><wbr><span>With</span><wbr><span><span>Value</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-201783064%2FClasslikes%2F-945919563"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":libs:kresult-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-failure-with-value/index.html">FailureWithValue</a><span class="token operator">&lt;</span><span class="token keyword">out </span><a href="-failure-with-value/index.html">E</a><span class="token punctuation">, </span><span class="token keyword">out </span><a href="-failure-with-value/index.html">T</a><span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>error<span class="token operator">: </span><a href="-failure-with-value/index.html">E</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>value<span class="token operator">: </span><a href="-failure-with-value/index.html">T</a></span></span><span class="token punctuation">)</span> : <a href="index.html">KResult</a><span class="token operator">&lt;</span><a href="-failure-with-value/index.html">E</a><span class="token punctuation">, </span><a href="-failure-with-value/index.html">T</a><span class="token operator">&gt; </span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1374256918%2FClasslikes%2F-945919563" anchor-label="Success" id="1374256918%2FClasslikes%2F-945919563" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":libs:kresult-core:dokkaHtmlPartial/commonMain" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-success/index.html"><span><span>Success</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1374256918%2FClasslikes%2F-945919563"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":libs:kresult-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-success/index.html">Success</a><span class="token operator">&lt;</span><span class="token keyword">out </span><a href="-success/index.html">T</a><span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>value<span class="token operator">: </span><a href="-success/index.html">T</a></span></span><span class="token punctuation">)</span> : <a href="index.html">KResult</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-nothing/index.html">Nothing</a><span class="token punctuation">, </span><a href="-success/index.html">T</a><span class="token operator">&gt; </span></div><div class="brief "><p class="paragraph">Represents a successful <a href="index.html">KResult</a></p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="1813038629%2FFunctions%2F-945919563" anchor-label="asResult" id="1813038629%2FFunctions%2F-945919563" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":libs:kresult-core:dokkaHtmlPartial/commonMain" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../as-result.html"><span>as</span><wbr><span><span>Result</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1813038629%2FFunctions%2F-945919563"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":libs:kresult-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../as-result.html">E</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-throwable/index.html">Throwable</a><span class="token punctuation">, </span><a href="../as-result.html">T</a><span class="token operator">&gt; </span><a href="index.html">KResult</a><span class="token operator">&lt;</span><a href="../as-result.html">E</a><span class="token punctuation">, </span><a href="../as-result.html">T</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../as-result.html"><span class="token function">asResult</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-result/index.html">Result</a><span class="token operator">&lt;</span><a href="../as-result.html">T</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Transforms a <a href="index.html">KResult</a> to a Kotlin native <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-result/index.html">kotlin.Result</a></p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2065286525%2FFunctions%2F-945919563" anchor-label="combine" id="-2065286525%2FFunctions%2F-945919563" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":libs:kresult-core:dokkaHtmlPartial/commonMain" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../combine.html"><span><span>combine</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2065286525%2FFunctions%2F-945919563"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":libs:kresult-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../combine.html">E</a><span class="token punctuation">, </span><a href="../combine.html">T</a><span class="token operator">&gt; </span><a href="index.html">KResult</a><span class="token operator">&lt;</span><a href="../combine.html">E</a><span class="token punctuation">, </span><a href="../combine.html">T</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../combine.html"><span class="token function">combine</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">other<span class="token operator">: </span><a href="index.html">KResult</a><span class="token operator">&lt;</span><a href="../combine.html">E</a><span class="token punctuation">, </span><a href="../combine.html">T</a><span class="token operator">&gt;</span><span class="token punctuation">, </span></span><span class="parameter ">combineFailure<span class="token operator">: </span><span class="token punctuation">(</span><a href="../combine.html">E</a><span class="token punctuation">, </span><a href="../combine.html">E</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="../combine.html">E</a><span class="token punctuation">, </span></span><span class="parameter ">combineSuccess<span class="token operator">: </span><span class="token punctuation">(</span><a href="../combine.html">T</a><span class="token punctuation">, </span><a href="../combine.html">T</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="../combine.html">T</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">KResult</a><span class="token operator">&lt;</span><a href="../combine.html">E</a><span class="token punctuation">, </span><a href="../combine.html">T</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1689847542%2FFunctions%2F-945919563" anchor-label="compareTo" id="-1689847542%2FFunctions%2F-945919563" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":libs:kresult-core:dokkaHtmlPartial/commonMain" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../compare-to.html"><span>compare</span><wbr><span><span>To</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1689847542%2FFunctions%2F-945919563"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":libs:kresult-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">operator </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../compare-to.html">E</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-comparable/index.html">Comparable</a><span class="token operator">&lt;</span><a href="../compare-to.html">E</a><span class="token operator">&gt;</span><span class="token punctuation">, </span><a href="../compare-to.html">T</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-comparable/index.html">Comparable</a><span class="token operator">&lt;</span><a href="../compare-to.html">T</a><span class="token operator">&gt;</span><span class="token operator">&gt; </span><a href="index.html">KResult</a><span class="token operator">&lt;</span><a href="../compare-to.html">E</a><span class="token punctuation">, </span><a href="../compare-to.html">T</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../compare-to.html"><span class="token function">compareTo</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">other<span class="token operator">: </span><a href="index.html">KResult</a><span class="token operator">&lt;</span><a href="../compare-to.html">E</a><span class="token punctuation">, </span><a href="../compare-to.html">T</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2139329696%2FFunctions%2F-945919563" anchor-label="component1" id="-2139329696%2FFunctions%2F-945919563" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":libs:kresult-core:dokkaHtmlPartial/commonMain" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="component1.html"><span><span>component1</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2139329696%2FFunctions%2F-945919563"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":libs:kresult-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">operator </span><span class="token keyword">fun </span><a href="component1.html"><span class="token function">component1</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">E</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Failure component for destructuring declaration</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2108309889%2FFunctions%2F-945919563" anchor-label="component2" id="-2108309889%2FFunctions%2F-945919563" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":libs:kresult-core:dokkaHtmlPartial/commonMain" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="component2.html"><span><span>component2</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2108309889%2FFunctions%2F-945919563"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":libs:kresult-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">operator </span><span class="token keyword">fun </span><a href="component2.html"><span class="token function">component2</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">T</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Success component for destructuring declaration</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="160092120%2FFunctions%2F-945919563" anchor-label="errors" id="160092120%2FFunctions%2F-945919563" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":libs:kresult-core:dokkaHtmlPartial/commonMain" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../errors.html"><span><span>errors</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="160092120%2FFunctions%2F-945919563"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":libs:kresult-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../errors.html">E</a><span class="token punctuation">, </span><a href="../errors.html">T</a><span class="token operator">&gt; </span><a href="../-multi-error-k-result/index.html">MultiErrorKResult</a><span class="token operator">&lt;</span><a href="../errors.html">E</a><span class="token punctuation">, </span><a href="../errors.html">T</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../errors.html"><span class="token function">errors</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="../errors.html">E</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Returns a list of errors</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-698073407%2FFunctions%2F-945919563" anchor-label="failureOrDefault" id="-698073407%2FFunctions%2F-945919563" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":libs:kresult-core:dokkaHtmlPartial/commonMain" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../failure-or-default.html"><span>failure</span><wbr><span>Or</span><wbr><span><span>Default</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-698073407%2FFunctions%2F-945919563"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":libs:kresult-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">infix inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../failure-or-default.html">E</a><span class="token punctuation">, </span><a href="../failure-or-default.html">T</a><span class="token operator">&gt; </span><a href="index.html">KResult</a><span class="token operator">&lt;</span><a href="../failure-or-default.html">E</a><span class="token punctuation">, </span><a href="../failure-or-default.html">T</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../failure-or-default.html"><span class="token function">failureOrDefault</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">default<span class="token operator">: </span><span class="token punctuation">(</span><a href="../failure-or-default.html">T</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="../failure-or-default.html">E</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../failure-or-default.html">E</a></div><div class="brief "><p class="paragraph">Returns the error of the <a href="-failure/index.html">Failure</a> side, or the result of the <a href="../failure-or-default.html">default</a> function otherwise</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1612099918%2FFunctions%2F-945919563" anchor-label="failureOrNull" id="-1612099918%2FFunctions%2F-945919563" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":libs:kresult-core:dokkaHtmlPartial/commonMain" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="failure-or-null.html"><span>failure</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1612099918%2FFunctions%2F-945919563"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":libs:kresult-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="failure-or-null.html"><span class="token function">failureOrNull</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">E</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Runs the <a href="-failure/error.html">Failure.error</a>, if the <a href="index.html">KResult</a> is a failure or <code class="lang-kotlin">null</code> otherwise</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="220342261%2FFunctions%2F-945919563" anchor-label="filter" id="220342261%2FFunctions%2F-945919563" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":libs:kresult-core:dokkaHtmlPartial/commonMain" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../filter.html"><span><span>filter</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="220342261%2FFunctions%2F-945919563"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":libs:kresult-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../filter.html">E</a><span class="token punctuation">, </span><a href="../filter.html">T</a><span class="token operator">&gt; </span><a href="index.html">KResult</a><span class="token operator">&lt;</span><a href="../filter.html">E</a><span class="token punctuation">, </span><a href="../filter.html">T</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../filter.html"><span class="token function">filter</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">f<span class="token operator">: </span><span class="token punctuation">(</span>success<span class="token operator">: </span><a href="../filter.html">T</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token punctuation">, </span></span><span class="parameter ">failureFn<span class="token operator">: </span><span class="token punctuation">(</span>success<span class="token operator">: </span><a href="../filter.html">T</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="../filter.html">E</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">KResult</a><span class="token operator">&lt;</span><a href="../filter.html">E</a><span class="token punctuation">, </span><a href="../filter.html">T</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1802350197%2FFunctions%2F-945919563" anchor-label="flatMap" id="-1802350197%2FFunctions%2F-945919563" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":libs:kresult-core:dokkaHtmlPartial/commonMain" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../flat-map.html"><span>flat</span><wbr><span><span>Map</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1802350197%2FFunctions%2F-945919563"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":libs:kresult-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../flat-map.html">E</a><span class="token punctuation">, </span><a href="../flat-map.html">T</a><span class="token punctuation">, </span><a href="../flat-map.html">T1</a><span class="token operator">&gt; </span><a href="index.html">KResult</a><span class="token operator">&lt;</span><a href="../flat-map.html">E</a><span class="token punctuation">, </span><a href="../flat-map.html">T</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../flat-map.html"><span class="token function">flatMap</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">f<span class="token operator">: </span><span class="token punctuation">(</span>success<span class="token operator">: </span><a href="../flat-map.html">T</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="index.html">KResult</a><span class="token operator">&lt;</span><a href="../flat-map.html">E</a><span class="token punctuation">, </span><a href="../flat-map.html">T1</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">KResult</a><span class="token operator">&lt;</span><a href="../flat-map.html">E</a><span class="token punctuation">, </span><a href="../flat-map.html">T1</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1807760563%2FFunctions%2F-945919563" anchor-label="flatMapFailure" id="-1807760563%2FFunctions%2F-945919563" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":libs:kresult-core:dokkaHtmlPartial/commonMain" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../flat-map-failure.html"><span>flat</span><wbr><span>Map</span><wbr><span><span>Failure</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1807760563%2FFunctions%2F-945919563"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":libs:kresult-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../flat-map-failure.html">E</a><span class="token punctuation">, </span><a href="../flat-map-failure.html">T</a><span class="token punctuation">, </span><a href="../flat-map-failure.html">E1</a><span class="token operator">&gt; </span><a href="index.html">KResult</a><span class="token operator">&lt;</span><a href="../flat-map-failure.html">E</a><span class="token punctuation">, </span><a href="../flat-map-failure.html">T</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../flat-map-failure.html"><span class="token function">flatMapFailure</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">f<span class="token operator">: </span><span class="token punctuation">(</span>failure<span class="token operator">: </span><a href="../flat-map-failure.html">E</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="index.html">KResult</a><span class="token operator">&lt;</span><a href="../flat-map-failure.html">E1</a><span class="token punctuation">, </span><a href="../flat-map-failure.html">T</a><span class="token operator">&gt;</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">KResult</a><span class="token operator">&lt;</span><a href="../flat-map-failure.html">E1</a><span class="token punctuation">, </span><a href="../flat-map-failure.html">T</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-669354910%2FFunctions%2F-945919563" anchor-label="flatten" id="-669354910%2FFunctions%2F-945919563" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":libs:kresult-core:dokkaHtmlPartial/commonMain" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../flatten.html"><span><span>flatten</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-669354910%2FFunctions%2F-945919563"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":libs:kresult-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../flatten.html">E</a><span class="token punctuation">, </span><a href="../flatten.html">T</a><span class="token operator">&gt; </span><a href="index.html">KResult</a><span class="token operator">&lt;</span><a href="../flatten.html">E</a><span class="token punctuation">, </span><a href="index.html">KResult</a><span class="token operator">&lt;</span><a href="../flatten.html">E</a><span class="token punctuation">, </span><a href="../flatten.html">T</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../flatten.html"><span class="token function">flatten</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">KResult</a><span class="token operator">&lt;</span><a href="../flatten.html">E</a><span class="token punctuation">, </span><a href="../flatten.html">T</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="563016910%2FFunctions%2F-945919563" anchor-label="flattenFailure" id="563016910%2FFunctions%2F-945919563" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":libs:kresult-core:dokkaHtmlPartial/commonMain" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../flatten-failure.html"><span>flatten</span><wbr><span><span>Failure</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="563016910%2FFunctions%2F-945919563"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":libs:kresult-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../flatten-failure.html">E</a><span class="token punctuation">, </span><a href="../flatten-failure.html">T</a><span class="token operator">&gt; </span><a href="index.html">KResult</a><span class="token operator">&lt;</span><a href="index.html">KResult</a><span class="token operator">&lt;</span><a href="../flatten-failure.html">E</a><span class="token punctuation">, </span><a href="../flatten-failure.html">T</a><span class="token operator">&gt;</span><span class="token punctuation">, </span><a href="../flatten-failure.html">T</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../flatten-failure.html"><span class="token function">flattenFailure</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">KResult</a><span class="token operator">&lt;</span><a href="../flatten-failure.html">E</a><span class="token punctuation">, </span><a href="../flatten-failure.html">T</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2037679278%2FFunctions%2F-945919563" anchor-label="fold" id="-2037679278%2FFunctions%2F-945919563" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":libs:kresult-core:dokkaHtmlPartial/commonMain" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="fold.html"><span><span>fold</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2037679278%2FFunctions%2F-945919563"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":libs:kresult-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="fold.html">R</a><span class="token operator">&gt; </span><a href="fold.html"><span class="token function">fold</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">ifFailure<span class="token operator">: </span><span class="token punctuation">(</span>failure<span class="token operator">: </span><a href="index.html">E</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="fold.html">R</a><span class="token punctuation">, </span></span><span class="parameter ">ifSuccess<span class="token operator">: </span><span class="token punctuation">(</span>success<span class="token operator">: </span><a href="index.html">T</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="fold.html">R</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="fold.html">R</a></div><div class="brief "><p class="paragraph">Transforms a <a href="index.html">KResult</a> into a value of <a href="fold.html">R</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1881278453%2FFunctions%2F-945919563" anchor-label="getOrDefault" id="1881278453%2FFunctions%2F-945919563" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":libs:kresult-core:dokkaHtmlPartial/commonMain" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../get-or-default.html"><span>get</span><wbr><span>Or</span><wbr><span><span>Default</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1881278453%2FFunctions%2F-945919563"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":libs:kresult-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">infix inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../get-or-default.html">E</a><span class="token punctuation">, </span><a href="../get-or-default.html">T</a><span class="token operator">&gt; </span><a href="index.html">KResult</a><span class="token operator">&lt;</span><a href="../get-or-default.html">E</a><span class="token punctuation">, </span><a href="../get-or-default.html">T</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../get-or-default.html"><span class="token function">getOrDefault</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">default<span class="token operator">: </span><span class="token punctuation">(</span><a href="../get-or-default.html">E</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="../get-or-default.html">T</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../get-or-default.html">T</a></div><div class="brief "><p class="paragraph">Returns the value of the <a href="-success/index.html">Success</a> side, or the result of the <a href="../get-or-default.html">default</a> function otherwise</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-551715131%2FFunctions%2F-945919563" anchor-label="getOrElse" id="-551715131%2FFunctions%2F-945919563" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":libs:kresult-core:dokkaHtmlPartial/commonMain" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../get-or-else.html"><span>get</span><wbr><span>Or</span><wbr><span><span>Else</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-551715131%2FFunctions%2F-945919563"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":libs:kresult-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">infix inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../get-or-else.html">E</a><span class="token punctuation">, </span><a href="../get-or-else.html">T</a><span class="token operator">&gt; </span><a href="index.html">KResult</a><span class="token operator">&lt;</span><a href="../get-or-else.html">E</a><span class="token punctuation">, </span><a href="../get-or-else.html">T</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../get-or-else.html"><span class="token function"><strike>getOrElse</strike></span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">default<span class="token operator">: </span><span class="token punctuation">(</span><a href="../get-or-else.html">E</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="../get-or-else.html">T</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../get-or-else.html">T</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="524940262%2FFunctions%2F-945919563" anchor-label="getOrNull" id="524940262%2FFunctions%2F-945919563" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":libs:kresult-core:dokkaHtmlPartial/commonMain" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-or-null.html"><span>get</span><wbr><span>Or</span><wbr><span><span>Null</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="524940262%2FFunctions%2F-945919563"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":libs:kresult-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="get-or-null.html"><span class="token function">getOrNull</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">T</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Runs the <a href="-success/value.html">Success.value</a>, if the <a href="index.html">KResult</a> is a success or <code class="lang-kotlin">null</code> otherwise</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1753816061%2FFunctions%2F-945919563" anchor-label="getOrThrow" id="-1753816061%2FFunctions%2F-945919563" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":libs:kresult-core:dokkaHtmlPartial/commonMain" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../get-or-throw.html"><span>get</span><wbr><span>Or</span><wbr><span><span>Throw</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1753816061%2FFunctions%2F-945919563"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":libs:kresult-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../get-or-throw.html">E</a><span class="token operator"> : </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-throwable/index.html">Throwable</a><span class="token punctuation">, </span><a href="../get-or-throw.html">T</a><span class="token operator">&gt; </span><a href="index.html">KResult</a><span class="token operator">&lt;</span><a href="../get-or-throw.html">E</a><span class="token punctuation">, </span><a href="../get-or-throw.html">T</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../get-or-throw.html"><span class="token function">getOrThrow</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../get-or-throw.html">T</a></div><div class="brief "><p class="paragraph">If a <a href="index.html">KResult</a> has a <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-throwable/index.html">Throwable</a> on failure side, this either returns the <a href="-success/value.html">Success.value</a> or throws the <a href="-failure/error.html">Failure.error</a></p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1756873754%2FFunctions%2F-945919563" anchor-label="isFailure" id="-1756873754%2FFunctions%2F-945919563" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":libs:kresult-core:dokkaHtmlPartial/commonMain" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="is-failure.html"><span>is</span><wbr><span><span>Failure</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1756873754%2FFunctions%2F-945919563"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":libs:kresult-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="is-failure.html"><span class="token function">isFailure</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph">Indicates if a <a href="index.html">KResult</a> is a <a href="-failure/index.html">Failure</a></p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-231524467%2FFunctions%2F-945919563" anchor-label="isSuccess" id="-231524467%2FFunctions%2F-945919563" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":libs:kresult-core:dokkaHtmlPartial/commonMain" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="is-success.html"><span>is</span><wbr><span><span>Success</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-231524467%2FFunctions%2F-945919563"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":libs:kresult-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="is-success.html"><span class="token function">isSuccess</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph">Indicates if a <a href="index.html">KResult</a> is a <a href="-success/index.html">Success</a></p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="847974440%2FFunctions%2F-945919563" anchor-label="map" id="847974440%2FFunctions%2F-945919563" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":libs:kresult-core:dokkaHtmlPartial/commonMain" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="map.html"><span><span>map</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="847974440%2FFunctions%2F-945919563"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":libs:kresult-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="map.html">R</a><span class="token operator">&gt; </span><a href="map.html"><span class="token function">map</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">f<span class="token operator">: </span><span class="token punctuation">(</span>success<span class="token operator">: </span><a href="index.html">T</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="map.html">R</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">KResult</a><span class="token operator">&lt;</span><a href="index.html">E</a><span class="token punctuation">, </span><a href="map.html">R</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Maps (transforms) the success value <a href="index.html">T</a> to a new value <a href="map.html">R</a></p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-962773364%2FFunctions%2F-945919563" anchor-label="mapFailure" id="-962773364%2FFunctions%2F-945919563" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":libs:kresult-core:dokkaHtmlPartial/commonMain" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="map-failure.html"><span>map</span><wbr><span><span>Failure</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-962773364%2FFunctions%2F-945919563"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":libs:kresult-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="map-failure.html">R</a><span class="token operator">&gt; </span><a href="map-failure.html"><span class="token function">mapFailure</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">f<span class="token operator">: </span><span class="token punctuation">(</span><a href="index.html">E</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="map-failure.html">R</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">KResult</a><span class="token operator">&lt;</span><a href="map-failure.html">R</a><span class="token punctuation">, </span><a href="index.html">T</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Maps (transforms) the failure value <a href="index.html">E</a> to a new value <a href="map-failure.html">R</a></p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2019274425%2FFunctions%2F-945919563" anchor-label="merge" id="-2019274425%2FFunctions%2F-945919563" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":libs:kresult-core:dokkaHtmlPartial/commonMain" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../merge.html"><span><span>merge</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2019274425%2FFunctions%2F-945919563"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":libs:kresult-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../merge.html">T</a><span class="token operator">&gt; </span><a href="index.html">KResult</a><span class="token operator">&lt;</span><a href="../merge.html">T</a><span class="token punctuation">, </span><a href="../merge.html">T</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../merge.html"><span class="token function">merge</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../merge.html">T</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1329212068%2FFunctions%2F-945919563" anchor-label="onFailure" id="1329212068%2FFunctions%2F-945919563" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":libs:kresult-core:dokkaHtmlPartial/commonMain" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="on-failure.html"><span>on</span><wbr><span><span>Failure</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1329212068%2FFunctions%2F-945919563"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":libs:kresult-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><a href="on-failure.html"><span class="token function">onFailure</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">action<span class="token operator">: </span><span class="token punctuation">(</span>failure<span class="token operator">: </span><a href="index.html">E</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">KResult</a><span class="token operator">&lt;</span><a href="index.html">E</a><span class="token punctuation">, </span><a href="index.html">T</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Runs an action (side-effect) when the <a href="index.html">KResult</a> is a <a href="-failure/index.html">Failure</a></p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="683401309%2FFunctions%2F-945919563" anchor-label="onSuccess" id="683401309%2FFunctions%2F-945919563" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":libs:kresult-core:dokkaHtmlPartial/commonMain" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="on-success.html"><span>on</span><wbr><span><span>Success</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="683401309%2FFunctions%2F-945919563"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":libs:kresult-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><a href="on-success.html"><span class="token function">onSuccess</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">action<span class="token operator">: </span><span class="token punctuation">(</span>success<span class="token operator">: </span><a href="index.html">T</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">KResult</a><span class="token operator">&lt;</span><a href="index.html">E</a><span class="token punctuation">, </span><a href="index.html">T</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Runs an action (side-effect) when the <a href="index.html">KResult</a> is a <a href="-success/index.html">Success</a></p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1563187519%2FFunctions%2F-945919563" anchor-label="swap" id="-1563187519%2FFunctions%2F-945919563" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":libs:kresult-core:dokkaHtmlPartial/commonMain" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="swap.html"><span><span>swap</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1563187519%2FFunctions%2F-945919563"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":libs:kresult-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">fun </span><a href="swap.html"><span class="token function">swap</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">KResult</a><span class="token operator">&lt;</span><a href="index.html">T</a><span class="token punctuation">, </span><a href="index.html">E</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Swap the parameters (<a href="index.html">T</a> and <a href="index.html">E</a>) of this <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-result/index.html">Result</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-691745319%2FFunctions%2F-945919563" anchor-label="validate" id="-691745319%2FFunctions%2F-945919563" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":libs:kresult-core:dokkaHtmlPartial/commonMain" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../validate.html"><span><span>validate</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-691745319%2FFunctions%2F-945919563"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":libs:kresult-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><span class="token operator">&lt;</span><a href="../validate.html">E</a><span class="token punctuation">, </span><a href="../validate.html">T</a><span class="token operator">&gt; </span><a href="../-multi-error-k-result/index.html">MultiErrorKResult</a><span class="token operator">&lt;</span><a href="../validate.html">E</a><span class="token punctuation">, </span><a href="../validate.html">T</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="../validate.html"><span class="token function">validate</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">failureValue<span class="token operator">: </span><a href="../validate.html">E</a><span class="token punctuation">, </span></span><span class="parameter ">expectationFn<span class="token operator">: </span><span class="token punctuation">(</span>success<span class="token operator">: </span><a href="../validate.html">T</a><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../-multi-error-k-result/index.html">MultiErrorKResult</a><span class="token operator">&lt;</span><a href="../validate.html">E</a><span class="token punctuation">, </span><a href="../validate.html">T</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Validates a <a href="-success/index.html">Success</a> or a <a href="-failure-with-value/index.html">FailureWithValue</a> against a predicate (<a href="../validate.html">expectationFn</a>] and applies <a href="../validate.html">failureValue</a> if not fulfilled</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2024 Copyright</span><span class="pull-right"><span>Generated by </span><a href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+

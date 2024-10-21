@@ -1,17 +1,16 @@
 pluginManagement {
-    includeBuild("convention-plugins")
-    repositories {
-        google()
-        mavenCentral()
-        gradlePluginPortal()
-    }
+  repositories {
+    google()
+    mavenCentral()
+    gradlePluginPortal()
+  }
 }
 
 dependencyResolutionManagement {
-    repositories {
-        google()
-        mavenCentral()
-    }
+  repositories {
+    google()
+    mavenCentral()
+  }
 }
 
 rootProject.name = "kresult"
