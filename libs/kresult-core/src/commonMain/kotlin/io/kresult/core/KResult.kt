@@ -102,10 +102,9 @@ import kotlin.jvm.JvmStatic
  *
  *   // filter
  *   KResult.Success("some-p4ss!")
- *     .filter(
- *       { it.isNotBlank() },
- *       { RuntimeException("String is empty") }
- *     ) shouldBe KResult.Success("some-p4ss!")
+ *     .filter(RuntimeException("String is empty")) {
+ *       it.isNotBlank()
+ *     } shouldBe KResult.Success("some-p4ss!")
  *
  *   // flatten
  *   KResult.Success(KResult.Success(2))
@@ -344,11 +343,10 @@ sealed class KResult<out E, out T> {
       callsInPlace(ifFailure, InvocationKind.AT_MOST_ONCE)
       callsInPlace(ifSuccess, InvocationKind.AT_MOST_ONCE)
     }
-    return when (this) {
-      is Success -> ifSuccess(value)
-      is Failure -> ifFailure(error)
-      is FailureWithValue -> ifFailure(error)
-    }
+
+    return map(ifSuccess)
+      .mapFailure(ifFailure)
+      .merge()
   }
 
   /**
