@@ -1,5 +1,7 @@
 # KResult
 
+![Maven Central Version](https://img.shields.io/maven-central/v/io.kresult/kresult-core)
+
 [![CI Build](https://github.com/kresult/kresult/actions/workflows/build.yml/badge.svg?branch=develop)](https://github.com/kresult/kresult/actions/workflows/build.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
