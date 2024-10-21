@@ -1,7 +1,6 @@
 package io.kresult.core
 
-import io.kresult.core.KResult.Failure
-import io.kresult.core.KResult.Success
+import io.kresult.core.KResult.*
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -343,10 +342,11 @@ sealed class KResult<out E, out T> {
       callsInPlace(ifFailure, InvocationKind.AT_MOST_ONCE)
       callsInPlace(ifSuccess, InvocationKind.AT_MOST_ONCE)
     }
-
-    return map(ifSuccess)
-      .mapFailure(ifFailure)
-      .merge()
+    return when (this) {
+      is Success -> ifSuccess(value)
+      is Failure -> ifFailure(error)
+      is FailureWithValue -> ifFailure(error)
+    }
   }
 
   /**
