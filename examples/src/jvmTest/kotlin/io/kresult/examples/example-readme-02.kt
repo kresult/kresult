@@ -30,7 +30,7 @@ fun test() {
       it.name.isNotBlank()
     }
     .filter(Failure.IllegalCharacters) {
-      it.name.contains("/")
+      !it.name.contains("/")
     }
 
   val response: Response = greeting
@@ -52,5 +52,5 @@ fun test() {
     .merge()
 
   response.status shouldBe 200
-  response.content shouldBe "Hello, World"
+  response.content shouldBe "Hello, World!"
 }
