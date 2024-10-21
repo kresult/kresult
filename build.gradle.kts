@@ -19,7 +19,7 @@ plugins {
   alias(libs.plugins.kotlinMultiplatform).apply(false)
   alias(libs.plugins.kotestMultiplatform).apply(false)
   alias(libs.plugins.kotlinxKnit)
-  id("root.publication")
+  alias(libs.plugins.vanniktech.mavenPublish) apply false
 }
 
 dependencies {
