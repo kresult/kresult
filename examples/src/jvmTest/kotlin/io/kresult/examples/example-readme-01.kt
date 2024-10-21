@@ -1,36 +1,33 @@
 // This file was automatically generated from README.md by Knit tool. Do not edit.
 package io.kresult.examples.exampleReadme01
 
-import io.kotest.matchers.shouldBe
 import io.kresult.core.KResult
-import io.kresult.core.asKResult
-import io.kresult.core.asSuccess
+import io.kresult.core.filter
 
 fun test() {
-  // by instance
-  KResult.Success("test")
-    .isSuccess() shouldBe true
+  val greeting = KResult.Success("World")
 
-  // by extension function
-  "test".asSuccess()
-    .isSuccess() shouldBe true
-
-  // by catching exceptions
-  KResult
-    .catch {
-      throw RuntimeException("throws")
+  val res: KResult<String, String> = greeting
+    // transform result, if successful
+    .map {
+      """Hello, $it!"""
     }
-    .isFailure() shouldBe true
-
-  // from nullable
-  KResult
-    .fromNullable(null) {
-      RuntimeException("Value can not be null")
+    // transform to IllegalArgumentException on failure side, if value is blank
+    .filter(IllegalArgumentException("Greeting should not be blank")) {
+      it.isNotBlank()
     }
-    .isFailure() shouldBe true
+    // execute side-effect, if successful
+    .onSuccess {
+      print("log: $it is successful")
+    }
+    // transform failure from Exception to a string
+    .mapFailure {
+      "${it.javaClass}: ${it.localizedMessage}"
+    }
 
-  // from Kotlin Result
-  Result.success("test")
-    .asKResult()
-    .isSuccess() shouldBe true
+  // fold result to string
+  res.fold(
+    { error -> "Result failed with error: $error" },
+    { value -> "Result was successful with value: $value" },
+  )
 }

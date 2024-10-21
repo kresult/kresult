@@ -25,10 +25,9 @@ fun test() {
 
   // filter
   KResult.Success("some-p4ss!")
-    .filter(
-      { it.isNotBlank() },
-      { RuntimeException("String is empty") }
-    ) shouldBe KResult.Success("some-p4ss!")
+    .filter(RuntimeException("String is empty")) {
+      it.isNotBlank()
+    } shouldBe KResult.Success("some-p4ss!")
 
   // flatten
   KResult.Success(KResult.Success(2))
