@@ -28,7 +28,6 @@ dependencies {
 }
 
 allprojects {
-  group = "io.kresult"
   version = rootProject
     .file("version.txt")
     .readText()
