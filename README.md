@@ -20,6 +20,8 @@ Arrow's [Either\<A, B\>](https://apidocs.arrow-kt.io/arrow-core/arrow.core/-eith
 
 * [Features](#features)
 * [Usage](#usage)
+  * [Core Modules](#core-modules)
+  * [Integrations](#integrations)
 * [Hello, World](#hello-world)
 * [License](#license)
 
