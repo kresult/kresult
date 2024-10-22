@@ -4,7 +4,6 @@ import io.kotest.matchers.shouldBe
 import kotlin.test.Test
 
 class ProblemTest4xx {
-
   @Test
   fun `BadRequest can be built and printed to JSON`() {
     val problem = Problem.BadRequest()
@@ -114,15 +113,63 @@ class ProblemTest4xx {
   }
 
   @Test
+  fun `ImATeapot can be built and printed to JSON`() {
+    val problem = Problem.ImATeapot()
+    problem.toJson(pretty = false) shouldBe """{"type": "https://kresult.io/problem/im-a-teapot","status": 418,"title": "Server refuses to brew coffee with a teapot"}"""
+  }
+
+  @Test
+  fun `MisdirectedRequest can be built and printed to JSON`() {
+    val problem = Problem.MisdirectedRequest()
+    problem.toJson(pretty = false) shouldBe """{"type": "https://kresult.io/problem/misdirected-request","status": 421,"title": "The request was directed to an invalid server"}"""
+  }
+
+  @Test
   fun `UnprocessableEntity can be built and printed to JSON`() {
     val problem = Problem.UnprocessableEntity()
     problem.toJson(pretty = false) shouldBe """{"type": "https://kresult.io/problem/unprocessable-entity","status": 422,"title": "The request content is semantically invalid"}"""
   }
 
   @Test
+  fun `Locked can be built and printed to JSON`() {
+    val problem = Problem.Locked()
+    problem.toJson(pretty = false) shouldBe """{"type": "https://kresult.io/problem/locked","status": 423,"title": "The resource is locked"}"""
+  }
+
+  @Test
+  fun `FailedDependency can be built and printed to JSON`() {
+    val problem = Problem.FailedDependency()
+    problem.toJson(pretty = false) shouldBe """{"type": "https://kresult.io/problem/failed-dependency","status": 424,"title": "The request failed due to a dependent request"}"""
+  }
+
+  @Test
+  fun `TooEarly can be built and printed to JSON`() {
+    val problem = Problem.TooEarly()
+    problem.toJson(pretty = false) shouldBe """{"type": "https://kresult.io/problem/too-early","status": 425,"title": "The server is unwilling to process the request"}"""
+  }
+
+  @Test
+  fun `UpgradeRequired can be built and printed to JSON`() {
+    val problem = Problem.UpgradeRequired()
+    problem.toJson(pretty = false) shouldBe """{"type": "https://kresult.io/problem/upgrade-required","status": 426,"title": "The client must upgrade to continue"}"""
+  }
+
+  @Test
+  fun `PreconditionRequired can be built and printed to JSON`() {
+    val problem = Problem.PreconditionRequired()
+    problem.toJson(pretty = false) shouldBe """{"type": "https://kresult.io/problem/precondition-required","status": 428,"title": "The request requires precondition headers"}"""
+  }
+
+  @Test
   fun `TooManyRequests can be built and printed to JSON`() {
     val problem = Problem.TooManyRequests()
     problem.toJson(pretty = false) shouldBe """{"type": "https://kresult.io/problem/too-many-requests","status": 429,"title": "Request rate limit has been exceeded"}"""
+  }
+
+  @Test
+  fun `RequestHeaderFieldsTooLarge can be built and printed to JSON`() {
+    val problem = Problem.RequestHeaderFieldsTooLarge()
+    problem.toJson(pretty = false) shouldBe """{"type": "https://kresult.io/problem/request-header-fields-too-large","status": 431,"title": "Request header fields exceed size limits"}"""
   }
 
   @Test
