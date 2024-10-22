@@ -11,6 +11,12 @@ class ProblemTest {
   }
 
   @Test
+  fun `default toJson does not pretty-print`() {
+    Problem.NotFound()
+      .toJson() shouldBe """{"type": "https://kresult.io/problem/not-found","status": 404,"title": "The requested resource was not found"}"""
+  }
+
+  @Test
   fun `can be pretty-printed to JSON`() {
     Problem.NotFound()
       .toJson(pretty = true) shouldBe """
