@@ -32,7 +32,7 @@ Arrow's [Either\<A, B\>](https://apidocs.arrow-kt.io/arrow-core/arrow.core/-eith
 
 ## Usage
 
-[KResult](https://kresult.io) is hosted on Maven Central. Use your favorite build tool to add a dependency. Replace 
+[KResult](https://kresult.io) is hosted on Maven Central. Use your favorite build tool to add a dependency. Replace
 `VERSION` with the current version number:
 
 **Using Gradle Kotlin DSL:**
@@ -52,10 +52,11 @@ implementation group: 'io.kresult', name: 'kresult-core', version: 'VERSION'
 **Using Maven:**
 
 ```xml
+
 <dependency>
-    <groupId>io.kresult</groupId>
-    <artifactId>kresult-core</artifactId>
-    <version>VERSION</version>
+  <groupId>io.kresult</groupId>
+  <artifactId>kresult-core</artifactId>
+  <version>VERSION</version>
 </dependency>
 ```
 
@@ -96,22 +97,23 @@ fun test() {
   )
 }
 ```
+
 <!--- KNIT example-readme-01.kt -->
 <!--- TEST lines.isEmpty() -->
 
-While strings are simple for showcasing, a more real world solution would have strongly typed result values. One common 
+While strings are simple for showcasing, a more real world solution would have strongly typed result values. One common
 practice is to encode:
 
 * `Success` side value as a product type (`data class` in Kotlin)
 * `Failure` side value as a sum type / tagged union (`enum` or `sealed class` in Kotlin)
 
-The following example demonstrates a very simplified case, where a greeting message is validated for correctness, and 
-the resulting `KResult<Failure, Greeting>` is folded to an exemplary `Response` object again. In a more practical setup, 
+The following example demonstrates a very simplified case, where a greeting message is validated for correctness, and
+the resulting `KResult<Failure, Greeting>` is folded to an exemplary `Response` object again. In a more practical setup,
 that `Response` and the mechanics to produce it would of course be provided by a framework integration:
 
 ```kotlin
-import io.kotest.matchers.shouldBe
 import io.kresult.core.*
+import io.kotest.matchers.shouldBe
 
 // Product to encode success
 data class Greeting(val name: String)
@@ -164,6 +166,7 @@ fun test() {
   response.content shouldBe "Hello, World!"
 }
 ```
+
 <!--- KNIT example-readme-02.kt -->
 <!--- TEST lines.isEmpty() -->
 

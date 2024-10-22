@@ -1,8 +1,8 @@
 // This file was automatically generated from README.md by Knit tool. Do not edit.
 package io.kresult.examples.exampleReadme02
 
-import io.kotest.matchers.shouldBe
 import io.kresult.core.*
+import io.kotest.matchers.shouldBe
 
 // Product to encode success
 data class Greeting(val name: String)
