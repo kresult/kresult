@@ -61,6 +61,20 @@ implementation group: 'io.kresult', name: 'kresult-core', version: 'VERSION'
 </dependency>
 ```
 
+### Core Modules
+
+| Module              | Description                                                                                                  |
+|---------------------|--------------------------------------------------------------------------------------------------------------|
+| [kresult-core]()    | Core module providing the functional `KResult` type as well as tooling and core functionality around it      |
+| [kresult-java]()    | Java interoperability for `KResult` and its transformations.                                                 |
+| [kresult-problem]() | [RFC7807](https://datatracker.ietf.org/doc/html/rfc7807) compliant Problem Details JSON support for KResult. |
+
+### Integrations
+
+| Module            | Description                                                                      |
+|-------------------|----------------------------------------------------------------------------------|
+| [kresult-arrow]() | Supports seamless integration with the [Arrow](https://arrow-kt.io/) FP library. |
+
 ## Hello, World
 
 <!--- CLEAR -->
