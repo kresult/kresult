@@ -5,6 +5,9 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
 [![CI Build](https://github.com/kresult/kresult/actions/workflows/build.yml/badge.svg?branch=develop)](https://github.com/kresult/kresult/actions/workflows/build.yml)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=kresult_kresult&metric=coverage)](https://sonarcloud.io/summary/new_code?id=kresult_kresult)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=kresult_kresult&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=kresult_kresult)
+
 
 **An opinionated, functional Result type for Kotlin**
 
@@ -20,6 +23,8 @@ Arrow's [Either\<A, B\>](https://apidocs.arrow-kt.io/arrow-core/arrow.core/-eith
 
 * [Features](#features)
 * [Usage](#usage)
+  * [Core Modules](#core-modules)
+  * [Integrations](#integrations)
 * [Hello, World](#hello-world)
 * [License](#license)
 
@@ -60,6 +65,20 @@ implementation group: 'io.kresult', name: 'kresult-core', version: 'VERSION'
   <version>VERSION</version>
 </dependency>
 ```
+
+### Core Modules
+
+| Module              | Description                                                                                                  |
+|---------------------|--------------------------------------------------------------------------------------------------------------|
+| [kresult-core]()    | Core module providing the functional `KResult` type as well as tooling and core functionality around it      |
+| [kresult-java]()    | Java interoperability for `KResult` and its transformations.                                                 |
+| [kresult-problem]() | [RFC7807](https://datatracker.ietf.org/doc/html/rfc7807) compliant Problem Details JSON support for KResult. |
+
+### Integrations
+
+| Module            | Description                                                                      |
+|-------------------|----------------------------------------------------------------------------------|
+| [kresult-arrow]() | Supports seamless integration with the [Arrow](https://arrow-kt.io/) FP library. |
 
 ## Hello, World
 
