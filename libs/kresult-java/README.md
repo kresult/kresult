@@ -16,13 +16,13 @@ dependencies {
 }
 ```
 
-**Using Gradle Groovy DSL**
+**Using Gradle Groovy DSL:**
 
 ```groovy
 implementation group: 'io.kresult', name: 'kresult-java', version: 'VERSION'
 ```
 
-**Using Maven**
+**Using Maven:**
 
 ```xml
 <dependency>
