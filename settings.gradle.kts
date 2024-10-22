@@ -18,6 +18,7 @@ rootProject.name = "kresult"
 // libs
 include(":libs")
 include(":libs:kresult-core")
+include(":libs:kresult-java")
 
 // integrations
 include(":integrations")
