@@ -5,7 +5,7 @@ which was an inspiration for this project as well.
 
 ## Usage
 
-**Using Gradle Kotlin DSL:**
+**Gradle Kotlin DSL:**
 
 ```kotlin
 dependencies {
@@ -13,13 +13,13 @@ dependencies {
 }
 ```
 
-**Using Gradle Groovy DSL:**
+**Gradle Groovy DSL:**
 
 ```groovy
 implementation group: 'io.kresult.integration', name: 'kresult-arrow', version: 'VERSION'
 ```
 
-**Using Maven:**
+**Maven:**
 
 ```xml
 <dependency>

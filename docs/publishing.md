@@ -9,7 +9,12 @@ Currently, publishing is still done manually, but should be automated in the fut
 ### Workflow
 
 1. Make sure everything staged for the release is merged to `develop`
-2. Bump the version number in `version.txt` and push to `develop` (*currently, we don't use release branches*)
+2. Check-out develop
+   - Bump the version number in `version.txt`
+   - Regenerate docs and kover report running: 
+     ```bash 
+     ./gradlew :clean :knit :dokkaHtmlMultiModule :check :koverHtmlReport
+     ```
 3. Create a [Pull Request](https://github.com/kresult/kresult/compare/main...develop), named `Release/X.Y.Z`, with 
    label `release` from `develop` to `main` (*containing the version you want to release after the slash*)
 4. Get a review from (another) maintainer

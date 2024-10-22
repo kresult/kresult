@@ -8,7 +8,7 @@ usable with Java types (e.g. from legacy libs) in Kotlin projects and not vice v
 
 ## Usage
 
-**Using Gradle Kotlin DSL:**
+**Gradle Kotlin DSL:**
 
 ```kotlin
 dependencies {
@@ -16,13 +16,13 @@ dependencies {
 }
 ```
 
-**Using Gradle Groovy DSL:**
+**Gradle Groovy DSL:**
 
 ```groovy
 implementation group: 'io.kresult', name: 'kresult-java', version: 'VERSION'
 ```
 
-**Using Maven:**
+**Maven:**
 
 ```xml
 <dependency>

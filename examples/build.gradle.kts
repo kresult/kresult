@@ -16,6 +16,7 @@ kotlin {
       dependencies {
         implementation(project(":libs:kresult-core"))
         implementation(project(":libs:kresult-java"))
+        implementation(project(":libs:kresult-problem"))
         implementation(project(":integrations:kresult-arrow"))
         implementation(libs.kotlin.test)
         implementation(libs.arrow.core)

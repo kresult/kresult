@@ -20,10 +20,13 @@ plugins {
   alias(libs.plugins.kotestMultiplatform).apply(false)
   alias(libs.plugins.kotlinxKnit)
   alias(libs.plugins.vanniktech.mavenPublish) apply false
+  alias(libs.plugins.sonarqube)
 }
 
 dependencies {
   kover(project(":libs:kresult-core"))
+  kover(project(":libs:kresult-java"))
+  kover(project(":libs:kresult-problem"))
   kover(project(":integrations:kresult-arrow"))
 }
 
@@ -135,3 +138,12 @@ fun configureDokka() {
 }
 
 configureDokka()
+
+sonar {
+  properties {
+    property("sonar.projectKey", "kresult_kresult")
+    property("sonar.organization", "kresult")
+    property("sonar.host.url", "https://sonarcloud.io")
+    property("sonar.coverage.jacoco.xmlReportPaths", "build/reports/kover/report.xml")
+  }
+}

@@ -25,3 +25,4 @@ kotestMultiplatform = { id = "io.kotest.multiplatform", version.ref = "kotest" }
 kotlinxKover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
 kotlinxKnit = { id = "org.jetbrains.kotlinx.knit", version.ref = "knit" }
 vanniktech-mavenPublish = { id = "com.vanniktech.maven.publish", version = "0.30.0" }
+sonarqube = { id = "org.sonarqube", version = "5.1.0.4882" }
