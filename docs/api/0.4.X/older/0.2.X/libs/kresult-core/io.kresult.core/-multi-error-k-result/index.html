@@ -1,0 +1,86 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>MultiErrorKResult</title>
+<link href="../../../../images/logo-icon.svg" rel="icon" type="image/svg">    <script>var pathToRoot = "../../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async></script>
+<script type="text/javascript" src="../../../../scripts/sourceset_dependencies.js" async></script>
+<link href="../../../../styles/style.css" rel="Stylesheet">
+<link href="../../../../styles/main.css" rel="Stylesheet">
+<link href="../../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../../scripts/clipboard.js" async></script>
+<script type="text/javascript" src="../../../../scripts/navigation-loader.js" async></script>
+<script type="text/javascript" src="../../../../scripts/platform-content-handler.js" async></script>
+<script type="text/javascript" src="../../../../scripts/main.js" defer></script>
+<script type="text/javascript" src="../../../../scripts/prism.js" async></script>
+<script type="text/javascript" src="../../../../scripts/symbol-parameters-wrapper_deferred.js" defer></script>
+<link href="../../../../styles/multimodule.css" rel="Stylesheet"></head>
+<body>
+    <div class="root">
+<nav class="navigation" id="navigation-wrapper">
+    <div class="navigation--inner">
+        <div class="navigation-title">
+            <button class="menu-toggle" id="menu-toggle" type="button">toggle menu</button>
+            <div class="library-name">
+<a class="library-name--link" href="../../../../index.html">
+                            kresult
+                    </a>            </div>
+            <div class="library-version">
+<dokka-template-command data="{&quot;@class&quot;:&quot;org.jetbrains.dokka.base.templating.ReplaceVersionsCommand&quot;,&quot;location&quot;:&quot;io.kresult.core/-multi-error-k-result/index.html&quot;}"><div class="versions-dropdown">
+  <div class="versions-dropdown-button">0.2.X</div>
+  <div class="versions-dropdown-data"><a href="../../../../../../libs/kresult-core/io.kresult.core/-multi-error-k-result/index.html">0.4.X</a><a href="../../../../../0.3.X/libs/kresult-core/io.kresult.core/-multi-error-k-result/index.html">0.3.X</a><a href="index.html">0.2.X</a><a href="../../../../../../not-found-version.html?v=0.1.X">0.1.X</a></div>
+</div>
+</dokka-template-command>            </div>
+        </div>
+        <div class="filter-section" id="filter-section">
+                <button class="platform-tag platform-selector common-like" data-active="" data-filter=":libs:kresult-core:dokkaHtmlPartial/commonMain">common</button>
+        </div>
+    </div>
+    <div class="navigation-controls">
+        <button class="navigation-controls--btn navigation-controls--theme" id="theme-toggle-button" type="button">switch theme</button>
+        <div class="navigation-controls--btn navigation-controls--search" id="searchBar" role="button">search in API</div>
+    </div>
+</nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="sidebar--inner" id="sideMenu"></div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageids="kresult-core::io.kresult.core/MultiErrorKResult///PointingToDeclaration//-945919563">
+  <div class="breadcrumbs"><a href="../../index.html">kresult-core</a><span class="delimiter">/</span><a href="../index.html">io.kresult.core</a><span class="delimiter">/</span><span class="current">MultiErrorKResult</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Multi</span><wbr><span>Error</span><wbr><span><span>KResult</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":libs:kresult-core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">typealias </span><a href="index.html">MultiErrorKResult</a><span class="token operator">&lt;</span><a href="index.html">E</a><span class="token punctuation">, </span><a href="index.html">T</a><span class="token operator">&gt;</span><span class="token operator"> = </span><a href="../-k-result/index.html">KResult</a><span class="token operator">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><a href="index.html">E</a><span class="token operator">&gt;</span><span class="token punctuation">, </span><a href="index.html">T</a><span class="token operator">&gt;</span><span class="clearfix"><span class="floating-right">(<a href="https://github.com/kresult/kresult/tree/main/libs/kresult-core/src/commonMain/kotlin/io/kresult/core/MultiErrorKResult.kt#L103">source</a>)</span></span></div><p class="paragraph">Typealias to represent <a href="../-k-result/index.html">KResult</a> types that have a <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a> type on the <a href="../-k-result/-failure/index.html">Failure</a> side</p><!-- TEST_NAME MultiErrorKResultKnitTest --><h2 class="">Validation</h2><p class="paragraph"><a href="index.html">MultiErrorKResult</a> instances have <a href="../validate.html">validate</a> and <a href="../errors.html">errors</a> extension functions. They can be used for very easy, type-safe and side-effect-free object validation:</p><div class="sample-container"><pre><code class="block lang-kotlin" theme="idea">import io.kresult.core.KResult<br>import io.kresult.core.MultiErrorKResult<br>import io.kresult.core.errors<br>import io.kresult.core.validate<br>import io.kotest.matchers.shouldBe<br><br>data class User(val name: String, val age: Int, val active: Boolean)<br><br>enum class ValidationError(val message: String) {<br>  InvalidName("Name must not be empty"),<br>  IllegalAge("User must be over 18 years old"),<br>  Inactive("User must active"),<br>}<br><br>fun test() {<br>  val user: MultiErrorKResult&lt;ValidationError, User&gt; =<br>    KResult.Success(User(name = "Max", age = 17, active = false))<br><br>  val result: MultiErrorKResult&lt;ValidationError, User&gt; = user<br>    .validate(ValidationError.InvalidName) { u -&gt;<br>      u.name.isNotBlank()<br>    }<br>    .validate(ValidationError.IllegalAge) { u -&gt;<br>      u.age &gt;= 18<br>    }<br>    .validate(ValidationError.Inactive) { u -&gt;<br>      u.active<br>    }<br><br>  result.isFailure() shouldBe true<br>  result.errors().size shouldBe 2<br>  result.errors()[0] shouldBe ValidationError.IllegalAge<br>  result.errors()[1] shouldBe ValidationError.Inactive<br>}</code></pre><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><!-- KNIT example-multierrorkresult-01.kt --><!-- TEST lines.isEmpty() --><h3 class="">Be careful with flatMap-ing validation results</h3><p class="paragraph">If you need to <a href="../flat-map.html">flatMap</a> a validation result (which is either a <a href="../-k-result/-success/index.html">Success</a> or a <a href="../-k-result/-failure-with-value/index.html">FailureWithValue</a>), make sure that there are <strong>no successive </strong><a href="../validate.html"><strong>validate</strong></a><strong> calls</strong>. In the failure case of a <a href="../flat-map.html">flatMap</a> operation, we lose the type information of <a href="../-k-result/-failure-with-value/value.html">FailureWithValue.value</a> and therefore need to return a plain <a href="../-k-result/-failure/index.html">Failure</a> object. This, will cause all successive <a href="../validate.html">validate</a> calls to be ignored without being evaluated, as we have nothing to apply the predicate function to. While such scenarios compile, having validations that are never applied should be, at least semantically, considered bugs.</p><div class="sample-container"><pre><code class="block lang-kotlin" theme="idea">import io.kresult.core.KResult<br>import io.kresult.core.MultiErrorKResult<br>import io.kresult.core.flatMap<br>import io.kresult.core.validate<br>import io.kotest.matchers.shouldBe<br><br>fun test() {<br>  val num: MultiErrorKResult&lt;String, Int&gt; = KResult.Success(7)<br><br>  val result = num<br>    .validate("Must be greater zero") {<br>      it 0<br>    }<br>    .flatMap {<br>      // while this compiles...<br>      if (it % 3 == 0) {<br>        KResult.Success(it)<br>      } else {<br>        KResult.Failure(listOf("Must be modulus of 3"))<br>      }<br>    }<br>    .validate("Must be even") {<br>      // this will never be called, if the flatMap before evaluates to Failure<br>      it % 2 == 0<br>    }<br><br>  // we would expect a second error: "Must be even" here, but the last validation was never called<br>  result shouldBe KResult.Failure(listOf("Must be modulus of 3"))<br>}</code></pre><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><!-- KNIT example-multierrorkresult-02.kt --><!-- TEST lines.isEmpty() --><span class="kdoc-tag"><h4 class="">Since</h4><p class="paragraph">0.2.0</p></span><h4 class="">See also</h4><div class="table"><div class="table-row" data-filterable-current=":libs:kresult-core:dokkaHtmlPartial/commonMain" data-filterable-set=":libs:kresult-core:dokkaHtmlPartial/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="../-multi-value-k-result/index.html"><span>Multi</span><wbr><span>Value</span><wbr><span><span>KResult</span></span></a></div></span></div><div><div class="title"><p class="paragraph">if success side carries a list</p></div></div></div></div></div></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION,EXTENSION_PROPERTY,EXTENSION_FUNCTION">Members &amp; Extensions</button></div>
+    <div class="tabs-section-body"></div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2024 Copyright</span><span class="pull-right"><span>Generated by </span><a href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
