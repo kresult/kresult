@@ -597,10 +597,7 @@ sealed class KResult<out E, out T> {
     override fun toString(): String = "${this::class.simpleName}($error)"
 
     override fun equals(other: Any?): Boolean =
-      if (other is Failure<*>)
-        error == other.error
-      else
-        false
+      other is Failure<*> && error == other.error
 
     override fun hashCode(): Int {
       return error?.hashCode() ?: 0
@@ -634,10 +631,7 @@ sealed class KResult<out E, out T> {
     override fun toString(): String = "${this::class.simpleName}($value)"
 
     override fun equals(other: Any?): Boolean =
-      if (other is Success<*>)
-        value == other.value
-      else
-        false
+      other is Success<*> && value == other.value
 
     override fun hashCode(): Int {
       return value?.hashCode() ?: 0
@@ -654,10 +648,7 @@ sealed class KResult<out E, out T> {
     override fun toString(): String = "${this::class.simpleName}($error)"
 
     override fun equals(other: Any?): Boolean =
-      if (other is Failure<*>)
-        error == other.error
-      else
-        false
+      other is FailureWithValue<*, *> && error == other.error
 
     override fun hashCode(): Int {
       return error?.hashCode() ?: 0
