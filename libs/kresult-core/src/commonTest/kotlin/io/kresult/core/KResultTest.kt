@@ -241,6 +241,23 @@ class KResultTest {
     }
   }
 
+  @Test
+  fun `KResult_catch can create KResult by catching an Exception`() {
+    val e = KResult.catch {
+      "test"
+    }
+
+    e.shouldBeInstanceOf<KResult.Success<String>>()
+    e.value.shouldBeEqual("test")
+
+    val f = KResult.catch {
+      throw RuntimeException("ex")
+    }
+
+    f.shouldBeInstanceOf<KResult.Failure<Throwable>>()
+    f.error.message!!.shouldBeEqual("ex")
+  }
+
   private fun success(): KResult<Nothing, String> = "success".asSuccess()
 
   private fun failure(): KResult<String, Nothing> = "failure".asFailure()
