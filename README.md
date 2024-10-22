@@ -2,9 +2,9 @@
 
 [![Maven Central Version](https://img.shields.io/maven-central/v/io.kresult/kresult-core)](https://central.sonatype.com/namespace/io.kresult)
 [![Kotlin version](https://img.shields.io/badge/Kotlin-2.0.20-blue)](https://kotlinlang.org/docs/whatsnew2020.html)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
 [![CI Build](https://github.com/kresult/kresult/actions/workflows/build.yml/badge.svg?branch=develop)](https://github.com/kresult/kresult/actions/workflows/build.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 **An opinionated, functional Result type for Kotlin**
 
