@@ -3,6 +3,32 @@
 The [Arrow](integration) integration module provides functionality to integrate with the famous FP library for Kotlin, 
 which was an inspiration for this project as well.
 
+## Usage
+
+**Using Gradle Kotlin DSL:**
+
+```kotlin
+dependencies {
+  implementation("io.kresult.integration:kresult-arrow:VERSION")
+}
+```
+
+**Using Gradle Groovy DSL:**
+
+```groovy
+implementation group: 'io.kresult.integration', name: 'kresult-arrow', version: 'VERSION'
+```
+
+**Using Maven:**
+
+```xml
+<dependency>
+    <groupId>io.kresult.integration</groupId>
+    <artifactId>kresult-arrow</artifactId>
+    <version>VERSION</version>
+</dependency>
+```
+
 # Package io.kresult.integration.arrow
 
 Provides majorly transformation from and to Arrow types, e.g. 
