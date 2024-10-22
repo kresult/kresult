@@ -5,6 +5,9 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
 [![CI Build](https://github.com/kresult/kresult/actions/workflows/build.yml/badge.svg?branch=develop)](https://github.com/kresult/kresult/actions/workflows/build.yml)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=kresult_kresult&metric=coverage)](https://sonarcloud.io/summary/new_code?id=kresult_kresult)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=kresult_kresult&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=kresult_kresult)
+
 
 **An opinionated, functional Result type for Kotlin**
 
