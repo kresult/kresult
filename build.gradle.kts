@@ -141,8 +141,9 @@ configureDokka()
 
 sonar {
   properties {
-    property("sonar.host.url", "https://sonarcloud.io")
     property("sonar.projectKey", "kresult_kresult")
+    property("sonar.organization", "kresult")
+    property("sonar.host.url", "https://sonarcloud.io")
     property("sonar.coverage.jacoco.xmlReportPaths", "build/reports/kover/report.xml")
   }
 }
