@@ -166,3 +166,7 @@ fun test() {
 ```
 <!--- KNIT example-readme-02.kt -->
 <!--- TEST lines.isEmpty() -->
+
+## License
+
+See [LICENSE](./LICENSE)
