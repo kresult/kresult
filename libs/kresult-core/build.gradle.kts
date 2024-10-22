@@ -1,7 +1,7 @@
 import com.vanniktech.maven.publish.SonatypeHost
 
 plugins {
-  id(libs.plugins.kotlinMultiplatform.get().pluginId)
+  alias(libs.plugins.kotlinMultiplatform)
   alias(libs.plugins.kotestMultiplatform)
   alias(libs.plugins.kotlinxKover)
   alias(libs.plugins.vanniktech.mavenPublish)
