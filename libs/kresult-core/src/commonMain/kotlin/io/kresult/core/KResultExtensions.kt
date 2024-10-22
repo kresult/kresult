@@ -80,7 +80,7 @@ fun <E, T, E1> KResult<E, T>.flatMapFailure(f: (failure: E) -> KResult<E1, T>): 
     is FailureWithValue ->
       f(error).fold(
         { innerFail -> FailureWithValue(innerFail, value) },
-        { innerSuccess -> Success(value) },
+        { Success(value) },
       )
   }
 }
