@@ -24,6 +24,8 @@ plugins {
 
 dependencies {
   kover(project(":libs:kresult-core"))
+  kover(project(":libs:kresult-java"))
+  kover(project(":libs:kresult-problem"))
   kover(project(":integrations:kresult-arrow"))
 }
 
