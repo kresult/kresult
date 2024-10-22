@@ -20,6 +20,7 @@ plugins {
   alias(libs.plugins.kotestMultiplatform).apply(false)
   alias(libs.plugins.kotlinxKnit)
   alias(libs.plugins.vanniktech.mavenPublish) apply false
+  alias(libs.plugins.sonarqube)
 }
 
 dependencies {
@@ -137,3 +138,10 @@ fun configureDokka() {
 }
 
 configureDokka()
+
+sonar {
+  properties {
+    property("sonar.projectKey", "kresult_kresult")
+    property("sonar.coverage.jacoco.xmlReportPaths", "build/reports/kover/report.xml")
+  }
+}
