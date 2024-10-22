@@ -35,7 +35,7 @@ Arrow's [Either\<A, B\>](https://apidocs.arrow-kt.io/arrow-core/arrow.core/-eith
 [KResult](https://kresult.io) is hosted on Maven Central. Use your favorite build tool to add a dependency. Replace 
 `VERSION` with the current version number:
 
-**Using Gradle Kotlin**
+**Using Gradle Kotlin DSL:**
 
 ```kotlin
 dependencies {
