@@ -1,7 +1,8 @@
 package io.kresult.problem
 
 sealed class Problem(
-    override val type: String, override val status: Int
+    override val type: String,
+    override val status: Int
 ) : ProblemDefinition {
 
     /**
@@ -301,6 +302,84 @@ sealed class Problem(
         override val detail: String? = null,
         override val instance: String? = null
     ) : Problem(type = typeUri("network-authentication-required"), status = 511)
+
+    /**
+     * Unofficial 70x HTTP Status Codes
+     *
+     * Source: https://github.com/joho/7XX-rfc
+     */
+
+    data class Meh(
+        override val title: String = "Meh",
+        override val detail: String? = null,
+        override val instance: String? = null
+    ) : Problem(type = typeUri("meh"), status = 701)
+
+    data class Explosion(
+        override val title: String = "Explosion",
+        override val detail: String? = null,
+        override val instance: String? = null
+    ) : Problem(type = typeUri("explosion"), status = 703)
+
+    data class DeleteYourAccount(
+        override val title: String = "Delete Your Account",
+        override val detail: String? = null,
+        override val instance: String? = null
+    ) : Problem(type = typeUri("delete-your-account"), status = 706)
+
+    data class Unpossible(
+        override val title: String = "Unpossible",
+        override val detail: String? = null,
+        override val instance: String? = null
+    ) : Problem(type = typeUri("unpossible"), status = 720)
+
+    data class KnownUnknowns(
+        override val title: String = "Known Unknowns",
+        override val detail: String? = null,
+        override val instance: String? = null
+    ) : Problem(type = typeUri("known-unknowns"), status = 721)
+
+    data class UnknownUnknowns(
+        override val title: String = "Unknown Unknowns",
+        override val detail: String? = null,
+        override val instance: String? = null
+    ) : Problem(type = typeUri("unknown-unknowns"), status = 722)
+
+    data class Tricky(
+        override val title: String = "Tricky",
+        override val detail: String? = null,
+        override val instance: String? = null
+    ) : Problem(type = typeUri("tricky"), status = 723)
+
+    data class ThisLineShouldBeUnreachable(
+        override val title: String = "This line should be unreachable",
+        override val detail: String? = null,
+        override val instance: String? = null
+    ) : Problem(type = typeUri("this-line-should-be-unreachable"), status = 724)
+
+    data class ItWorksOnMyMachine(
+        override val title: String = "It works on my machine",
+        override val detail: String? = null,
+        override val instance: String? = null
+    ) : Problem(type = typeUri("it-works-on-my-machine"), status = 725)
+
+    data class ItsAFeatureNotABug(
+        override val title: String = "It's a feature, not a bug",
+        override val detail: String? = null,
+        override val instance: String? = null
+    ) : Problem(type = typeUri("its-a-feature-not-a-bug"), status = 726)
+
+    data class ThirtyTwoBitsIsPlenty(
+        override val title: String = "32 bits is plenty",
+        override val detail: String? = null,
+        override val instance: String? = null
+    ) : Problem(type = typeUri("32-bits-is-plenty"), status = 727)
+
+    data class ItWorksInMyTimezone(
+        override val title: String = "It works in my timezone",
+        override val detail: String? = null,
+        override val instance: String? = null
+    ) : Problem(type = typeUri("it-works-in-my-timezone"), status = 728)
 
     companion object {
         private const val BASE_URL = "https://kresult.io/problem"
