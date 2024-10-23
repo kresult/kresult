@@ -21,7 +21,7 @@ inline fun <E, T, T1> KResult<E, T>.flatMap(f: (success: T) -> KResult<E, T1>): 
     // because of that
     is FailureWithValue ->
       f(value).fold(
-        { innerFail -> Failure(error) },
+        { _ -> Failure(error) },
         { innerSuccess -> FailureWithValue(error, innerSuccess) },
       )
   }
