@@ -21,11 +21,38 @@ inline fun <E, T, T1> KResult<E, T>.flatMap(f: (success: T) -> KResult<E, T1>): 
     // because of that
     is FailureWithValue ->
       f(value).fold(
-        { innerFail -> Failure(innerFail) },
+        { _ -> Failure(error) },
         { innerSuccess -> FailureWithValue(error, innerSuccess) },
       )
   }
 }
+
+@OptIn(ExperimentalContracts::class)
+fun <E, T, E1> KResult<E, T>.flatMapFailure(f: (failure: E) -> KResult<E1, T>): KResult<E1, T> {
+  contract { callsInPlace(f, InvocationKind.AT_MOST_ONCE) }
+  return when (this) {
+
+    is Failure ->
+      f(this.error)
+
+    is Success ->
+      this
+
+    // If the flatMap(f) results in a success, we lose type information of the error and need to return a Success
+    // because of that
+    is FailureWithValue ->
+      f(error).fold(
+        { innerFail -> FailureWithValue(innerFail, value) },
+        { Success(value) },
+      )
+  }
+}
+
+fun <E, T> KResult<E, KResult<E, T>>.flatten(): KResult<E, T> =
+  flatMap { it }
+
+fun <E, T> KResult<KResult<E, T>, T>.flattenFailure(): KResult<E, T> =
+  flatMapFailure { it }
 
 @OptIn(ExperimentalContracts::class)
 inline fun <E, T> KResult<E, T>.filter(failureFn: (success: T) -> E, f: (success: T) -> Boolean): KResult<E, T> {
@@ -63,33 +90,6 @@ inline fun <E, T> KResult<E, T>.filter(failureValue: E, f: (success: T) -> Boole
     }
   )
 }
-
-@OptIn(ExperimentalContracts::class)
-fun <E, T, E1> KResult<E, T>.flatMapFailure(f: (failure: E) -> KResult<E1, T>): KResult<E1, T> {
-  contract { callsInPlace(f, InvocationKind.AT_MOST_ONCE) }
-  return when (this) {
-
-    is Failure ->
-      f(this.error)
-
-    is Success ->
-      this
-
-    // If the flatMap(f) results in a success, we lose type information of the error and need to return a Success
-    // because of that
-    is FailureWithValue ->
-      f(error).fold(
-        { innerFail -> FailureWithValue(innerFail, value) },
-        { innerSuccess -> Success(value) },
-      )
-  }
-}
-
-fun <E, T> KResult<E, KResult<E, T>>.flatten(): KResult<E, T> =
-  flatMap { it }
-
-fun <E, T> KResult<KResult<E, T>, T>.flattenFailure(): KResult<E, T> =
-  flatMapFailure { it }
 
 // getters for success & failure
 

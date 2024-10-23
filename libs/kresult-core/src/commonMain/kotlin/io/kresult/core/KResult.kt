@@ -432,7 +432,13 @@ sealed class KResult<out E, out T> {
     contract {
       callsInPlace(action, InvocationKind.AT_MOST_ONCE)
     }
-    return also { if (it.isSuccess()) action(it.value) }
+    return also {
+      when(it) {
+        is Failure -> Unit
+        is FailureWithValue -> Unit
+        is Success -> action(it.value)
+      }
+    }
   }
 
   /**
@@ -462,7 +468,13 @@ sealed class KResult<out E, out T> {
     contract {
       callsInPlace(action, InvocationKind.AT_MOST_ONCE)
     }
-    return also { if (it.isFailure()) action(it.error) }
+    return also {
+      when(it) {
+        is Failure -> action(it.error)
+        is FailureWithValue -> action(it.error)
+        is Success -> Unit
+      }
+    }
   }
 
   /**
@@ -590,21 +602,12 @@ sealed class KResult<out E, out T> {
   }
 
   /**
-   * Represents a failed [KResult]
+   * Indicates that the implementation carries an error
+   *
+   * Used for unified processing of [Failure] and [FailureWithValue]
    */
-  class Failure<out E>(val error: E) : KResult<E, Nothing>() {
-
-    override fun toString(): String = "${this::class.simpleName}($error)"
-
-    override fun equals(other: Any?): Boolean =
-      if (other is Failure<*>)
-        error == other.error
-      else
-        false
-
-    override fun hashCode(): Int {
-      return error?.hashCode() ?: 0
-    }
+  sealed interface HasError<out E> {
+    val error: E
   }
 
   /**
@@ -629,15 +632,14 @@ sealed class KResult<out E, out T> {
    * <!--- KNIT example-result-18.kt -->
    * <!--- TEST lines.isEmpty() -->
    */
-  class Success<out T>(val value: T) : KResult<Nothing, T>() {
+  class Success<out T>(
+    val value: T
+  ) : KResult<Nothing, T>() {
 
-    override fun toString(): String = "${this::class.simpleName}($value)"
+    override fun toString(): String = "KResult.${this::class.simpleName}($value)"
 
     override fun equals(other: Any?): Boolean =
-      if (other is Success<*>)
-        value == other.value
-      else
-        false
+      other is Success<*> && value == other.value
 
     override fun hashCode(): Int {
       return value?.hashCode() ?: 0
@@ -649,15 +651,38 @@ sealed class KResult<out E, out T> {
     }
   }
 
-  class FailureWithValue<out E, out T>(val error: E, val value: T) : KResult<E, T>() {
+  /**
+   * Represents a failed [KResult]
+   */
+  class Failure<out E>(
+    override val error: E
+  ) : KResult<E, Nothing>(), HasError<E> {
 
-    override fun toString(): String = "${this::class.simpleName}($error)"
+    override fun toString(): String = "KResult.${this::class.simpleName}($error)"
 
     override fun equals(other: Any?): Boolean =
-      if (other is Failure<*>)
-        error == other.error
-      else
-        false
+      other is Failure<*> && error == other.error
+
+    override fun hashCode(): Int {
+      return error?.hashCode() ?: 0
+    }
+
+    /**
+     * Extends an existing [Failure] with a [value] to produce a [FailureWithValue]
+     */
+    fun <T> withValue(value: T): FailureWithValue<E, T> =
+      FailureWithValue(error, value)
+  }
+
+  class FailureWithValue<out E, out T>(
+    override val error: E,
+    val value: T
+  ) : KResult<E, T>(), HasError<E> {
+
+    override fun toString(): String = "KResult.${this::class.simpleName}($error, $value)"
+
+    override fun equals(other: Any?): Boolean =
+      other is FailureWithValue<*, *> && error == other.error
 
     override fun hashCode(): Int {
       return error?.hashCode() ?: 0
