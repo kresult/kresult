@@ -624,7 +624,7 @@ sealed class KResult<out E, out T> {
     val value: T
   ) : KResult<Nothing, T>() {
 
-    override fun toString(): String = "${this::class.simpleName}($value)"
+    override fun toString(): String = "KResult.${this::class.simpleName}($value)"
 
     override fun equals(other: Any?): Boolean =
       other is Success<*> && value == other.value
@@ -646,7 +646,7 @@ sealed class KResult<out E, out T> {
     override val error: E
   ) : KResult<E, Nothing>(), HasError<E> {
 
-    override fun toString(): String = "${this::class.simpleName}($error)"
+    override fun toString(): String = "KResult.${this::class.simpleName}($error)"
 
     override fun equals(other: Any?): Boolean =
       other is Failure<*> && error == other.error
@@ -661,7 +661,7 @@ sealed class KResult<out E, out T> {
     val value: T
   ) : KResult<E, T>(), HasError<E> {
 
-    override fun toString(): String = "${this::class.simpleName}($error)"
+    override fun toString(): String = "KResult.${this::class.simpleName}($error, $value)"
 
     override fun equals(other: Any?): Boolean =
       other is FailureWithValue<*, *> && error == other.error

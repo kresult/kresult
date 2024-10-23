@@ -8,9 +8,9 @@ class SuccessTest {
 
   @Test
   fun `KResult_Success_toString produces a readable result`() {
-    "test".asSuccess().toString().shouldBeEqual("Success(test)")
-    false.asSuccess().toString().shouldBeEqual("Success(false)")
-    A("bar").asSuccess().toString().shouldBeEqual("Success(A(foo=bar))")
+    "test".asSuccess().toString().shouldBeEqual("KResult.Success(test)")
+    false.asSuccess().toString().shouldBeEqual("KResult.Success(false)")
+    A("bar").asSuccess().toString().shouldBeEqual("KResult.Success(A(foo=bar))")
   }
 
   @Test
