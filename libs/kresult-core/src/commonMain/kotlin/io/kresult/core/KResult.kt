@@ -432,7 +432,13 @@ sealed class KResult<out E, out T> {
     contract {
       callsInPlace(action, InvocationKind.AT_MOST_ONCE)
     }
-    return also { if (it.isSuccess()) action(it.value) }
+    return also {
+      when(it) {
+        is Failure -> Unit
+        is FailureWithValue -> Unit
+        is Success -> action(it.value)
+      }
+    }
   }
 
   /**
@@ -462,7 +468,13 @@ sealed class KResult<out E, out T> {
     contract {
       callsInPlace(action, InvocationKind.AT_MOST_ONCE)
     }
-    return also { if (it.isFailure()) action(it.error) }
+    return also {
+      when(it) {
+        is Failure -> action(it.error)
+        is FailureWithValue -> action(it.error)
+        is Success -> Unit
+      }
+    }
   }
 
   /**
