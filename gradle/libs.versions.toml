@@ -1,8 +1,6 @@
 [versions]
-agp = "8.5.0"
 dokka = "1.9.20"
 kotlin = "2.0.21"
-nexus-publish = "2.0.0"
 kotest = "5.9.1"
 kover = "0.8.3"
 knit = "0.5.0"
@@ -12,7 +10,6 @@ arrow = "1.2.4"
 arrow-core = { module = "io.arrow-kt:arrow-core", version.ref = "arrow" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlinx-knit-test = { module = "org.jetbrains.kotlinx:kotlinx-knit-test", version.ref = "knit" }
-nexus-publish = { module = "io.github.gradle-nexus.publish-plugin:io.github.gradle-nexus.publish-plugin.gradle.plugin", version.ref = "nexus-publish" }
 kotest-assertions-core = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
 kotest-framework-engine = { module = "io.kotest:kotest-framework-engine", version.ref = "kotest" }
 kotest-framework-datatest = { module = "io.kotest:kotest-framework-datatest", version.ref = "kotest" }
