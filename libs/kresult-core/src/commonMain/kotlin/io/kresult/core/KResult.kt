@@ -654,6 +654,12 @@ sealed class KResult<out E, out T> {
     override fun hashCode(): Int {
       return error?.hashCode() ?: 0
     }
+
+    /**
+     * Extends an existing [Failure] with a [value] to produce a [FailureWithValue]
+     */
+    fun <T> withValue(value: T): FailureWithValue<E, T> =
+      FailureWithValue(error, value)
   }
 
   class FailureWithValue<out E, out T>(
