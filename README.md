@@ -4,10 +4,9 @@
 [![Kotlin version](https://img.shields.io/badge/Kotlin-2.0.20-blue)](https://kotlinlang.org/docs/whatsnew2020.html)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
-[![CI Build](https://github.com/kresult/kresult/actions/workflows/build.yml/badge.svg?branch=develop)](https://github.com/kresult/kresult/actions/workflows/build.yml)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=kresult_kresult&metric=coverage)](https://sonarcloud.io/summary/new_code?id=kresult_kresult)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/kresult/kresult/build.yml?branch=main&logo=github)](https://github.com/kresult/kresult/actions/workflows/build.yml?query=branch%3Amain+)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=kresult_kresult&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=kresult_kresult)
-
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=kresult_kresult&metric=coverage)](https://sonarcloud.io/summary/new_code?id=kresult_kresult)
 
 **An opinionated, functional Result type for Kotlin**
 
