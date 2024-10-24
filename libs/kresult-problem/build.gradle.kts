@@ -12,6 +12,13 @@ kotlin {
   linuxX64()
 
   sourceSets {
+
+    val commonMain by getting {
+      dependencies {
+        api(project(":libs:kresult-core"))
+      }
+    }
+
     val commonTest by getting {
       dependencies {
         implementation(libs.kotlin.test)
