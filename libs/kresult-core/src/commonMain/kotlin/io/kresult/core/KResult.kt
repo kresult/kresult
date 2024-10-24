@@ -433,7 +433,7 @@ sealed class KResult<out E, out T> {
       callsInPlace(action, InvocationKind.AT_MOST_ONCE)
     }
     return also {
-      when(it) {
+      when (it) {
         is Failure -> Unit
         is FailureWithValue -> Unit
         is Success -> action(it.value)
@@ -469,7 +469,7 @@ sealed class KResult<out E, out T> {
       callsInPlace(action, InvocationKind.AT_MOST_ONCE)
     }
     return also {
-      when(it) {
+      when (it) {
         is Failure -> action(it.error)
         is FailureWithValue -> action(it.error)
         is Success -> Unit
