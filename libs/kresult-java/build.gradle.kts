@@ -3,6 +3,7 @@ plugins {
   alias(libs.plugins.kotestMultiplatform)
   id("kresult.docs")
   id("kresult.maven-publish")
+  id("kresult.code-quality")
 }
 
 kotlin {
