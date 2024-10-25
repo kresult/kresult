@@ -5,6 +5,8 @@ kotest = "5.9.1"
 kover = "0.8.3"
 knit = "0.5.0"
 arrow = "1.2.4"
+quarkus = "3.15.1"
+mavenPublish = "0.30.0"
 
 [libraries]
 arrow-core = { module = "io.arrow-kt:arrow-core", version.ref = "arrow" }
@@ -15,11 +17,16 @@ kotest-framework-engine = { module = "io.kotest:kotest-framework-engine", versio
 kotest-framework-datatest = { module = "io.kotest:kotest-framework-datatest", version.ref = "kotest" }
 kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 
+plugindeps-vanniktech-mavenPublish = { module = "com.vanniktech:gradle-maven-publish-plugin", version.ref = "mavenPublish" }
+plugindeps-dokka = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "dokka" }
+plugindeps-kotlinxKover = { module = "org.jetbrains.kotlinx:kover-gradle-plugin", version.ref = "kover" }
+plugindeps-kotlinxKnit = { module = "org.jetbrains.kotlinx:kotlinx-knit", version.ref = "knit" }
+
 [plugins]
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotestMultiplatform = { id = "io.kotest.multiplatform", version.ref = "kotest" }
 kotlinxKover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
 kotlinxKnit = { id = "org.jetbrains.kotlinx.knit", version.ref = "knit" }
-vanniktech-mavenPublish = { id = "com.vanniktech.maven.publish", version = "0.30.0" }
 sonarqube = { id = "org.sonarqube", version = "5.1.0.4882" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version = "12.1.1" }
