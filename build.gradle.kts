@@ -1,8 +1,15 @@
 import org.jetbrains.dokka.gradle.DokkaMultiModuleTask
-import org.jetbrains.dokka.gradle.DokkaTaskPartial
-import java.net.URL
 import org.jlleitschuh.gradle.ktlint.KtlintExtension
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+
+val publishableProjects = setOf(
+  ":libs:kresult-core",
+  ":libs:kresult-java",
+  ":libs:kresult-problem",
+  ":integrations:kresult-arrow",
+  ":integrations:kresult-quarkus",
+)
+
 version = rootProject
   .file("version.txt")
   .readText()
@@ -25,6 +32,7 @@ plugins {
   alias(libs.plugins.kotestMultiplatform).apply(false)
   alias(libs.plugins.kotlinxKnit)
   alias(libs.plugins.sonarqube)
+  alias(libs.plugins.ktlint).apply(false)
 }
 
 dependencies {
@@ -35,10 +43,10 @@ dependencies {
 }
 
 allprojects {
-  version = rootProject
-    .file("version.txt")
-    .readText()
-    .trim()
+
+  if (publishableProjects.contains(project.path)) {
+    configureKtlint()
+  }
 
   tasks {
     withType<Test> {
@@ -115,5 +123,17 @@ sonar {
     property("sonar.organization", "kresult")
     property("sonar.host.url", "https://sonarcloud.io")
     property("sonar.coverage.jacoco.xmlReportPaths", "build/reports/kover/report.xml")
+  }
+}
+
+fun configureKtlint() {
+  plugins.apply("org.jlleitschuh.gradle.ktlint")
+
+  configure<KtlintExtension> {
+    ignoreFailures.set(false)
+
+    reporters {
+      reporter(ReporterType.PLAIN)
+    }
   }
 }
