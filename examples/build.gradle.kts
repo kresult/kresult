@@ -1,8 +1,10 @@
 plugins {
   alias(libs.plugins.kotlinMultiplatform)
   alias(libs.plugins.kotestMultiplatform)
-  alias(libs.plugins.kotlinxKover)
+  id("kresult.docs")
 }
+
+group = "io.kresult"
 
 kotlin {
   jvm()
@@ -13,6 +15,8 @@ kotlin {
     val commonTest by getting {
       dependencies {
         implementation(project(":libs:kresult-core"))
+        implementation(project(":libs:kresult-java"))
+        implementation(project(":libs:kresult-problem"))
         implementation(project(":integrations:kresult-arrow"))
         implementation(libs.kotlin.test)
         implementation(libs.arrow.core)

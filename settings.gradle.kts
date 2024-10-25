@@ -15,9 +15,13 @@ dependencyResolutionManagement {
 
 rootProject.name = "kresult"
 
+includeBuild("convention-plugins")
+
 // libs
 include(":libs")
 include(":libs:kresult-core")
+include(":libs:kresult-java")
+include(":libs:kresult-problem")
 
 // integrations
 include(":integrations")

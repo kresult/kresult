@@ -25,7 +25,7 @@ fun <T> Result<T>.asKResult(): KResult<Throwable, T> =
  * [KResult] instances having a [Throwable] subtype on their [Failure] side.
  *
  * @since 0.2.0
- * @see KResult.asKResult to transform a Kotlin [Result] to a [KResult]
+ * @see Result.asKResult to transform a Kotlin [Result] to a [KResult]
  */
 fun <E : Throwable, T> KResult<E, T>.asResult(): Result<T> =
   fold(
@@ -36,7 +36,7 @@ fun <E : Throwable, T> KResult<E, T>.asResult(): Result<T> =
 /**
  * Transforms any element to a [KResult], carrying the given element on [Failure] side
  */
-fun <A> A.asFailure(): KResult<A, Nothing> =
+fun <A> A.asFailure(): Failure<A> =
   Failure(this)
 
 /**
@@ -44,13 +44,13 @@ fun <A> A.asFailure(): KResult<A, Nothing> =
  *
  * @since 0.2.0
  */
-fun <A> A.asFailureList(): KResult<List<A>, Nothing> =
+fun <A> A.asFailureList(): Failure<List<A>> =
   Failure(listOf(this))
 
 /**
  * Transforms any element to a [KResult], carrying the given element on [Success] side
  */
-fun <A> A.asSuccess(): KResult<Nothing, A> =
+fun <A> A.asSuccess(): Success<A> =
   Success(this)
 
 /**
@@ -58,5 +58,5 @@ fun <A> A.asSuccess(): KResult<Nothing, A> =
  *
  * @since 0.2.0
  */
-fun <A> A.asSuccessList(): MultiValueKResult<Nothing, A> =
+fun <A> A.asSuccessList(): Success<List<A>> =
   Success(listOf(this))

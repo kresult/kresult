@@ -1,14 +1,12 @@
 package io.kresult.integration.arrow
 
-import arrow.core.Either
 import io.kresult.core.KResult
-
-/**
- * <!--- TEST_NAME ArrowIntegrationsKnitTest -->
- */
+import arrow.core.Either
 
 /**
  * Transforms an Arrow [Either] to a [KResult]
+ *
+ * <!--- TEST_NAME ArrowIntegrationsKnitTest -->
  *
  * ```kotlin
  * import arrow.core.Either
