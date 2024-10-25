@@ -5,7 +5,7 @@ depend on this either implicitly or explicitly.
 
 ## Usage
 
-*Note: Literally all integrations and extensions depend on `kresult-core`, so if any other `kresult-*` dependency is in 
+*Note: Literally all integrations and extensions depend on `kresult-core`, so if any other `kresult-*` dependency is in
 place, this is not needed.*
 
 **Gradle Kotlin DSL:**
@@ -34,5 +34,5 @@ implementation group: 'io.kresult', name: 'kresult-core', version: 'VERSION'
 
 # Package io.kresult.core
 
-The core package hosts the main entrypoint of the library: The **[KResult]** class. It provides builders, transformers and 
-extractors for result values and failures.
+The core package hosts the main entrypoint of the library: The **[KResult]** class. It provides builders, transformers
+and extractors for result values and failures.

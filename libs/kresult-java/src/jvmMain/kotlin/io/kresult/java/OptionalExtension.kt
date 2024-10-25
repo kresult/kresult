@@ -4,7 +4,6 @@ import io.kresult.core.KResult
 import java.util.*
 import kotlin.jvm.optionals.getOrDefault
 
-
 /**
  * <!--- TEST_NAME JavaIntegrationKnitTest -->
  */
