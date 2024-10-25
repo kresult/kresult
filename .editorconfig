@@ -6,4 +6,6 @@ indent_style = space
 [{*.kt,*.kts}]
 ktlint_code_style = intellij_idea
 ktlint_standard_no-wildcard-imports = disabled
+ktlint_standard_trailing-comma-on-call-site = disabled
+ktlint_standard_trailing-comma-on-declaration-site = disabled
 ij_kotlin_imports_layout = io.kresult.**, *, java.**, javax.**, kotlin.**, ^
