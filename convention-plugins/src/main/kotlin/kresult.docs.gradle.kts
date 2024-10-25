@@ -10,8 +10,8 @@ plugins {
 
 // https://github.com/gradle/gradle/issues/15383
 val libs = the<LibrariesForLibs>()
-val dokkaPlugin by configurations
 
+val dokkaPlugin by configurations
 dependencies {
   dokkaPlugin("org.jetbrains.dokka:versioning-plugin:${libs.versions.dokka.get()}")
 }

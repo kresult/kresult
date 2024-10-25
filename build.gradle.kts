@@ -1,4 +1,8 @@
+import org.jetbrains.dokka.base.DokkaBase
+import org.jetbrains.dokka.base.DokkaBaseConfiguration
 import org.jetbrains.dokka.gradle.DokkaMultiModuleTask
+import org.jetbrains.dokka.versioning.VersioningConfiguration
+import org.jetbrains.dokka.versioning.VersioningPlugin
 
 version = rootProject
   .file("version.txt")
@@ -11,6 +15,12 @@ buildscript {
     google()
     gradlePluginPortal()
     mavenLocal()
+  }
+
+  buildscript {
+    dependencies {
+      classpath("org.jetbrains.dokka:versioning-plugin:1.9.20")
+    }
   }
 }
 
@@ -30,6 +40,11 @@ dependencies {
   kover(project(":libs:kresult-java"))
   kover(project(":libs:kresult-problem"))
   kover(project(":integrations:kresult-arrow"))
+
+  val dokkaPlugin by configurations
+  dependencies {
+    dokkaPlugin("org.jetbrains.dokka:versioning-plugin:${libs.versions.dokka.get()}")
+  }
 }
 
 allprojects {
@@ -58,8 +73,9 @@ allprojects {
   }
 }
 
-val docDir = layout.projectDirectory
-  .dir("docs/api")
+val docDir = rootDir.resolve("docs/api")
+
+val docVersionsDir = docDir.resolve("versions")
 
 val docVersion = project.version.toString()
   .split(".")
@@ -74,12 +90,31 @@ val docVersion = project.version.toString()
 tasks {
 
   withType<DokkaMultiModuleTask>().configureEach {
-    val id = "org.jetbrains.dokka.versioning.VersioningPlugin"
-    val config = """{ "version": "$docVersion", "olderVersionsDir":"$docDir" }"""
-    val mapOf = mapOf(id to config)
 
-    outputDirectory.set(docDir.dir(docVersion))
-    pluginsMapConfiguration.set(mapOf)
+    val versionedOutputDir = docVersionsDir.resolve(docVersion)
+    val publicOutputDir = docDir.resolve("public")
+
+    outputDirectory.set(versionedOutputDir)
+
+    pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
+      footerMessage = "KResult APi Documentation - [docs.kresult.io](https://docs.kresult.io)"
+    }
+
+    pluginConfiguration<VersioningPlugin, VersioningConfiguration> {
+      version = docVersion
+      olderVersionsDir = docVersionsDir
+      renderVersionsNavigationOnAllPages = true
+    }
+
+    doFirst {
+      logger.lifecycle("Deleting output dir: $versionedOutputDir")
+      versionedOutputDir.deleteRecursively()
+    }
+
+    doLast {
+      versionedOutputDir.copyRecursively(publicOutputDir, true)
+      versionedOutputDir.resolve("older").deleteRecursively()
+    }
   }
 }
 
