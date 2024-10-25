@@ -21,6 +21,7 @@ Arrow's [Either\<A, B\>](https://apidocs.arrow-kt.io/arrow-core/arrow.core/-eith
 <!--- TOC -->
 
 * [Features](#features)
+* [Documentation](#documentation)
 * [Usage](#usage)
   * [Core Modules](#core-modules)
   * [Integrations](#integrations)
@@ -31,13 +32,39 @@ Arrow's [Either\<A, B\>](https://apidocs.arrow-kt.io/arrow-core/arrow.core/-eith
 
 ## Features
 
-- Support for full `map` and `flatMap` operations on both sides, success & failure
-- Failure-side transformation and recovery
-- Nullable (or not found) handling
+- Functional result type [KResult](https://docs.kresult.io/libs/kresult-core/io.kresult.core/-k-result/) to express 
+  [Success](https://docs.kresult.io/libs/kresult-core/io.kresult.core/-k-result/-success/) or
+  [Failure](https://docs.kresult.io/libs/kresult-core/io.kresult.core/-k-result/-failure/) of any action
+- Rich functional transformation functions, e.g. 
+  [map](https://docs.kresult.io/libs/kresult-core/io.kresult.core/-k-result/map) /
+  [flatMap](https://docs.kresult.io/libs/kresult-core/io.kresult.core/flat-map), 
+  [filter](https://docs.kresult.io/libs/kresult-core/io.kresult.core/filter), 
+  [fold](https://docs.kresult.io/libs/kresult-core/io.kresult.core/-k-result/fold),
+  [merge](https://docs.kresult.io/libs/kresult-core/io.kresult.core/merge),
+  [combine](https://docs.kresult.io/libs/kresult-core/io.kresult.core/combine)
+- Failure-side mapping and recovery, e.g. 
+  [apFailure](https://docs.kresult.io/libs/kresult-core/io.kresult.core/-k-result/map-failure), 
+  [flatMapFailure](https://docs.kresult.io/libs/kresult-core/io.kresult.core/flat-map-failure), 
+  [getOrDefault](https://docs.kresult.io/libs/kresult-core/io.kresult.core/get-or-default)
+- Nullable and empty success handling, see 
+  [fromNullable](https://docs.kresult.io/libs/kresult-core/io.kresult.core/-k-result/-companion/from-nullable) / 
+  [Success.unit](https://docs.kresult.io/libs/kresult-core/io.kresult.core/-k-result/-success/-companion/unit)
+- Smooth integration with Kotlin's [Result<T>](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-result/)
+- Java interoperability, see [kresult-java](https://docs.kresult.io/libs/kresult-java/)
+- Provides RFC7807 compliant HTTP Problem Detail support using 
+  [kresult-problem](https://docs.kresult.io/libs/kresult-problem/)
+- Integration with various frameworks and libraries, e.g. [Arrow](https://docs.kresult.io/integrations/kresult-arrow/)
+- 100% [Kotlin](https://kotlinlang.org), 
+  100% [open source](https://github.com/kresult/kresult?tab=readme-ov-file#license)
+
+## Documentation
+
+Documentation, examples and package overview can all be found on [docs.kresult.io](https://docs.kresult.io/). For a 
+quick intro and usages, keep reading...
 
 ## Usage
 
-[KResult](https://kresult.io) is hosted on Maven Central. Use your favorite build tool to add a dependency. Replace
+[KResult](https://docs.kresult.io) is hosted on Maven Central. Use your favorite build tool to add a dependency. Replace
 `VERSION` with the current version number:
 
 **Using Gradle Kotlin DSL:**
@@ -67,17 +94,17 @@ implementation group: 'io.kresult', name: 'kresult-core', version: 'VERSION'
 
 ### Core Modules
 
-| Module              | Description                                                                                                  |
-|---------------------|--------------------------------------------------------------------------------------------------------------|
-| [kresult-core]()    | Core module providing the functional `KResult` type as well as tooling and core functionality around it      |
-| [kresult-java]()    | Java interoperability for `KResult` and its transformations.                                                 |
-| [kresult-problem]() | [RFC7807](https://datatracker.ietf.org/doc/html/rfc7807) compliant Problem Details JSON support for KResult. |
+| Module            | Description                                                                                                  | Link                                                                                                                              |
+|-------------------|--------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------|
+| `kresult-core`    | Core module providing the functional `KResult` type as well as tooling and core functionality around it      | [Docs](https://docs.kresult.io/libs/kresult-core/) / [Maven](https://central.sonatype.com/artifact/io.kresult/kresult-core)       |
+| `kresult-java`    | Java interoperability for `KResult` and its transformations.                                                 | [Docs](https://docs.kresult.io/libs/kresult-java/) / [Maven](https://central.sonatype.com/artifact/io.kresult/kresult-java)       |
+| `kresult-problem` | [RFC7807](https://datatracker.ietf.org/doc/html/rfc7807) compliant Problem Details JSON support for KResult. | [Docs](https://docs.kresult.io/libs/kresult-problem/) / [Maven](https://central.sonatype.com/artifact/io.kresult/kresult-problem) |
 
 ### Integrations
 
-| Module            | Description                                                                      |
-|-------------------|----------------------------------------------------------------------------------|
-| [kresult-arrow]() | Supports seamless integration with the [Arrow](https://arrow-kt.io/) FP library. |
+| Module          | Description                                                                                                   | Link                                                                                                                                            |
+|-----------------|---------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------|
+| `kresult-arrow` | Supports seamless integration with types of the [Arrow](https://arrow-kt.io/) functional programming library. | [Docs](https://docs.kresult.io/integrations/kresult-arrow/) / [Maven](https://central.sonatype.com/artifact/io.kresult.integration/kresult-arrow) |
 
 ## Hello, World
 
