@@ -133,24 +133,20 @@ for details.
 
 ```kotlin
 dependencies {
-  implementation("io.kresult.integration:kresult-quarkus:VERSION")
 }
 ```
 
 **Gradle Groovy DSL:**
 
 ```groovy
-implementation group: 'io.kresult.integration', name: 'kresult-quarkus', version: 'VERSION'
 ```
 
 **Maven:**
 
 ```xml
-
 <dependency>
-  <groupId>io.kresult.integration</groupId>
-  <artifactId>kresult-quarkus</artifactId>
-  <version>VERSION</version>
+    <groupId>io.kresult.integration</groupId>
+    <version>VERSION</version>
 </dependency>
 ```
 
