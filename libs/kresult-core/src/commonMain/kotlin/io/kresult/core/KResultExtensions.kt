@@ -31,7 +31,6 @@ inline fun <E, T, T1> KResult<E, T>.flatMap(f: (success: T) -> KResult<E, T1>): 
 fun <E, T, E1> KResult<E, T>.flatMapFailure(f: (failure: E) -> KResult<E1, T>): KResult<E1, T> {
   contract { callsInPlace(f, InvocationKind.AT_MOST_ONCE) }
   return when (this) {
-
     is Failure ->
       f(this.error)
 

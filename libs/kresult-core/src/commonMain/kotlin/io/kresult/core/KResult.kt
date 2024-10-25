@@ -598,7 +598,6 @@ sealed class KResult<out E, out T> {
       combineSuccess: (T, T) -> T,
     ): KResult<E, T> =
       first.combine(second, combineFailure, combineSuccess)
-
   }
 
   /**

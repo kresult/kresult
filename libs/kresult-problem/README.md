@@ -4,7 +4,7 @@ Provides [RFC7807](https://datatracker.ietf.org/doc/html/rfc7807) compliant Prob
 
 <!--- TEST_NAME ProblemReadmeKnitTest -->
 
-By using a `Problem` on the `Failure` side of a `KResult`, strongly typed HTTP problems rendering to 
+By using a `Problem` on the `Failure` side of a `KResult`, strongly typed HTTP problems rendering to
 `application/json+problem` can be utilized:
 
 ```kotlin
@@ -24,6 +24,7 @@ fun test() {
   res.error.status shouldBe 404
 }
 ```
+
 <!--- KNIT example-problemreadme-01.kt -->
 <!--- TEST lines.isEmpty() -->
 <!--- CLEAR -->

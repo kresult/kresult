@@ -1,7 +1,9 @@
-import kotlinx.knit.KnitPluginExtension
 import org.jetbrains.dokka.gradle.DokkaMultiModuleTask
-import org.jetbrains.dokka.gradle.DokkaTaskPartial
-import java.net.URL
+
+version = rootProject
+  .file("version.txt")
+  .readText()
+  .trim()
 
 buildscript {
   repositories {
@@ -14,13 +16,13 @@ buildscript {
 
 plugins {
   base
-  alias(libs.plugins.dokka) apply false
+  alias(libs.plugins.dokka)
   alias(libs.plugins.kotlinxKover)
   alias(libs.plugins.kotlinMultiplatform).apply(false)
   alias(libs.plugins.kotestMultiplatform).apply(false)
   alias(libs.plugins.kotlinxKnit)
-  alias(libs.plugins.vanniktech.mavenPublish) apply false
   alias(libs.plugins.sonarqube)
+  alias(libs.plugins.ktlint)
 }
 
 dependencies {
@@ -31,13 +33,9 @@ dependencies {
 }
 
 allprojects {
-  version = rootProject
-    .file("version.txt")
-    .readText()
-    .trim()
 
   tasks {
-    withType<Test>() {
+    withType<Test> {
       filter {
         isFailOnNoMatchingTests = false
       }
@@ -46,7 +44,7 @@ allprojects {
         showStandardStreams = true
         events = setOf(
           org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED,
-          org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED
+          org.gradle.api.tasks.testing.logging.TestLogEvent.PASSED,
         )
         exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
       }
@@ -73,7 +71,23 @@ val docVersion = project.version.toString()
     }
   }
 
-configure<KnitPluginExtension> {
+tasks {
+
+  withType<DokkaMultiModuleTask>().configureEach {
+    val id = "org.jetbrains.dokka.versioning.VersioningPlugin"
+    val config = """{ "version": "$docVersion", "olderVersionsDir":"$docDir" }"""
+    val mapOf = mapOf(id to config)
+
+    outputDirectory.set(docDir.dir(docVersion))
+    pluginsMapConfiguration.set(mapOf)
+  }
+}
+
+rootProject.plugins.withType<org.jetbrains.kotlin.gradle.targets.js.yarn.YarnPlugin> {
+  rootProject.the<org.jetbrains.kotlin.gradle.targets.js.yarn.YarnRootExtension>().ignoreScripts = false
+}
+
+knit {
   siteRoot = "https://kresult.io/"
   rootDir = projectDir
   moduleRoots = listOf(".")
@@ -88,56 +102,6 @@ configure<KnitPluginExtension> {
     exclude("**/.gradle/**")
   }
 }
-
-tasks {
-  getByName("knitPrepare").dependsOn(getTasksByName("dokka", true))
-}
-
-@Suppress("DEPRECATION")
-fun configureDokka() {
-  allprojects {
-    plugins.apply("org.jetbrains.dokka")
-
-    val dokkaPlugin by configurations
-    dependencies {
-      dokkaPlugin("org.jetbrains.dokka:versioning-plugin:${libs.versions.dokka.get()}")
-    }
-
-    tasks {
-      withType<DokkaTaskPartial>().configureEach {
-        dokkaSourceSets {
-          configureEach {
-
-            if (File(projectDir, "README.md").canRead()) {
-              includes.from("README.md")
-            }
-
-            sourceLink {
-              localDirectory.set(rootDir)
-              remoteUrl.set(URL("https://github.com/kresult/kresult/tree/main"))
-              remoteLineSuffix.set("#L")
-            }
-          }
-        }
-      }
-    }
-  }
-
-  tasks.withType<DokkaMultiModuleTask>().configureEach {
-    val id = "org.jetbrains.dokka.versioning.VersioningPlugin"
-    val config = """{ "version": "$docVersion", "olderVersionsDir":"$docDir" }"""
-    val mapOf = mapOf(id to config)
-
-    outputDirectory.set(docDir.dir(docVersion))
-    pluginsMapConfiguration.set(mapOf)
-  }
-
-  rootProject.plugins.withType<org.jetbrains.kotlin.gradle.targets.js.yarn.YarnPlugin> {
-    rootProject.the<org.jetbrains.kotlin.gradle.targets.js.yarn.YarnRootExtension>().ignoreScripts = false
-  }
-}
-
-configureDokka()
 
 sonar {
   properties {

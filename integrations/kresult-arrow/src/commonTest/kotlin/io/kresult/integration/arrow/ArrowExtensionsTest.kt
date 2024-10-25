@@ -7,7 +7,6 @@ import io.kotest.matchers.shouldBe
 import kotlin.test.Test
 
 class ArrowExtensionsTest {
-
   /**
    * Either
    *
@@ -65,5 +64,4 @@ class ArrowExtensionsTest {
     val original = Failure("error")
     original.toEither().toKResult() shouldBe original
   }
-
 }

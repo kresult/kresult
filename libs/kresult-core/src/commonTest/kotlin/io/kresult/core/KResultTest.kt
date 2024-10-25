@@ -110,7 +110,6 @@ class KResultTest {
   //   }
   // }
 
-
   /**
    * isSuccess
    *
@@ -133,13 +132,13 @@ class KResultTest {
   }
 
   // FIXME
-  //@Test
-  //fun `isSuccess - should enable smart casting to Success`() {
+  // @Test
+  // fun `isSuccess - should enable smart casting to Success`() {
   //  val result: KResult<String, String> = Success("value")
   //  if (result.isSuccess()) {
   //    result.value shouldBe "value"
   //  }
-  //}
+  // }
 
   /**
    * fold
@@ -193,8 +192,14 @@ class KResultTest {
     var failureCount = 0
 
     Success("value").fold(
-      ifFailure = { failureCount++; it },
-      ifSuccess = { successCount++; it }
+      ifFailure = {
+        failureCount++
+        it
+      },
+      ifSuccess = {
+        successCount++
+        it
+      },
     )
 
     successCount shouldBe 1
@@ -204,8 +209,14 @@ class KResultTest {
     failureCount = 0
 
     Failure("error").fold(
-      ifFailure = { failureCount++; it },
-      ifSuccess = { successCount++; it }
+      ifFailure = {
+        failureCount++
+        it
+      },
+      ifSuccess = {
+        successCount++
+        it
+      },
     )
 
     successCount shouldBe 0
@@ -241,21 +252,30 @@ class KResultTest {
   @Test
   fun `map - should invoke transformation exactly once`() {
     var count = 0
-    Success(1).map { count++; it }
+    Success(1).map {
+      count++
+      it
+    }
     count shouldBe 1
   }
 
   @Test
   fun `map - on Failure should not invoke transformation`() {
     var count = 0
-    Failure("error").map { count++; it }
+    Failure("error").map {
+      count++
+      it
+    }
     count shouldBe 0
   }
 
   @Test
   fun `map - on FailureWithValue should invoke transformation anyways to carry the new value`() {
     var count = 0
-    FailureWithValue("error", 1).map { count++; it }
+    FailureWithValue("error", 1).map {
+      count++
+      it
+    }
     count shouldBe 1
   }
 
@@ -288,21 +308,30 @@ class KResultTest {
   @Test
   fun `mapFailure - should invoke transformation exactly once`() {
     var count = 0
-    Failure(1).mapFailure { count++; it }
+    Failure(1).mapFailure {
+      count++
+      it
+    }
     count shouldBe 1
   }
 
   @Test
   fun `mapFailure - on Success should not invoke transformation`() {
     var count = 0
-    Success(1).mapFailure { count++; it }
+    Success(1).mapFailure {
+      count++
+      it
+    }
     count shouldBe 0
   }
 
   @Test
   fun `mapFailure - on FailureWithValue should invoke transformation exactly once`() {
     var count = 0
-    FailureWithValue(1, "value").mapFailure { count++; it }
+    FailureWithValue(1, "value").mapFailure {
+      count++
+      it
+    }
     count shouldBe 1
   }
 
@@ -699,18 +728,6 @@ class KResultTest {
       combineSuccess = { v1, v2 -> v1 + v2 }
     ) shouldBe Failure("error1 + error2")
   }
-
-
-
-
-
-
-
-
-
-
-
-
 
   @Test
   fun `KSuccess returns isSuccess == true and isFailure == false`() {

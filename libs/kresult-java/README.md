@@ -2,8 +2,8 @@
 
 Provides interoperability helpers to integrate with Java libraries.
 
-**Note:** *KResult is NOT a Java library! While `kresult-java` provides helpers for Java interoperability, it remains a 
-library for Kotlin to be used with Kotlin projects. The intent of providing Java interoperability is to make KResult 
+**Note:** *KResult is NOT a Java library! While `kresult-java` provides helpers for Java interoperability, it remains a
+library for Kotlin to be used with Kotlin projects. The intent of providing Java interoperability is to make KResult
 usable with Java types (e.g. from legacy libs) in Kotlin projects and not vice versa.*
 
 ## Usage

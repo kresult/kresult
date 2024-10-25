@@ -129,16 +129,18 @@ inline fun <E, T> MultiErrorKResult<E, T>.validate(
       this
 
     is Success ->
-      if (expectationFn(value))
+      if (expectationFn(value)) {
         this
-      else
+      } else {
         FailureWithValue(listOf(failureValue), value)
+      }
 
     is FailureWithValue ->
-      if (expectationFn(value))
+      if (expectationFn(value)) {
         this
-      else
+      } else {
         FailureWithValue(error + failureValue, value)
+      }
   }
 }
 

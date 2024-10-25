@@ -17,5 +17,6 @@ class FailureTest {
   fun `Failure_withValue produces FailureWithValue`() {
     KResult.Failure("err").withValue("foo") shouldBe KResult.FailureWithValue("err", "foo")
   }
+
   data class A(val foo: String)
 }
