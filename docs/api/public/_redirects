@@ -1,3 +1,7 @@
+/badge/maven.svg https://img.shields.io/maven-central/v/io.kresult/kresult-core?logo=apachemaven 303
+/badge/kotlin.svg https://img.shields.io/badge/Kotlin-2.0.20-blue 303
+/badge/license.svg https://img.shields.io/badge/License-Apache%202.0-blue 303
+
 /badge/build-status.svg https://img.shields.io/github/actions/workflow/status/kresult/kresult/build.yml?branch=main&logo=github 303
 /badge/security-rating.svg https://sonarcloud.io/api/project_badges/measure?project=kresult_kresult&metric=security_rating 303
 /badge/code-coverage.svg https://sonarcloud.io/api/project_badges/measure?project=kresult_kresult&metric=coverage 303
