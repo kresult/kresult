@@ -67,69 +67,43 @@
   <div class="cover ">
     <div class="cover ">
       <h1 class="">KResult</h1>
-      <p class="paragraph"><a href="https://central.sonatype.com/namespace/io.kresult"><img alt="Maven Central Version" src="https://kresult.io/badge/maven.svg"></a> <a href="https://kotlinlang.org/docs/whatsnew2020.html"><img alt="Kotlin version" src="https:/kresult.io//badge/kotlin.svg"></a> <a href="https://www.apache.org/licenses/LICENSE-2.0"><img alt="License" src="https://kresult.io/badge/license.svg"></a></p>
-      <p class="paragraph"><a href="https://github.com/kresult/kresult/actions/workflows/build.yml?query=branch%3Amain+"><img alt="Build Status" src="https:/kresult.io//badge/build-status.svg"></a> <a href="https://sonarcloud.io/summary/new_code?id=kresult_kresult"><img alt="Security Rating" src="https://kresult.io/badge/security-rating.svg"></a> <a href="https://sonarcloud.io/summary/new_code?id=kresult_kresult"><img alt="Coverage" src="https://kresult.io/badge/code-coverage.svg"></a></p>
+      <p class="paragraph"><a href="https://central.sonatype.com/namespace/io.kresult"><img alt="Maven Central Version" src="https://kresult.io/badge/maven.svg"></a> <a href="https://kotlinlang.org/docs/whatsnew2020.html"><img alt="Kotlin version" src="https://kresult.io/badge/kotlin.svg"></a> <a href="https://www.apache.org/licenses/LICENSE-2.0"><img alt="License" src="https://kresult.io/badge/license.svg"></a></p>
+      <p class="paragraph"><a href="https://github.com/kresult/kresult/actions/workflows/build.yml?query=branch%3Amain+"><img alt="Build Status" src="https://kresult.io/badge/build-status.svg"></a> <a href="https://sonarcloud.io/summary/new_code?id=kresult_kresult"><img alt="Security Rating" src="https://kresult.io/badge/security-rating.svg"></a> <a href="https://sonarcloud.io/summary/new_code?id=kresult_kresult"><img alt="Coverage" src="https://kresult.io/badge/code-coverage.svg"></a></p>
       <p class="paragraph"><strong>An opinionated, functional Result type for Kotlin</strong></p>
-      <p class="paragraph"><a href="https://kresult.io"><i>KResult</i></a><i> is a functional library that provides an opinionated and feature-rich extension / alternative to Kotlin's </i><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-result/"><i>Result\</i><<i>T\</i>></a><i> type. While the core library is as lean and dependency-free as possible, seamless integrations with common frameworks are provided via integration packages or plugins. KResult is heavily inspired by Scala's </i><a href="https://www.scala-lang.org/api/current/scala/util/Try.html"><i>Try\[T\]</i></a><i> type, Rust's </i><a href="https://doc.rust-lang.org/std/result/enum.Result.html"><i>Result\</i><<i>T, E\</i>></a><i> and Arrow's </i><a href="https://apidocs.arrow-kt.io/arrow-core/arrow.core/-either/index.html"><i>Either\</i><<i>A, B\</i>></a><i>.</i></p>
-<!--- TOC -->      <ul>
-        <li>
-          <p class="paragraph">#features</p>
-        </li>
-        <li>
-          <p class="paragraph">#documentation</p>
-        </li>
-        <li>
-          <p class="paragraph">#usage</p>
-        </li>
-        <ul>
-          <li>
-            <p class="paragraph">#core-modules</p>
-          </li>
-          <li>
-            <p class="paragraph">#integrations</p>
-          </li>
-        </ul>
-        <li>
-          <p class="paragraph">#hello-world</p>
-        </li>
-        <li>
-          <p class="paragraph">#license</p>
-        </li>
-      </ul>
-<!--- END -->      <h2 class="">Features</h2>
+      <p class="paragraph"><a href="https://kresult.io"><i>KResult</i></a><i> is a functional library that provides an opinionated and feature-rich extension / alternative to Kotlin's </i><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-result/"><code class="italic lang-kotlin"><i>Result&lt;T&gt;</i></code></a><i> type. While the core library is as lean and dependency-free as possible, seamless integrations with common frameworks are provided via integration packages or plugins. KResult is heavily inspired by Scala's </i><a href="https://www.scala-lang.org/api/current/scala/util/Try.html"><code class="italic lang-kotlin"><i>Try[T]</i></code></a><i> type, Rust's </i><a href="https://doc.rust-lang.org/std/result/enum.Result.html"><code class="italic lang-kotlin"><i>Result&lt;T, E&gt;</i></code></a><i> and Arrow's </i><a href="https://apidocs.arrow-kt.io/arrow-core/arrow.core/-either/index.html"><code class="italic lang-kotlin"><i>Either&lt;A, B&gt;</i></code></a><i>.</i></p>
+      <h2 class="">Features</h2>
       <ul>
         <li>
-          <p class="paragraph">Functional result type <a href="https://docs.kresult.io/libs/kresult-core/io.kresult.core/-k-result/">KResult</a> to express    <a href="https://docs.kresult.io/libs/kresult-core/io.kresult.core/-k-result/-success/">Success</a> or   <a href="https://docs.kresult.io/libs/kresult-core/io.kresult.core/-k-result/-failure/">Failure</a> of any action</p>
+          <p class="paragraph">Functional result type <a href="https://kresult.io/libs/kresult-core/io.kresult.core/-k-result/">KResult</a> to express    <a href="https://kresult.io/libs/kresult-core/io.kresult.core/-k-result/-success/">Success</a> or   <a href="https://kresult.io/libs/kresult-core/io.kresult.core/-k-result/-failure/">Failure</a> of any action</p>
         </li>
         <li>
-          <p class="paragraph">Rich functional transformation functions, e.g.    <a href="https://docs.kresult.io/libs/kresult-core/io.kresult.core/-k-result/map">map</a> /   <a href="https://docs.kresult.io/libs/kresult-core/io.kresult.core/flat-map">flatMap</a>,    <a href="https://docs.kresult.io/libs/kresult-core/io.kresult.core/filter">filter</a>,    <a href="https://docs.kresult.io/libs/kresult-core/io.kresult.core/-k-result/fold">fold</a>,   <a href="https://docs.kresult.io/libs/kresult-core/io.kresult.core/merge">merge</a>,   <a href="https://docs.kresult.io/libs/kresult-core/io.kresult.core/combine">combine</a></p>
+          <p class="paragraph">Rich functional transformation functions, e.g.    <a href="https://kresult.io/libs/kresult-core/io.kresult.core/-k-result/map">map</a> /   <a href="https://kresult.io/libs/kresult-core/io.kresult.core/flat-map">flatMap</a>,    <a href="https://kresult.io/libs/kresult-core/io.kresult.core/filter">filter</a>,    <a href="https://kresult.io/libs/kresult-core/io.kresult.core/-k-result/fold">fold</a>,   <a href="https://kresult.io/libs/kresult-core/io.kresult.core/merge">merge</a>,   <a href="https://kresult.io/libs/kresult-core/io.kresult.core/combine">combine</a></p>
         </li>
         <li>
-          <p class="paragraph">Failure-side mapping and recovery, e.g.    <a href="https://docs.kresult.io/libs/kresult-core/io.kresult.core/-k-result/map-failure">apFailure</a>,    <a href="https://docs.kresult.io/libs/kresult-core/io.kresult.core/flat-map-failure">flatMapFailure</a>,    <a href="https://docs.kresult.io/libs/kresult-core/io.kresult.core/get-or-default">getOrDefault</a></p>
+          <p class="paragraph">Failure-side mapping and recovery, e.g.    <a href="https://kresult.io/libs/kresult-core/io.kresult.core/-k-result/map-failure">apFailure</a>,    <a href="https://kresult.io/libs/kresult-core/io.kresult.core/flat-map-failure">flatMapFailure</a>,    <a href="https://kresult.io/libs/kresult-core/io.kresult.core/get-or-default">getOrDefault</a></p>
         </li>
         <li>
-          <p class="paragraph">Nullable and empty success handling, see    <a href="https://docs.kresult.io/libs/kresult-core/io.kresult.core/-k-result/-companion/from-nullable">fromNullable</a> /    <a href="https://docs.kresult.io/libs/kresult-core/io.kresult.core/-k-result/-success/-companion/unit">Success.unit</a></p>
+          <p class="paragraph">Nullable and empty success handling, see    <a href="https://kresult.io/libs/kresult-core/io.kresult.core/-k-result/-companion/from-nullable">fromNullable</a> /    <a href="https://kresult.io/libs/kresult-core/io.kresult.core/-k-result/-success/-companion/unit">Success.unit</a></p>
         </li>
         <li>
           <p class="paragraph">Smooth integration with Kotlin's <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-result/">Result<T></a></p>
         </li>
         <li>
-          <p class="paragraph">Java interoperability, see <a href="https://docs.kresult.io/libs/kresult-java/">kresult-java</a></p>
+          <p class="paragraph">Java interoperability, see <a href="https://kresult.io/libs/kresult-java/">kresult-java</a></p>
         </li>
         <li>
-          <p class="paragraph">Provides RFC7807 compliant HTTP Problem Detail support using    <a href="https://docs.kresult.io/libs/kresult-problem/">kresult-problem</a></p>
+          <p class="paragraph">Provides RFC7807 compliant HTTP Problem Detail support using    <a href="https://kresult.io/libs/kresult-problem/">kresult-problem</a></p>
         </li>
         <li>
-          <p class="paragraph">Integration with various frameworks and libraries, e.g. <a href="https://docs.kresult.io/integrations/kresult-arrow/">Arrow</a></p>
+          <p class="paragraph">Integration with various frameworks and libraries, e.g. <a href="https://kresult.io/integrations/kresult-arrow/">Arrow</a></p>
         </li>
         <li>
           <p class="paragraph">100% <a href="https://kotlinlang.org">Kotlin</a>,    100% <a href="https://github.com/kresult/kresult?tab=readme-ov-file#license">open source</a></p>
         </li>
       </ul>
-      <h2 class="">Documentation</h2>
-      <p class="paragraph">Documentation, examples and package overview can all be found on <a href="https://docs.kresult.io/">docs.kresult.io</a>. For a  quick intro and usages, keep reading...</p>
+      <p class="paragraph"><i>Find full documentation on </i><a href="https://kresult.io"><i><strong>kresult.io</strong></i></a><i>.</i></p>
       <h2 class="">Usage</h2>
-      <p class="paragraph"><a href="https://docs.kresult.io">KResult</a> is hosted on Maven Central. Use your favorite build tool to add a dependency. Replace <code class="lang-kotlin">VERSION</code> with the current version number:</p>
+      <p class="paragraph"><a href="https://kresult.io">KResult</a> is hosted on Maven Central. Use your favorite build tool to add a dependency. Replace <code class="lang-kotlin">VERSION</code> with the current version number:</p>
       <p class="paragraph"><strong>Using Gradle Kotlin DSL:</strong></p>
       <div class="sample-container">
         <pre><code class="block lang-kotlin" theme="idea">dependencies {<br>  implementation(&quot;io.kresult:kresult-core:VERSION&quot;)<br>}</code></pre>
@@ -159,19 +133,19 @@
         </thead>
         <tbody>
           <tr>
-            <td><code class="org.jetbrains.dokka.pages.commenttable@b5d1187 lang-kotlin">kresult-core</code></td>
-            <td>Core module providing the functional <code class="org.jetbrains.dokka.pages.commenttable@b5d1187 lang-kotlin">KResult</code> type as well as tooling and core functionality around it</td>
-            <td><a href="https://docs.kresult.io/libs/kresult-core/">Docs</a> / <a href="https://central.sonatype.com/artifact/io.kresult/kresult-core">Maven</a></td>
+            <td><code class="org.jetbrains.dokka.pages.commenttable@24ebdbeb lang-kotlin">kresult-core</code></td>
+            <td>Core module providing the functional <code class="org.jetbrains.dokka.pages.commenttable@24ebdbeb lang-kotlin">KResult</code> type as well as tooling and core functionality around it</td>
+            <td><a href="https://kresult.io/libs/kresult-core/">Docs</a> / <a href="https://central.sonatype.com/artifact/io.kresult/kresult-core">Maven</a></td>
           </tr>
           <tr>
-            <td><code class="org.jetbrains.dokka.pages.commenttable@b5d1187 lang-kotlin">kresult-java</code></td>
-            <td>Java interoperability for <code class="org.jetbrains.dokka.pages.commenttable@b5d1187 lang-kotlin">KResult</code> and its transformations.</td>
-            <td><a href="https://docs.kresult.io/libs/kresult-java/">Docs</a> / <a href="https://central.sonatype.com/artifact/io.kresult/kresult-java">Maven</a></td>
+            <td><code class="org.jetbrains.dokka.pages.commenttable@24ebdbeb lang-kotlin">kresult-java</code></td>
+            <td>Java interoperability for <code class="org.jetbrains.dokka.pages.commenttable@24ebdbeb lang-kotlin">KResult</code> and its transformations.</td>
+            <td><a href="https://kresult.io/libs/kresult-java/">Docs</a> / <a href="https://central.sonatype.com/artifact/io.kresult/kresult-java">Maven</a></td>
           </tr>
           <tr>
-            <td><code class="org.jetbrains.dokka.pages.commenttable@b5d1187 lang-kotlin">kresult-problem</code></td>
+            <td><code class="org.jetbrains.dokka.pages.commenttable@24ebdbeb lang-kotlin">kresult-problem</code></td>
             <td><a href="https://datatracker.ietf.org/doc/html/rfc7807">RFC7807</a> compliant Problem Details JSON support for KResult.</td>
-            <td><a href="https://docs.kresult.io/libs/kresult-problem/">Docs</a> / <a href="https://central.sonatype.com/artifact/io.kresult/kresult-problem">Maven</a></td>
+            <td><a href="https://kresult.io/libs/kresult-problem/">Docs</a> / <a href="https://central.sonatype.com/artifact/io.kresult/kresult-problem">Maven</a></td>
           </tr>
         </tbody>
       </table>
@@ -186,9 +160,9 @@
         </thead>
         <tbody>
           <tr>
-            <td><code class="org.jetbrains.dokka.pages.commenttable@b5d1187 lang-kotlin">kresult-arrow</code></td>
+            <td><code class="org.jetbrains.dokka.pages.commenttable@24ebdbeb lang-kotlin">kresult-arrow</code></td>
             <td>Supports seamless integration with types of the <a href="https://arrow-kt.io/">Arrow</a> functional programming library.</td>
-            <td><a href="https://docs.kresult.io/integrations/kresult-arrow/">Docs</a> / <a href="https://central.sonatype.com/artifact/io.kresult.integration/kresult-arrow">Maven</a></td>
+            <td><a href="https://kresult.io/integrations/kresult-arrow/">Docs</a> / <a href="https://central.sonatype.com/artifact/io.kresult.integration/kresult-arrow">Maven</a></td>
           </tr>
         </tbody>
       </table>
