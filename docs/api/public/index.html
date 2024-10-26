@@ -65,6 +65,164 @@
 <div class="main-content" id="content" pageIds="kresult::.ext/allModules///PointingToDeclaration//0">
   <div class="breadcrumbs"></div>
   <div class="cover ">
+    <div class="cover ">
+      <h1 class="">KResult</h1>
+      <p class="paragraph"><a href="https://central.sonatype.com/namespace/io.kresult"><img alt="Maven Central Version" src="https://kresult.io/badge/maven.svg"></a> <a href="https://kotlinlang.org/docs/whatsnew2020.html"><img alt="Kotlin version" src="https:/kresult.io//badge/kotlin.svg"></a> <a href="https://www.apache.org/licenses/LICENSE-2.0"><img alt="License" src="https://kresult.io/badge/license.svg"></a></p>
+      <p class="paragraph"><a href="https://github.com/kresult/kresult/actions/workflows/build.yml?query=branch%3Amain+"><img alt="Build Status" src="https:/kresult.io//badge/build-status.svg"></a> <a href="https://sonarcloud.io/summary/new_code?id=kresult_kresult"><img alt="Security Rating" src="https://kresult.io/badge/security-rating.svg"></a> <a href="https://sonarcloud.io/summary/new_code?id=kresult_kresult"><img alt="Coverage" src="https://kresult.io/badge/code-coverage.svg"></a></p>
+      <p class="paragraph"><strong>An opinionated, functional Result type for Kotlin</strong></p>
+      <p class="paragraph"><a href="https://kresult.io"><i>KResult</i></a><i> is a functional library that provides an opinionated and feature-rich extension / alternative to Kotlin's </i><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-result/"><i>Result\</i><<i>T\</i>></a><i> type. While the core library is as lean and dependency-free as possible, seamless integrations with common frameworks are provided via integration packages or plugins. KResult is heavily inspired by Scala's </i><a href="https://www.scala-lang.org/api/current/scala/util/Try.html"><i>Try\[T\]</i></a><i> type, Rust's </i><a href="https://doc.rust-lang.org/std/result/enum.Result.html"><i>Result\</i><<i>T, E\</i>></a><i> and Arrow's </i><a href="https://apidocs.arrow-kt.io/arrow-core/arrow.core/-either/index.html"><i>Either\</i><<i>A, B\</i>></a><i>.</i></p>
+<!--- TOC -->      <ul>
+        <li>
+          <p class="paragraph">#features</p>
+        </li>
+        <li>
+          <p class="paragraph">#documentation</p>
+        </li>
+        <li>
+          <p class="paragraph">#usage</p>
+        </li>
+        <ul>
+          <li>
+            <p class="paragraph">#core-modules</p>
+          </li>
+          <li>
+            <p class="paragraph">#integrations</p>
+          </li>
+        </ul>
+        <li>
+          <p class="paragraph">#hello-world</p>
+        </li>
+        <li>
+          <p class="paragraph">#license</p>
+        </li>
+      </ul>
+<!--- END -->      <h2 class="">Features</h2>
+      <ul>
+        <li>
+          <p class="paragraph">Functional result type <a href="https://docs.kresult.io/libs/kresult-core/io.kresult.core/-k-result/">KResult</a> to express    <a href="https://docs.kresult.io/libs/kresult-core/io.kresult.core/-k-result/-success/">Success</a> or   <a href="https://docs.kresult.io/libs/kresult-core/io.kresult.core/-k-result/-failure/">Failure</a> of any action</p>
+        </li>
+        <li>
+          <p class="paragraph">Rich functional transformation functions, e.g.    <a href="https://docs.kresult.io/libs/kresult-core/io.kresult.core/-k-result/map">map</a> /   <a href="https://docs.kresult.io/libs/kresult-core/io.kresult.core/flat-map">flatMap</a>,    <a href="https://docs.kresult.io/libs/kresult-core/io.kresult.core/filter">filter</a>,    <a href="https://docs.kresult.io/libs/kresult-core/io.kresult.core/-k-result/fold">fold</a>,   <a href="https://docs.kresult.io/libs/kresult-core/io.kresult.core/merge">merge</a>,   <a href="https://docs.kresult.io/libs/kresult-core/io.kresult.core/combine">combine</a></p>
+        </li>
+        <li>
+          <p class="paragraph">Failure-side mapping and recovery, e.g.    <a href="https://docs.kresult.io/libs/kresult-core/io.kresult.core/-k-result/map-failure">apFailure</a>,    <a href="https://docs.kresult.io/libs/kresult-core/io.kresult.core/flat-map-failure">flatMapFailure</a>,    <a href="https://docs.kresult.io/libs/kresult-core/io.kresult.core/get-or-default">getOrDefault</a></p>
+        </li>
+        <li>
+          <p class="paragraph">Nullable and empty success handling, see    <a href="https://docs.kresult.io/libs/kresult-core/io.kresult.core/-k-result/-companion/from-nullable">fromNullable</a> /    <a href="https://docs.kresult.io/libs/kresult-core/io.kresult.core/-k-result/-success/-companion/unit">Success.unit</a></p>
+        </li>
+        <li>
+          <p class="paragraph">Smooth integration with Kotlin's <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-result/">Result<T></a></p>
+        </li>
+        <li>
+          <p class="paragraph">Java interoperability, see <a href="https://docs.kresult.io/libs/kresult-java/">kresult-java</a></p>
+        </li>
+        <li>
+          <p class="paragraph">Provides RFC7807 compliant HTTP Problem Detail support using    <a href="https://docs.kresult.io/libs/kresult-problem/">kresult-problem</a></p>
+        </li>
+        <li>
+          <p class="paragraph">Integration with various frameworks and libraries, e.g. <a href="https://docs.kresult.io/integrations/kresult-arrow/">Arrow</a></p>
+        </li>
+        <li>
+          <p class="paragraph">100% <a href="https://kotlinlang.org">Kotlin</a>,    100% <a href="https://github.com/kresult/kresult?tab=readme-ov-file#license">open source</a></p>
+        </li>
+      </ul>
+      <h2 class="">Documentation</h2>
+      <p class="paragraph">Documentation, examples and package overview can all be found on <a href="https://docs.kresult.io/">docs.kresult.io</a>. For a  quick intro and usages, keep reading...</p>
+      <h2 class="">Usage</h2>
+      <p class="paragraph"><a href="https://docs.kresult.io">KResult</a> is hosted on Maven Central. Use your favorite build tool to add a dependency. Replace <code class="lang-kotlin">VERSION</code> with the current version number:</p>
+      <p class="paragraph"><strong>Using Gradle Kotlin DSL:</strong></p>
+      <div class="sample-container">
+        <pre><code class="block lang-kotlin" theme="idea">dependencies {<br>  implementation(&quot;io.kresult:kresult-core:VERSION&quot;)<br>}</code></pre>
+<span class="top-right-position"><span class="copy-icon"></span>
+          <div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div>
+        </span></div>
+      <p class="paragraph"><strong>Using Gradle Groovy DSL:</strong></p>
+      <div class="sample-container">
+        <pre><code class="block lang-groovy" theme="idea">implementation group: 'io.kresult', name: 'kresult-core', version: 'VERSION'</code></pre>
+<span class="top-right-position"><span class="copy-icon"></span>
+          <div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div>
+        </span></div>
+      <p class="paragraph"><strong>Using Maven:</strong></p>
+      <div class="sample-container">
+        <pre><code class="block lang-xml" theme="idea">&lt;dependency&gt;<br>  &lt;groupId&gt;io.kresult&lt;/groupId&gt;<br>  &lt;artifactId&gt;kresult-core&lt;/artifactId&gt;<br>  &lt;version&gt;VERSION&lt;/version&gt;<br>&lt;/dependency&gt;</code></pre>
+<span class="top-right-position"><span class="copy-icon"></span>
+          <div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div>
+        </span></div>
+      <h3 class="">Core Modules</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Module</th>
+            <th>Description</th>
+            <th>Link</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code class="org.jetbrains.dokka.pages.commenttable@b5d1187 lang-kotlin">kresult-core</code></td>
+            <td>Core module providing the functional <code class="org.jetbrains.dokka.pages.commenttable@b5d1187 lang-kotlin">KResult</code> type as well as tooling and core functionality around it</td>
+            <td><a href="https://docs.kresult.io/libs/kresult-core/">Docs</a> / <a href="https://central.sonatype.com/artifact/io.kresult/kresult-core">Maven</a></td>
+          </tr>
+          <tr>
+            <td><code class="org.jetbrains.dokka.pages.commenttable@b5d1187 lang-kotlin">kresult-java</code></td>
+            <td>Java interoperability for <code class="org.jetbrains.dokka.pages.commenttable@b5d1187 lang-kotlin">KResult</code> and its transformations.</td>
+            <td><a href="https://docs.kresult.io/libs/kresult-java/">Docs</a> / <a href="https://central.sonatype.com/artifact/io.kresult/kresult-java">Maven</a></td>
+          </tr>
+          <tr>
+            <td><code class="org.jetbrains.dokka.pages.commenttable@b5d1187 lang-kotlin">kresult-problem</code></td>
+            <td><a href="https://datatracker.ietf.org/doc/html/rfc7807">RFC7807</a> compliant Problem Details JSON support for KResult.</td>
+            <td><a href="https://docs.kresult.io/libs/kresult-problem/">Docs</a> / <a href="https://central.sonatype.com/artifact/io.kresult/kresult-problem">Maven</a></td>
+          </tr>
+        </tbody>
+      </table>
+      <h3 class="">Integrations</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Module</th>
+            <th>Description</th>
+            <th>Link</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code class="org.jetbrains.dokka.pages.commenttable@b5d1187 lang-kotlin">kresult-arrow</code></td>
+            <td>Supports seamless integration with types of the <a href="https://arrow-kt.io/">Arrow</a> functional programming library.</td>
+            <td><a href="https://docs.kresult.io/integrations/kresult-arrow/">Docs</a> / <a href="https://central.sonatype.com/artifact/io.kresult.integration/kresult-arrow">Maven</a></td>
+          </tr>
+        </tbody>
+      </table>
+      <h2 class="">Hello, World</h2>
+<!--- CLEAR --><!--- TEST_NAME ReadmeKnitTest -->      <div class="sample-container">
+        <pre><code class="block lang-kotlin" theme="idea">import io.kresult.core.KResult<br>import io.kresult.core.filter<br><br>fun test() {<br>  val greeting = KResult.Success(&quot;World&quot;)<br><br>  val res: KResult&lt;String, String&gt; = greeting<br>    // transform result, if successful<br>    .map {<br>      &quot;&quot;&quot;Hello, $it!&quot;&quot;&quot;<br>    }<br>    // transform to IllegalArgumentException on failure side, if value is blank<br>    .filter(IllegalArgumentException(&quot;Greeting should not be blank&quot;)) {<br>      it.isNotBlank()<br>    }<br>    // execute side-effect, if successful<br>    .onSuccess {<br>      print(&quot;log: $it is successful&quot;)<br>    }<br>    // transform failure from Exception to a string<br>    .mapFailure {<br>      &quot;${it.javaClass}: ${it.localizedMessage}&quot;<br>    }<br><br>  // fold result to string<br>  res.fold(<br>    { error -&gt; &quot;Result failed with error: $error&quot; },<br>    { value -&gt; &quot;Result was successful with value: $value&quot; },<br>  )<br>}</code></pre>
+<span class="top-right-position"><span class="copy-icon"></span>
+          <div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div>
+        </span></div>
+<!--- KNIT example-readme-01.kt --><!--- TEST lines.isEmpty() -->      <p class="paragraph">While strings are simple for showcasing, a more real world solution would have strongly typed result values. One common practice is to encode:</p>
+      <ul>
+        <li>
+          <p class="paragraph"><code class="lang-kotlin">Success</code> side value as a product type (<code class="lang-kotlin">data class</code> in Kotlin)</p>
+        </li>
+        <li>
+          <p class="paragraph"><code class="lang-kotlin">Failure</code> side value as a sum type / tagged union (<code class="lang-kotlin">enum</code> or <code class="lang-kotlin">sealed class</code> in Kotlin)</p>
+        </li>
+      </ul>
+      <p class="paragraph">The following example demonstrates a very simplified case, where a greeting message is validated for correctness, and the resulting <code class="lang-kotlin">KResult&lt;Failure, Greeting&gt;</code> is folded to an exemplary <code class="lang-kotlin">Response</code> object again. In a more practical setup, that <code class="lang-kotlin">Response</code> and the mechanics to produce it would of course be provided by a framework integration:</p>
+      <div class="sample-container">
+        <pre><code class="block lang-kotlin" theme="idea">import io.kresult.core.*<br>import io.kotest.matchers.shouldBe<br><br>// Product to encode success<br>data class Greeting(val name: String)<br><br>// SUm to encode a failure<br>sealed class Failure(val msg: String) {<br><br>  // Indicates that Failure was caused by invalid input<br>  interface InputValidationProblem<br>  data object BlankName : Failure(&quot;Name should not be blank&quot;), InputValidationProblem<br>  data object IllegalCharacters : Failure(&quot;Name contains illegal characters&quot;), InputValidationProblem<br><br>  data object Unknown : Failure(&quot;An unknown error occured&quot;)<br>}<br><br>// Product to encode a response<br>data class Response(val status: Int, val content: String)<br><br>fun test() {<br>  val greeting: KResult&lt;Failure, Greeting&gt; = Greeting(&quot;World&quot;)<br>    // Wraps any type into a KResult.Success<br>    .asSuccess()<br>    // Filter, transforming to failure if greeting name is blank<br>    .filter(Failure.BlankName) {<br>      it.name.isNotBlank()<br>    }<br>    .filter(Failure.IllegalCharacters) {<br>      !it.name.contains(&quot;/&quot;)<br>    }<br><br>  val response: Response = greeting<br>    // Transforms Success side to a Response<br>    .map {<br>      Response(status = 200, content = &quot;&quot;&quot;Hello, ${it.name}!&quot;&quot;&quot;)<br>    }<br>    // Transforms Failure side to a Response<br>    .mapFailure { failure -&gt;<br>      when (failure) {<br>        is Failure.InputValidationProblem -&gt;<br>          Response(status = 400, content = failure.msg)<br><br>        else -&gt;<br>          Response(status = 500, content = failure.msg)<br>      }<br>    }<br>    // When Success and Failure side are of the same type, we can merge them (long syntax for fold)<br>    .merge()<br><br>  response.status shouldBe 200<br>  response.content shouldBe &quot;Hello, World!&quot;<br>}</code></pre>
+<span class="top-right-position"><span class="copy-icon"></span>
+          <div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div>
+        </span></div>
+<!--- KNIT example-readme-02.kt --><!--- TEST lines.isEmpty() -->      <h2 class="">License</h2>
+      <p class="paragraph">Copyright 2024 <a href="https://kresult.io">kresult.io</a> authors</p>
+      <p class="paragraph">Licensed under the Apache License, Version 2.0 (the &quot;License&quot;); you may not use this file except in compliance with the License. You may obtain a copy of the License at</p>
+      <div class="sample-container">
+        <pre><code class="block lang-kotlin" theme="idea">   http://www.apache.org/licenses/LICENSE-2.0</code></pre>
+<span class="top-right-position"><span class="copy-icon"></span>
+          <div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div>
+        </span></div>
+      <p class="paragraph">Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.</p>
+    </div>
     <h2 class="">All modules:</h2>
     <div class="table"><a data-name="479328969%2FMain%2F0" anchor-label="kresult-arrow" id="479328969%2FMain%2F0" data-filterable-set=""></a>
       <div class="table-row">

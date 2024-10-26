@@ -96,6 +96,8 @@ tasks {
 
     outputDirectory.set(versionedOutputDir)
 
+    includes.from("README.md")
+
     pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
       footerMessage = "KResult APi Documentation - [docs.kresult.io](https://docs.kresult.io)"
     }
