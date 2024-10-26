@@ -1,10 +1,10 @@
 # KResult
 
-[![Maven Central Version](https://img.shields.io/maven-central/v/io.kresult/kresult-core)](https://central.sonatype.com/namespace/io.kresult)
-[![Kotlin version](https://img.shields.io/badge/Kotlin-2.0.20-blue)](https://kotlinlang.org/docs/whatsnew2020.html)
+[![Maven Central Version](https://img.shields.io/maven-central/v/io.kresult/kresult-core.svg)](https://central.sonatype.com/namespace/io.kresult)
+[![Kotlin version](https://img.shields.io/badge/Kotlin-2.0.20-blue.svg)](https://kotlinlang.org/docs/whatsnew2020.html)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
-[![Build Status](https://img.shields.io/github/actions/workflow/status/kresult/kresult/build.yml?branch=main&logo=github)](https://github.com/kresult/kresult/actions/workflows/build.yml?query=branch%3Amain+)
+[![Build Status](/badge/build-status.svg)](https://github.com/kresult/kresult/actions/workflows/build.yml?query=branch%3Amain+)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=kresult_kresult&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=kresult_kresult)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=kresult_kresult&metric=coverage)](https://sonarcloud.io/summary/new_code?id=kresult_kresult)
 

@@ -1,0 +1,3 @@
+/badge/build-status.svg https://img.shields.io/github/actions/workflow/status/kresult/kresult/build.yml?branch=main&logo=github 303
+/badge/security-rating.svg https://sonarcloud.io/api/project_badges/measure?project=kresult_kresult&metric=security_rating 303
+/badge/code-coverage.svg https://sonarcloud.io/api/project_badges/measure?project=kresult_kresult&metric=coverage 303
