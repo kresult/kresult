@@ -1,8 +1,4 @@
-import org.jetbrains.dokka.base.DokkaBase
-import org.jetbrains.dokka.base.DokkaBaseConfiguration
-import org.jetbrains.dokka.gradle.DokkaMultiModuleTask
-import org.jetbrains.dokka.versioning.VersioningConfiguration
-import org.jetbrains.dokka.versioning.VersioningPlugin
+import org.jetbrains.dokka.gradle.tasks.DokkaGeneratePublicationTask
 
 version = rootProject
   .file("version.txt")
@@ -45,6 +41,11 @@ dependencies {
   dependencies {
     dokkaPlugin("org.jetbrains.dokka:versioning-plugin:${libs.versions.dokka.get()}")
   }
+
+  dokka(project(":libs:kresult-core"))
+  dokka(project(":libs:kresult-java"))
+  dokka(project(":libs:kresult-problem"))
+  dokka(project(":integrations:kresult-arrow"))
 }
 
 allprojects {
@@ -87,34 +88,40 @@ val docVersion = project.version.toString()
     }
   }
 
-tasks {
+val versionedOutputDir = docVersionsDir.resolve(docVersion)
+val publicOutputDir = docDir.resolve("public")
 
-  withType<DokkaMultiModuleTask>().configureEach {
+dokka {
 
-    val versionedOutputDir = docVersionsDir.resolve(docVersion)
-    val publicOutputDir = docDir.resolve("public")
-
+  dokkaPublications.html {
     outputDirectory.set(versionedOutputDir)
 
     includes.from("README.md")
+  }
 
-    pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
-      footerMessage = "KResult APi Documentation - [docs.kresult.io](https://docs.kresult.io)"
-    }
+  pluginsConfiguration.html {
+    footerMessage = "KResult APi Documentation - [docs.kresult.io](https://docs.kresult.io)"
+  }
 
-    pluginConfiguration<VersioningPlugin, VersioningConfiguration> {
-      version = docVersion
-      olderVersionsDir = docVersionsDir
-      renderVersionsNavigationOnAllPages = true
-    }
+  pluginsConfiguration.versioning {
+    version = docVersion
+    olderVersionsDir = docVersionsDir
+    renderVersionsNavigationOnAllPages = true
+  }
+}
 
+tasks {
+
+  withType<DokkaGeneratePublicationTask>().configureEach {
     doFirst {
       logger.lifecycle("Deleting output dir: $versionedOutputDir")
       versionedOutputDir.deleteRecursively()
     }
 
     doLast {
+      logger.lifecycle("Copying output dir to public")
       versionedOutputDir.copyRecursively(publicOutputDir, true)
+      logger.lifecycle("Removing 'older' versioned output")
       versionedOutputDir.resolve("older").deleteRecursively()
     }
   }
