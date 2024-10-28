@@ -4,7 +4,6 @@ import java.net.URI
 plugins {
   id("org.jetbrains.dokka")
   id("org.jetbrains.kotlinx.knit")
-  id("org.jetbrains.kotlinx.kover")
 }
 
 // https://github.com/gradle/gradle/issues/15383

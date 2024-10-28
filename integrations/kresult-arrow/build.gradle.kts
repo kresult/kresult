@@ -1,8 +1,7 @@
 import java.net.URI
 
 plugins {
-  alias(libs.plugins.kotlinMultiplatform)
-  alias(libs.plugins.kotestMultiplatform)
+  id("kresult.multiplatform")
   id("kresult.docs")
   id("kresult.maven-publish")
   id("kresult.code-quality")

@@ -10,7 +10,7 @@
       </option>
       <option name="taskNames">
         <list>
-          <option value=":dokkaHtmlMultiModule" />
+          <option value="dokkaGeneratePublicationHtml" />
           <option value=":knit" />
         </list>
       </option>
