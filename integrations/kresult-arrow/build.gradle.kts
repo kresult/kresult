@@ -1,9 +1,7 @@
-import org.jetbrains.dokka.gradle.DokkaTaskPartial
-import java.net.URL
+import java.net.URI
 
 plugins {
-  alias(libs.plugins.kotlinMultiplatform)
-  alias(libs.plugins.kotestMultiplatform)
+  id("kresult.multiplatform")
   id("kresult.docs")
   id("kresult.maven-publish")
   id("kresult.code-quality")
@@ -41,13 +39,11 @@ kotlin {
     }
   }
 
-  @Suppress("DEPRECATION")
-  tasks.withType<DokkaTaskPartial>().configureEach {
+  dokka {
     dokkaSourceSets {
       configureEach {
-        externalDocumentationLink {
-          url.set(URL("https://apidocs.arrow-kt.io/"))
-          packageListUrl.set(URL("https://apidocs.arrow-kt.io/package-list"))
+        externalDocumentationLinks.create("Arrow").apply {
+          url.set(URI("https://apidocs.arrow-kt.io/"))
         }
       }
     }

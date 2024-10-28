@@ -10,6 +10,8 @@ repositories {
 dependencies{
   implementation(libs.plugindeps.mavenPublish)
   implementation(libs.plugindeps.dokka)
+  implementation(libs.plugindeps.kotlinMultiplatform)
+  implementation(libs.plugindeps.kotestMultiplatform)
   implementation(libs.plugindeps.kotlinxKnit)
   implementation(libs.plugindeps.kotlinxKover)
   implementation(libs.plugindeps.ktlint)
