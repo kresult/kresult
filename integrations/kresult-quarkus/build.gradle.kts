@@ -1,19 +1,21 @@
 plugins {
-  alias(libs.plugins.kotlinMultiplatform)
-  alias(libs.plugins.kotestMultiplatform)
+  id("kresult.multiplatform")
   id("kresult.docs")
   id("kresult.maven-publish")
+  id("kresult.code-quality")
 }
 
 kotlin {
   jvm()
-  linuxX64()
 
   sourceSets {
     val jvmMain by getting {
       dependencies {
+        api(project(":libs:kresult-core"))
         implementation(project(":libs:kresult-problem"))
+
         implementation("io.quarkus.resteasy.reactive:resteasy-reactive-common:${libs.versions.quarkus.get()}")
+        implementation("org.eclipse.microprofile.openapi:microprofile-openapi-api:3.1.1")
       }
     }
 
