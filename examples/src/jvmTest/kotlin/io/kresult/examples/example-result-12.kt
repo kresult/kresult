@@ -5,12 +5,8 @@ import io.kresult.core.KResult
 import io.kotest.matchers.shouldBe
 
 fun test() {
-  var result = ""
+  val res: KResult<Nothing, Unit> =
+    KResult.Success.unit
 
-  KResult.Success("test-success")
-    .onSuccess {
-      result += it
-    }
-
-  result shouldBe "test-success"
+  res.isSuccess() shouldBe true
 }

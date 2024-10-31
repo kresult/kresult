@@ -2,12 +2,15 @@
 package io.kresult.examples.exampleResult11
 
 import io.kresult.core.KResult
-import io.kotest.matchers.shouldBe
 
 fun test() {
-  KResult.Failure(2)
-    .mapFailure {
-      it * it
-    }
-    .failureOrNull() shouldBe 4
+  val first: KResult<String, String> = KResult.Success("test 1")
+  val second: KResult<String, String> = KResult.Success("test 2")
+
+  KResult.combine(
+    first,
+    second,
+    { f1, f2 -> "$f1, $f2" },
+    { s1, s2 -> "$s1, $s2" }
+  )
 }

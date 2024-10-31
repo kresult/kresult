@@ -1,10 +1,10 @@
 // This file was automatically generated from KResult.kt by Knit tool. Do not edit.
 package io.kresult.examples.exampleResult02
 
-import io.kresult.integration.arrow.toKResult
-import arrow.core.Either
+import io.kresult.core.KResult
+import io.kotest.matchers.shouldBe
 
 fun test() {
-  Either.Right("test")
-    .toKResult()
+  KResult.Success("test").isSuccess() shouldBe true
+  KResult.Failure("test").isSuccess() shouldBe false
 }

@@ -7,7 +7,7 @@ import io.kotest.matchers.shouldBe
 // Product to encode success
 data class Greeting(val name: String)
 
-// SUm to encode a failure
+// Sum to encode a failure
 sealed class Failure(val msg: String) {
 
   // Indicates that Failure was caused by invalid input
