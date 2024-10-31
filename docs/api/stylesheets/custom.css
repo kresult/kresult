@@ -1,0 +1,16 @@
+:root {
+  --default-font-size: 17px;
+  --active-tab-border-color: #0274B5;
+  --active-section-color: #0274B5;
+  --sidemenu-section-active-color: #0274B5;
+}
+
+#main .main-content a:not([data-name]),
+#main .main-content a:not([data-name]):hover,
+#main .main-content a:not([data-name]):active {
+  color: #0274B5;
+}
+
+#main .main-content p.paragraph {
+  margin-block-end: 0.5rem;
+}

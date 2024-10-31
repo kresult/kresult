@@ -43,7 +43,9 @@ dokka {
   }
 
   pluginsConfiguration.html {
-    footerMessage = "KResult APi Documentation - [docs.kresult.io](https://docs.kresult.io)"
+    footerMessage = """KResult API Documentation - &copy; <a href=<"https://kresult.io">kresult.io</a>"""
+    customAssets.from(docDir.resolve("assets"))
+    customStyleSheets.from(docDir.resolve("stylesheets/custom.css"))
   }
 
   pluginsConfiguration.versioning {
