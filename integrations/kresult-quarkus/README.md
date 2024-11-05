@@ -36,14 +36,10 @@ class DemoResource {
 
 The snippet above responds with a JSON representation of the user:
 
-```js
+```json
 {
-  "id"
-:
-  "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    "name"
-:
-  "string"
+  "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "name": "string"
 }
 ```
 
@@ -74,20 +70,12 @@ class DemoResource {
 The output of the snippet above responds with an [RFC7807](https://datatracker.ietf.org/doc/html/rfc7807) compliant
 HTTP Problem Response of type `application/problem+json`:
 
-```js
+```json
 {
-  "type"
-:
-  "https://kresult.io/problem/not-found",
-    "status"
-:
-  404,
-    "title"
-:
-  "The requested resource was not found",
-    "detail"
-:
-  "User with that ID could not be found"
+  "type": "https://kresult.io/problem/not-found",
+  "status": 404,
+  "title": "The requested resource was not found",
+  "detail": "User with that ID could not be found"
 }
 ```
 
@@ -133,24 +121,26 @@ for details.
 
 ```kotlin
 dependencies {
+  implementation("io.kresult.integration:kresult-quarkus:VERSION")
 }
 ```
 
 **Gradle Groovy DSL:**
 
 ```groovy
+  implementation group: 'io.kresult.integration', name: 'kresult-quarkus', version: 'VERSION'
 ```
 
 **Maven:**
 
 ```xml
 <dependency>
-    <groupId>io.kresult.integration</groupId>
-    <version>VERSION</version>
+  <groupId>io.kresult.integration</groupId>
+  <artifactId>kresult-quarkus</artifactId>
+  <version>VERSION</version>
 </dependency>
 ```
 
-# Package io.kresult.integration.arrow
+# Package io.kresult.integration.quarkus
 
-Provides majorly transformation from and to Arrow types, e.g.
-[Either](https://apidocs.arrow-kt.io/arrow-core/arrow.core/-either/index.html).
+Provides integration helpers for the Quarkus framework.
