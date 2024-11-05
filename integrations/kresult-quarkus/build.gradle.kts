@@ -17,7 +17,7 @@ kotlin {
         implementation(enforcedPlatform("io.quarkus.platform:quarkus-bom:${libs.versions.quarkus.get()}"))
 
         implementation("io.quarkus.resteasy.reactive:resteasy-reactive-common")
-        implementation("org.eclipse.microprofile.openapi:microprofile-openapi-api:3.1.1")
+        implementation("org.eclipse.microprofile.openapi:microprofile-openapi-api")
       }
     }
 
