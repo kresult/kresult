@@ -18,14 +18,19 @@ rootProject.name = "kresult"
 includeBuild("convention-plugins")
 
 // libs
-include(":libs")
-include(":libs:kresult-core")
-include(":libs:kresult-java")
-include(":libs:kresult-problem")
+include(
+  ":libs",
+  ":libs:kresult-core",
+  ":libs:kresult-java",
+  ":libs:kresult-problem",
+)
 
 // integrations
-include(":integrations")
-include(":integrations:kresult-arrow")
+include(
+  ":integrations",
+  ":integrations:kresult-arrow",
+  ":integrations:kresult-quarkus",
+)
 
 // other
 include(":examples")

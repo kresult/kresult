@@ -28,11 +28,13 @@ dependencies {
   kover(project(":libs:kresult-java"))
   kover(project(":libs:kresult-problem"))
   kover(project(":integrations:kresult-arrow"))
+  kover(project(":integrations:kresult-quarkus"))
 
   dokka(project(":libs:kresult-core"))
   dokka(project(":libs:kresult-java"))
   dokka(project(":libs:kresult-problem"))
   dokka(project(":integrations:kresult-arrow"))
+  dokka(project(":integrations:kresult-quarkus"))
 }
 
 rootProject.plugins.withType<org.jetbrains.kotlin.gradle.targets.js.yarn.YarnPlugin> {
