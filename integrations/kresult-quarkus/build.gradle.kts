@@ -14,7 +14,9 @@ kotlin {
         api(project(":libs:kresult-core"))
         implementation(project(":libs:kresult-problem"))
 
-        implementation("io.quarkus.resteasy.reactive:resteasy-reactive-common:${libs.versions.quarkus.get()}")
+        implementation(enforcedPlatform("io.quarkus.platform:quarkus-bom:${libs.versions.quarkus.get()}"))
+
+        implementation("io.quarkus.resteasy.reactive:resteasy-reactive-common")
         implementation("org.eclipse.microprofile.openapi:microprofile-openapi-api:3.1.1")
       }
     }
@@ -31,6 +33,14 @@ kotlin {
 
         implementation(libs.kotest.runner.junit5)
         implementation(libs.kotlinx.knit.test)
+
+        // quarkus
+        implementation("io.quarkus:quarkus-rest")
+        implementation("io.quarkus:quarkus-smallrye-openapi")
+        implementation("io.quarkus:quarkus-rest-jackson")
+        implementation("io.quarkus:quarkus-kotlin")
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+        implementation("io.quarkus:quarkus-arc")
       }
     }
   }
